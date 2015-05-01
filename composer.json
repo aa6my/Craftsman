@@ -1,0 +1,14 @@
+{
+    "name": "dsv/craftsman",
+    "type": "codeigniter-module",
+    "require": {
+        "symfony/console": "~2.6",
+        "composer/installers": "~1.0"
+    },
+    "authors": [
+        {
+            "name": "David Sosa Valdes",
+            "email": "david.sosa.valdes@gmail.com"
+        }
+    ]
+}
