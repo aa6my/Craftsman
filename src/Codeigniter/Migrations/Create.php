@@ -36,12 +36,6 @@ class Create extends Command
     private $_path = 'application/migrations'.DIRECTORY_SEPARATOR;
 
     /**
-     * [$_template_path description]
-     * @var string
-     */
-    private $_template_path = 'templates/Codeigniter'.DIRECTORY_SEPARATOR;
-
-    /**
      * [$_migrations description]
      * @var array
      */
@@ -208,7 +202,7 @@ class Create extends Command
     private function _create_script_template($params = array())
     {
         Twig_Autoloader::register();
-        $loader = new Twig_Loader_Filesystem($this->_template_path);
+        $loader = new Twig_Loader_Filesystem(TEMPLATEPATH);
         $twig = new Twig_Environment($loader);
         $template = $twig->loadTemplate('Migration.php.twig');
         return $template->render($params);

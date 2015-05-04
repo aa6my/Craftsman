@@ -2,6 +2,8 @@
 <?php
 require __DIR__.'/../../autoload.php';
 
+define('TEMPLATEPATH', __DIR__.'/templates/Codeigniter'.DIRECTORY_SEPARATOR);
+
 use Symfony\Component\Console\Application;
 use Codeigniter\Migrations\Create as MigrationsCreateCommand;
 
