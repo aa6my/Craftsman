@@ -1,0 +1,12 @@
+#!/usr/bin/env php
+<?php
+require __DIR__.'/vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use Codeigniter\Migrations\Create as MigrationsCreateCommand;
+
+$migration = new MigrationsCreateCommand(); 
+
+$application = new Application('Craftsman','1.0.0');
+$application->add($migration);
+$application->run();

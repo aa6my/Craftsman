@@ -1,14 +1,18 @@
 {
     "name": "dsv/craftsman",
-    "type": "codeigniter-module",
     "require": {
-        "symfony/console": "~2.6",
-        "composer/installers": "~1.0"
+        "symfony/console" : "~2.6",
+        "symfony/filesystem" : "2.6.6",
+        "twig/twig" : "~1.0"
     },
     "authors": [
         {
             "name": "David Sosa Valdes",
             "email": "david.sosa.valdes@gmail.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
+    "bin": ["craftsman"] 
 }
