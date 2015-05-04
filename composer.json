@@ -19,7 +19,9 @@
         "psr-0": { "": "src/" }
     },
     "bin": ["craftsman"],
-    "branch-alias": {
-        "dev-master": "1.0.x-dev"
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
     }
 }
