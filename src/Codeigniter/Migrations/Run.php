@@ -32,6 +32,7 @@ class Run extends Command
 		'version',
 		'latest'
 	);
+	
 	/**
 	 * [$_work description]
 	 * @var [type]
