@@ -1,14 +1,26 @@
 #!/usr/bin/env php
 <?php
+# PRODUCTION
 require __DIR__.'/../../autoload.php';
+
+# DEVELOPMENT
+#require __DIR__.'/vendor/autoload.php';
 
 define('TEMPLATEPATH', __DIR__.'/templates/Codeigniter'.DIRECTORY_SEPARATOR);
 
 use Symfony\Component\Console\Application;
-use Codeigniter\Migrations\Create as MigrationsCreateCommand;
 
-$migration = new MigrationsCreateCommand(); 
+use Codeigniter\Migrations\Create as MigrationsCreateCommand;
+use Codeigniter\Migrations\Run as MigrationsRunCommand;
+
+$commands = array(
+	"migration-create" => new MigrationsCreateCommand(),
+	"migration-run" => new MigrationsRunCommand(),
+);
 
 $application = new Application('Craftsman','1.0.0');
-$application->add($migration);
+
+foreach ($commands as $key => $command) {
+	$application->add($command);
+}
 $application->run();
