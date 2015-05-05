@@ -19,7 +19,7 @@ use Symfony\Component\Process\Process;
 use Exception;
 
 /**
-* 
+* Migration:Run
 */
 class Run extends Command
 {

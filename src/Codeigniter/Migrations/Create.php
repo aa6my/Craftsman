@@ -20,7 +20,7 @@ use Twig_Environment;
 use Exception;
 
 /**
- * 
+ * Migration:Create
  */
 class Create extends Command
 {
