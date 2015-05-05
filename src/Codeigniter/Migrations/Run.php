@@ -140,7 +140,13 @@ class Run extends Command
 		    return;
 		}
         $process = new Process($command);
-        echo $command.PHP_EOL;
         $process->run();
+
+		// executes after the command finishes
+		if (!$process->isSuccessful()) {
+		    throw new \RuntimeException($process->getErrorOutput());
+		}		
+
+		echo $process->getOutput();        
     }	
 }
