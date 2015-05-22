@@ -29,6 +29,7 @@ class Create extends Command
      * @var string
      */
     private $_default_folder = 'migrations';
+
     /**
      * [$_path description]
      * @var string
