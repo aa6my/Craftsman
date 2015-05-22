@@ -33,7 +33,7 @@ class Create extends Command
      * [$_path description]
      * @var string
      */
-    private $_path = 'application/migrations'.DIRECTORY_SEPARATOR;
+    private $_path = 'application/migrations/';
 
     /**
      * [$_migrations description]
