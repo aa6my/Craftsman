@@ -50,8 +50,8 @@ class Run extends Command
 	 * @var array
 	 */
 	private $_commands = array(
-		'module' => '/usr/bin/env php index.php migration module',
-		'default' => '/usr/bin/env php index.php migration'
+		'module' => '/usr/bin/env php index.php climigration module',
+		'default' => '/usr/bin/env php index.php climigration'
 	);
 
 	/**
