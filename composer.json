@@ -9,23 +9,6 @@
             "email": "david.sosa.valdes@gmail.com"
         }
     ],
-    "repositories": {
-        "dsv": {
-            "type": "codeigniter-module",
-            "package": {
-                "name": "dsv/hmvc-migration",
-                "version": "1.0.0",
-                "source": {
-                    "url": "https://gitlab.com/david-sosa-valdes/CI-HMVC-Migrations",
-                    "type": "git",
-                    "reference": "7bc90ae7"
-                }
-            },
-            "require":{
-                "composer/installers": "*"
-            }    
-        }
-    },    
     "require": {
         "php": ">=5.4.0",
         "symfony/console" : "~2.6",
