@@ -149,7 +149,7 @@ class Run extends Command
             if (!$process->isSuccessful()) {
                 throw new \RuntimeException($process->getErrorOutput());
             }           
-        } catch (Exception $e) {
+        } catch (\RuntimeException $e) {
             echo $e->getMessage();
         }
 
