@@ -30,7 +30,8 @@ class Run extends Command
 	private $_valid_works = array(
 		'current',
 		'version',
-		'latest'
+		'latest',
+        'info'
 	);
 	
 	/**
@@ -105,6 +106,7 @@ class Run extends Command
 		$output->writeln('<info>Work: '.$this->_work.'</info>');
         if (! in_array($this->_work, $this->_valid_works)) 
         {
+            $this->_work == 'info' && $this->_work = 'index';
         	$output->writeln('<error>The work: '.$this->_work.' is not valid.</error>');
         	return;
         }
