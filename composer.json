@@ -15,7 +15,7 @@
         "symfony/filesystem" : "2.6.6",
         "twig/twig" : "~1.0",
         "symfony/process": "2.6.6",
-        "dsv/climigration": "1.0.1"
+        "dsv/climigration": "1.0.2"
     },    
     "autoload": {
         "psr-0": { "": "src/" }
