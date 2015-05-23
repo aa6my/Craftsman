@@ -23,43 +23,43 @@ use Exception;
 */
 class Run extends Command
 {
-	/**
-	 * [$_valid_works description]
-	 * @var array
-	 */
-	private $_valid_works = array(
-		'current',
-		'version',
-		'latest',
+    /**
+     * [$_valid_works description]
+     * @var array
+     */
+    private $_valid_works = array(
+        'current',
+        'version',
+        'latest',
         'info'
-	);
-	
-	/**
-	 * [$_work description]
-	 * @var [type]
-	 */
-	private $_work;
+    );
+    
+    /**
+     * [$_work description]
+     * @var [type]
+     */
+    private $_work;
 
-	/**
-	 * [$_module description]
-	 * @var [type]
-	 */
-	private $_module;
+    /**
+     * [$_module description]
+     * @var [type]
+     */
+    private $_module;
 
-	/**
-	 * [$_commands description]
-	 * @var array
-	 */
-	private $_commands = array(
-		'module' => '/usr/bin/env php index.php climigration module',
-		'default' => '/usr/bin/env php index.php climigration'
-	);
+    /**
+     * [$_commands description]
+     * @var array
+     */
+    private $_commands = array(
+        'module' => '/usr/bin/env php index.php climigration module',
+        'default' => '/usr/bin/env php index.php climigration'
+    );
 
-	/**
-	 * [$_version description]
-	 * @var integer
-	 */
-	private $_version = 0;
+    /**
+     * [$_version description]
+     * @var integer
+     */
+    private $_version = 0;
 
     /**
      * [configure description]
@@ -76,10 +76,10 @@ class Run extends Command
                 'Set the work name'
             )
             ->addArgument(
-            	'version',
-            	InputArgument::OPTIONAL,
-            	'Set current version',
-            	NULL
+                'version',
+                InputArgument::OPTIONAL,
+                'Set current version',
+                NULL
             )
             ->addOption(
                 'module', 
@@ -99,57 +99,60 @@ class Run extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-    	$this->_work = $input->getArgument('work');
-    	$this->_version = $input->getArgument('version');
+        $this->_work = $input->getArgument('work');
+        $this->_version = $input->getArgument('version');
         $this->_module = $input->getOption('module');
-		
-		$output->writeln('<info>Work: '.$this->_work.'</info>');
+        
+        $output->writeln('<info>Work: '.$this->_work.'</info>');
         if (! in_array($this->_work, $this->_valid_works)) 
         {
-            $this->_work == 'info' && $this->_work = 'index';
-        	$output->writeln('<error>The work: '.$this->_work.' is not valid.</error>');
-        	return;
+            $output->writeln('<error>The work: '.$this->_work.' is not valid.</error>');
+            return;
         }
-        elseif ($this->_module !== FALSE && is_string($this->_module)) 
-        {
-        	$output->writeln('<info>Module: '.$this->_module.'</info>');
-        	if ($this->_work == 'version') 
-        	{
-        		$this->_version = abs($this->_version);
-        		$output->writeln('<info>Version: '.$this->_version.'</info>');
-        		$command = $this->_commands["module"]." {$this->_module} {$this->_work} {$this->_version}";
-        	} 
-        	else 
-        	{
-        		$command = $this->_commands["module"]." {$this->_module} {$this->_work}";
-        	}
+        $this->_work == 'info' && $this->_work = 'index';
+        if ($this->_module !== FALSE && is_string($this->_module)) 
+        {   
+            if ($this->_work == 'version') 
+            {
+                $this->_version = abs($this->_version);
+                $output->writeln('<info>Version: '.$this->_version.'</info>');
+                $command = $this->_commands["module"]." {$this->_module} {$this->_work} {$this->_version}";
+            } 
+            else 
+            {
+                $command = $this->_commands["module"]." {$this->_module} {$this->_work}";
+            }
         }
         else
         {
-        	if ($this->_work == 'version') 
-        	{
-				$this->_version = abs($this->_version);
-        		$output->writeln('<info>Version: '.$this->_version.'</info>');
-        		$command = $this->_commands["default"]." {$this->_work} {$this->_version}";
-        	} 
-        	else 
-        	{
-        		$command = $this->_commands["default"]." {$this->_work}";
-        	}
+            if ($this->_work == 'version') 
+            {
+                $this->_version = abs($this->_version);
+                $output->writeln('<info>Version: '.$this->_version.'</info>');
+                $command = $this->_commands["default"]." {$this->_work} {$this->_version}";
+            } 
+            else 
+            {
+                $command = $this->_commands["default"]." {$this->_work}";
+            }
         }
-		$helper = $this->getHelper('question');
-		$question = new ConfirmationQuestion('Continue with this action <comment>[yes]</comment>? ', TRUE);		
-		if (!$helper->ask($input, $output, $question)) {
-		    return;
-		}
+        $helper = $this->getHelper('question');
+        $question = new ConfirmationQuestion('Continue with this action <comment>[yes]</comment>? ', TRUE);     
+        if (!$helper->ask($input, $output, $question)) {
+            return;
+        }
         $process = new Process($command);
         $process->run();
 
-		// executes after the command finishes
-		if (!$process->isSuccessful()) {
-		    throw new \RuntimeException($process->getErrorOutput());
-		}		
+        try {
+            // executes after the command finishes
+            if (!$process->isSuccessful()) {
+                throw new \RuntimeException($process->getErrorOutput());
+            }           
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
 
-		echo $process->getOutput();        
-    }	
+        echo $process->getOutput();        
+    }   
 }
