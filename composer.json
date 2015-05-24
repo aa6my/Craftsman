@@ -9,6 +9,9 @@
             "email": "david.sosa.valdes@gmail.com"
         }
     ],
+    "support":{
+        "issues": "https://gitlab.com/david-sosa-valdes/craftsman/issues"
+    },
     "require": {
         "php": ">=5.4.0",
         "symfony/console" : "~2.6",
