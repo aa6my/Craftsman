@@ -188,6 +188,11 @@ php bin/craftsman migration:refresh
 ## CHANGELOG
 ---
 
+**1.2.1**
+
+* Add php docblocks
+* Fix some bugs.
+
 **1.2.0**
 
 * Add reset, refresh and rollback migration commands.
