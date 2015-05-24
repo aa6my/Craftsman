@@ -202,8 +202,6 @@ If you like Craftsman CLI help me to improve it. Here's a list of something that
 * Check the list of [issues](https://gitlab.com/david-sosa-valdes/craftsman/issues).
 * Send me an email.
 
-## Codeigniter developers
-
 ## Related Projects for CodeIgniter 3.0
 
 * [kenjis/codeigniter-cli](https://github.com/kenjis/codeigniter-cli)
