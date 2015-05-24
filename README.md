@@ -139,7 +139,7 @@ Now it's your turn to give the finishing touches before running this scheme.
 
 ### Running migrations
  
-Running Migrations respect Codeigniter standards. Here's a list of posible options.
+Running Migrations respecting the Codeigniter standards. Here's a list of posible options.
 <!---
 #### Current (Currently not working properly)
 
