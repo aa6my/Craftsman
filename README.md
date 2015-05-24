@@ -104,7 +104,7 @@ php bin/craftsman migration:run version 1
 
 ### Rolling Back Migrations
 
-#### Rollback The Last Migration Operation
+#### Rollback the last migration operation
 
 ```
 php bin/craftsman migration:rollback
