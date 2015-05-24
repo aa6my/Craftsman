@@ -17,13 +17,13 @@ Note: Codeigniter 2.x is not supported.
 ## How to install
 ---
 
-### With composer 
+### With composer
 
 ```
 composer require "dsv/craftsman":"*"
 ```
 
-Before run the composer install command add the bin-dir config path inside your composer file:
+**Note**: Before run the composer install command add the bin-dir config path inside your composer file:
 
 ```
 "config": {
@@ -43,8 +43,7 @@ php bin/craftsman list
 
 ### Viewing The Help Screen For A Command 
 
-Every command includes a "help" screen which displays the command's available arguments and options. 
-To view a help screen from a command, simply add the name of the command with help:
+Every command includes a ```help``` screen which displays the command's available arguments and options. To view a help screen from a command, simply add the name of the command with help:
 
 ```
 php bin/craftsman help migration:run
@@ -55,31 +54,27 @@ php bin/craftsman help migration:run
 
 ### Migrations 
 
-Migration schemes are simple files that hold the commands to apply and remove changes to your database. It allows you to easily keep track of changes made in your app. They may create tables, modify tables or fields, etc. But they are not limited to just changing the schema. You could use them to fix bad data in the database or populate new fields.
+Migration schemes are simple files that hold the commands to apply and remove changes to your database. It allows you to easily keep track of changes made in your app. They may create/modify tables or fields, etc. But they are not limited to just changing the schema. You could use them to fix bad data in the database or populate new fields.
 
 #### Creating migrations
 
-To create a migration, you may use the migration:generate command on the Craftsman CLI:
+Create a migration with the migration:generate command on the Craftsman CLI:
 
 ```
 php bin/craftsman migration:generate create_users
 ```
 
-The migration command can accept an array of database fields:
+The migration command may accept an array of database fields using the field format ```field_name:field_type``` :
 
 ```
 php bin/craftsman migration:generate create_foo name:varchar description:text amount:int
 ```
 
-Any field separated with the ':' symbol then the field type.
-
-The migration will be placed in your ```application/migrations``` folder or in any folder you specify instead of the default value, and will contain a number which allows the framework to determine the order of the migrations.
+The migration file will be placed in your ```application/migrations``` folder or any folder you specify instead of the default path. It will contain a version number as a prefix which allows the Codeigniter framework to determine the order of the migrations.
 
 #### Running migrations
 
-Running Migrations (the CI way)
-
-Here's the posible options for running the migrations:
+Running Migrations respect Codeigniter standards. Here's a list of posible options.
 
 **Current**
 
