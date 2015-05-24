@@ -24,7 +24,7 @@ $commands = array(
 	new MigrationsRefreshCommand(),
 );
 
-$application = new Application('Craftsman','1.0.0');
+$application = new Application('Craftsman','1.2.0');
 
 foreach ($commands as $key => $command) {
 	$application->add($command);

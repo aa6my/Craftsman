@@ -19,12 +19,21 @@ use Symfony\Component\Process\Process;
 use Exception;
 
 /**
-* Migration:Run
-*/
+ * Migration:Run Class
+ *
+ * Principal class used as a default command for every other Migration class exept generate. 
+ *
+ * @package     CLI Craftsman
+ * @author      David Sosa Valdes
+ * @link        https://gitlab.com/david-sosa-valdes/craftsman
+ * @copyright   Copyright (c) 2014, David Sosa Valdes.
+ * @version     1.2.1
+ *
+ */
 class Run extends Command
 {
     /**
-     * [$_valid_works description]
+     * Set of all the posible works.
      * @var array
      */
     private $_valid_works = array(
@@ -38,19 +47,19 @@ class Run extends Command
     );
     
     /**
-     * [$_work description]
-     * @var [type]
+     * Currently selected work.
+     * @var string
      */
     private $_work;
 
     /**
-     * [$_module description]
-     * @var [type]
+     * Currently selected module (HMVC)
+     * @var string
      */
     private $_module;
 
     /**
-     * [$_commands description]
+     * Set of possible Codeigniter CLI commands used
      * @var array
      */
     private $_commands = array(
@@ -59,14 +68,15 @@ class Run extends Command
     );
 
     /**
-     * [$_version description]
+     * Current migration version
      * @var integer
      */
     private $_version = 0;
 
     /**
-     * [configure description]
-     * @return [type] [description]
+     * Command configuration method.
+     * 
+     * Configure all the arguments and options.
      */
     protected function configure()
     {
@@ -95,10 +105,12 @@ class Run extends Command
     }
 
     /**
-     * [execute description]
-     * @param  InputInterface  $input  [description]
-     * @param  OutputInterface $output [description]
-     * @return [type]                  [description]
+     * Execute the command
+     *
+     * Run the migration work type for a specific module or default application.
+     * 
+     * @param  InputInterface  $input  
+     * @param  OutputInterface $output 
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

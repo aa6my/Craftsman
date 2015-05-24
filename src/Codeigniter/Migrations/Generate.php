@@ -20,43 +20,51 @@ use Twig_Environment;
 use Exception;
 
 /**
- * Migration:Generate
+ * Migration:Generate Class
+ *
+ *
+ * @package     CLI Craftsman
+ * @author      David Sosa Valdes
+ * @link        https://gitlab.com/david-sosa-valdes/craftsman
+ * @copyright   Copyright (c) 2014, David Sosa Valdes.
+ * @version     1.2.1
+ *
  */
 class Generate extends Command
 {
     /**
-     * [$_default_folder description]
+     * Available migration folder.
      * @var string
      */
     private $_default_folder = 'migrations';
 
     /**
-     * [$_path description]
+     * Default migrations folder path.
      * @var string
      */
     private $_path = 'application/migrations/';
 
     /**
-     * [$_migrations description]
+     * Set of migrations available inside the Migration Filesystem.
      * @var array
      */
     private $_migrations = array();
 
     /**
-     * [$_filename description]
-     * @var [type]
+     * New Migration Filename 
+     * @var string
      */
     private $_filename;
 
     /**
-     * [$_name description]
-     * @var [type]
+     * New Migration name (without extension and prefix)
+     * @var string
      */
     private $_name;
 
     /**
-     * [$_type description]
-     * @var [type]
+     * Migration Type (numeric,timestamp) 
+     * @var string
      */
     private $_type;
 
@@ -70,8 +78,9 @@ class Generate extends Command
     );
 
     /**
-     * [configure description]
-     * @return [type] [description]
+     * Command configuration method.
+     * 
+     * Configure all the arguments and options.
      */
     protected function configure()
     {
@@ -99,10 +108,12 @@ class Generate extends Command
     }
 
     /**
-     * [execute description]
-     * @param  InputInterface  $input  [description]
-     * @param  OutputInterface $output [description]
-     * @return [type]                  [description]
+     * Execute the command
+     *
+     * Create the migration scheme file and move it inside the filesystem.
+     * 
+     * @param  InputInterface  $input  
+     * @param  OutputInterface $output 
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -215,9 +226,11 @@ class Generate extends Command
     }
 
     /**
-     * [_create_script_template description]
-     * @param  array  $params [description]
-     * @return [type]         [description]
+     * Create a script template using Twig.
+     * 
+     * @param  array  $params   Twig template params.
+     * @param  string $name     Template filename.
+     * @return string           Twig render output.
      */
     private function _create_script_template($params = array(),$template_name = "")
     {

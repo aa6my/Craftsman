@@ -8,6 +8,18 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 
+/**
+ * Migration:Refresh Class
+ *
+ * Calls Migration:run command with a predefined params for refresh all the migration schemes.
+ *
+ * @package     CLI Craftsman
+ * @author      David Sosa Valdes
+ * @link        https://gitlab.com/david-sosa-valdes/craftsman
+ * @copyright   Copyright (c) 2014, David Sosa Valdes.
+ * @version     1.2.1
+ *
+ */
 class Refresh extends Command
 {
     protected function configure()
