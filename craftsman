@@ -10,12 +10,12 @@ define('TEMPLATEPATH', __DIR__.'/templates/Codeigniter'.DIRECTORY_SEPARATOR);
 
 use Symfony\Component\Console\Application;
 
-use Codeigniter\Migrations\Create as MigrationsCreateCommand;
+use Codeigniter\Migrations\Generate as MigrationsGenerateCommand;
 use Codeigniter\Migrations\Run as MigrationsRunCommand;
 
 $commands = array(
-	"migration-create" => new MigrationsCreateCommand(),
-	"migration-run" => new MigrationsRunCommand(),
+	new MigrationsGenerateCommand(),
+	new MigrationsRunCommand(),
 );
 
 $application = new Application('Craftsman','1.0.0');

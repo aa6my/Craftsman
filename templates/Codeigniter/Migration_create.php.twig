@@ -10,25 +10,33 @@ class Migration_{{name}} extends CI_Migration {
 
 	public function up() 
 	{
-		$this->create_{{table_name}}_table();
+		$this->{{table_name}}_table();
 	}
 
 	public function down() 
 	{
-		$this->dbforge->drop_table('{{table_name}}');
+		$this->dbforge->drop_table('ci_{{ table_name|replace({'create_':''}) }}');
 	}
 
-	private function create_{{table_name}}_table()
+	private function {{table_name}}_table()
 	{
 		$this->dbforge->add_field(array(
 			'id' => array(
 				'type' => 'INT',
 				'null' => FALSE,
 				'auto_increment' => TRUE
-			)
+			),{% for field in fields %}{% set command = set_command(field) %}
+
+			'{{command.name}}' => array(
+				'type' => '{{command.type}}',
+				'constraint' => 100,
+				'null' => TRUE,
+				'auto_increment' => FALSE
+			),{% endfor %}
+
 		));
 		$this->dbforge->add_key('id', TRUE);
-		$this->dbforge->create_table('{{table_name}}',TRUE);		
+		$this->dbforge->create_table('ci_{{ table_name|replace({'create_':''}) }}',TRUE);		
 	}
 }
 

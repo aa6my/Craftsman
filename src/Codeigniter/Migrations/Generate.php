@@ -20,9 +20,9 @@ use Twig_Environment;
 use Exception;
 
 /**
- * Migration:Create
+ * Migration:Generate
  */
-class Create extends Command
+class Generate extends Command
 {
     /**
      * [$_default_folder description]
@@ -76,13 +76,18 @@ class Create extends Command
     protected function configure()
     {
         $this
-            ->setName('migration:create')
-            ->setDescription('Migration Create')
+            ->setName('migration:generate')
+            ->setDescription('Migration Generate')
             ->addArgument(
                 'name',
                 InputArgument::REQUIRED,
                 'The name of the new migration'
             )
+            ->addArgument(
+                'columns',
+                InputArgument::IS_ARRAY,
+                'table fields (E.j <field>:<type> <field_n>:<type_n>)'
+            )            
             ->addOption(
                 'type', 
                 't', 
@@ -179,7 +184,7 @@ class Create extends Command
         $output->writeln("Installation path: <info>{$this->_path}</info>");
         $output->writeln("Filename: <info>{$this->_filename}</info>");
         
-        $question = new ConfirmationQuestion('Create migration file? [<comment>yes</comment>]? ', TRUE);
+        $question = new ConfirmationQuestion('Generate migration file? [<comment>yes</comment>]? ', TRUE);
         if (! $helper->ask($input, $output, $question)) {
             $output->writeln("<info>Aborting...</info>");
             return;
@@ -191,7 +196,21 @@ class Create extends Command
             'path'       => DIRECTORY_SEPARATOR.$this->_path.$this->_filename,
             'table_name' => $this->_name
         );
-        $template = $this->_create_script_template($params);
+
+        list($migration_type) = explode('_', $this->_name);
+
+        switch ($migration_type) 
+        {
+            case 'create':
+                $template_name = 'Migration_create.php.twig'; 
+                $params['fields'] = (array) $input->getArgument('columns');
+                break;
+            
+            default:
+                $template_name = 'Migration_default.php.twig';
+                break;
+        }
+        $template = $this->_create_script_template($params,$template_name);
         $filesystem->dumpFile($this->_path.$this->_filename, $template); 
     }
 
@@ -200,12 +219,16 @@ class Create extends Command
      * @param  array  $params [description]
      * @return [type]         [description]
      */
-    private function _create_script_template($params = array())
+    private function _create_script_template($params = array(),$template_name = "")
     {
         Twig_Autoloader::register();
         $loader = new Twig_Loader_Filesystem(TEMPLATEPATH);
         $twig = new Twig_Environment($loader);
-        $template = $twig->loadTemplate('Migration.php.twig');
+        $function = new \Twig_SimpleFunction('set_command', function ($field = "") {
+          return array_combine(array('name','type'), explode(':', $field));
+        });
+        $twig->addFunction($function);        
+        $template = $twig->loadTemplate($template_name);
         return $template->render($params);
     }
 
