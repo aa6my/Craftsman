@@ -31,7 +31,10 @@ class Run extends Command
         'current',
         'version',
         'latest',
-        'info'
+        'info',
+        'rollback',
+        'reset',
+        'refresh'
     );
     
     /**
@@ -150,9 +153,10 @@ class Run extends Command
                 throw new \RuntimeException($process->getErrorOutput());
             }           
         } catch (\RuntimeException $e) {
-            echo $e->getMessage();
+            $output->writeln('<error>'.PHP_EOL.$e->getMessage().'</error>');
+            return;
         }
 
-        echo $process->getOutput();        
+       $output->writeln('<comment>'.PHP_EOL.$process->getOutput().'</comment>');     
     }   
 }

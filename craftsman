@@ -12,10 +12,16 @@ use Symfony\Component\Console\Application;
 
 use Codeigniter\Migrations\Generate as MigrationsGenerateCommand;
 use Codeigniter\Migrations\Run as MigrationsRunCommand;
+use Codeigniter\Migrations\Rollback as MigrationsRollbackCommand;
+use Codeigniter\Migrations\Refresh as MigrationsRefreshCommand;
+use Codeigniter\Migrations\Reset as MigrationsResetCommand;
 
 $commands = array(
 	new MigrationsGenerateCommand(),
 	new MigrationsRunCommand(),
+	new MigrationsRollbackCommand(),
+	new MigrationsResetCommand(),
+	new MigrationsRefreshCommand(),
 );
 
 $application = new Application('Craftsman','1.0.0');
