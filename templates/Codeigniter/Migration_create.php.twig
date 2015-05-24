@@ -28,7 +28,7 @@ class Migration_{{name}} extends CI_Migration {
 			),{% for field in fields %}{% set command = set_command(field) %}
 
 			'{{command.name}}' => array(
-				'type' => '{{command.type}}',
+				'type' => '{{command.type|upper}}',
 				'constraint' => 100,
 				'null' => TRUE,
 				'auto_increment' => FALSE
