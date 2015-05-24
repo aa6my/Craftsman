@@ -69,10 +69,73 @@ php bin/craftsman migration:generate create_users
 The migration command may accept an array of database fields using the field format ```field_name:field_type``` :
 
 ```
-php bin/craftsman migration:generate create_foo name:varchar description:text amount:int
+php bin/craftsman migration:generate create_users firstname:varchar lastname:varchar email:varchar active:smallint
 ```
 
 The migration file will be placed in your ```application/migrations``` folder or any folder you specify instead of the default path. It will contain a version number as a prefix which allows the Codeigniter framework to determine the order of the migrations.
+
+Here's the example output:
+
+```php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Migration_create_users extends CI_Migration {
+
+	public function __construct()
+	{
+		$this->load->dbforge();
+		$this->load->database();
+	}
+
+	public function up() 
+	{
+		$this->create_users_table();
+	}
+
+	public function down() 
+	{
+		$this->dbforge->drop_table('ci_users');
+	}
+
+	private function create_users_table()
+	{
+		$this->dbforge->add_field(array(
+			'id' => array(
+				'type' => 'INT',
+				'null' => FALSE,
+				'auto_increment' => TRUE
+			),
+			'firstname' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 100,
+				'null' => FALSE
+			),
+			'lastname' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 100,
+				'null' => TRUE
+			),
+			'email' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 100,
+				'null' => TRUE
+			),
+			'active' => array(
+				'type' => 'SMALLINT',
+				'null' => FALSE,
+				'default' => 1
+			),
+		));
+		$this->dbforge->add_key('id', TRUE);
+		$this->dbforge->create_table('ci_users',TRUE);		
+	}
+}
+
+/* End of file 001_create_users.php.php */
+/* Location: /application/migrations/001_create_users.php */
+```
+
+Now it's your turn to give the finishing touches before running this scheme.
 
 ### Running migrations
  
