@@ -5,7 +5,7 @@
 
 Craftsman is the name of the command-line interface that you needed in Codeigniter 3.0. It provides a set of commands that will help you when you're developing your application, in addition to make your job easier. It is driven by the powerful Symfony Console component.
 
-### Requirements 
+## Requirements 
 ---
 
 * PHP 5.2.4+
@@ -14,10 +14,10 @@ Craftsman is the name of the command-line interface that you needed in Codeignit
 
 Note: Codeigniter 2.x is not supported.
 
-### How to install
+## How to install
 ---
 
-#### With composer 
+### With composer 
 
 ```
 composer require "dsv/craftsman":"*"
@@ -30,10 +30,10 @@ Before run the composer install command add the bin-dir config path inside your 
     "bin-dir": "bin"
 }	
 ```
-### How to use it
+## How to use it
 ---
 
-#### Listing All Available Commands
+### Listing All Available Commands
 
 To view a list of all available Craftsman commands, you may use the ```list``` command:
 
@@ -41,7 +41,7 @@ To view a list of all available Craftsman commands, you may use the ```list``` c
 php bin/craftsman list
 ```
 
-#### Viewing The Help Screen For A Command ####
+### Viewing The Help Screen For A Command 
 
 Every command includes a "help" screen which displays the command's available arguments and options. 
 To view a help screen from a command, simply add the name of the command with help:
@@ -107,13 +107,12 @@ Note: It works just like current() but ignores $config['migration_version']
 php bin/craftsman migration:run version 1
 ```
 
-### CHANGELOG
+## CHANGELOG
 ---
 
 
-### Codeigniter developers
+## Codeigniter developers
 
 This is a list of people you need to check on what they are working.
 
-Kenjis
-
+[Kenjis](https://github.com/kenjis/)
