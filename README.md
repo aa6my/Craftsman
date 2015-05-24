@@ -51,12 +51,14 @@ php bin/craftsman help migration:run
 
 ## List of commands
 ---
+* [Migrations](#migrations)
 
-### Migrations 
+## Migrations
+---
 
 Migration schemes are simple files that hold the commands to apply and remove changes to your database. It allows you to easily keep track of changes made in your app. They may create/modify tables or fields, etc. But they are not limited to just changing the schema. You could use them to fix bad data in the database or populate new fields.
 
-#### Creating migrations
+### Creating migrations
 
 Create a migration with the migration:generate command on the Craftsman CLI:
 
@@ -72,38 +74,60 @@ php bin/craftsman migration:generate create_foo name:varchar description:text am
 
 The migration file will be placed in your ```application/migrations``` folder or any folder you specify instead of the default path. It will contain a version number as a prefix which allows the Codeigniter framework to determine the order of the migrations.
 
-#### Running migrations
-
+### Running migrations
+ 
 Running Migrations respect Codeigniter standards. Here's a list of posible options.
+<!---
+#### Current (Currently not working properly)
 
-**Current**
-
-Whatever is set for $config['migration_version'] in HMVC ```config/migration.php``` file.
+Whatever is set for ```$config['migration_version']``` in HMVC ```config/migration.php``` file.
 
 ```
 php bin/craftsman migration:run current
 ```
+-->
+#### Latest
 
-**Latest**
-
-Migrate to the latest version. This works much the same way as current() but instead of looking for the $config['migration_version'] the Migration class will use the very newest migration found in the filesystem.
+Migrate to the latest version, the migration class will use the very newest migration found in the filesystem.
 
 ```
 php bin/craftsman migration:run latest
 ```
 
-**Version**
+#### Version
 
 Version can be used to roll back changes or step forwards programmatically to specific versions. 
-
-Note: It works just like current() but ignores $config['migration_version']
 
 ```
 php bin/craftsman migration:run version 1
 ```
 
+### Rolling Back Migrations
+
+#### Rollback The Last Migration Operation
+
+```
+php bin/craftsman migration:rollback
+```
+
+#### Rollback all migrations
+
+```
+php bin/craftsman migration:reset
+```
+
+#### Rollback all migrations and run them all again
+
+```
+php bin/craftsman migration:refresh
+```
+
 ## CHANGELOG
 ---
+
+**1.2.0**
+
+* Add reset,refresh and rollback migration commands.
 
 
 ## Codeigniter developers
