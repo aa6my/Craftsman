@@ -192,9 +192,18 @@ php bin/craftsman migration:refresh
 
 * Add reset, refresh and rollback migration commands.
 
+## Contribute!
+---
+
+If you like Craftsman CLI help me to improve it. Here's a list of something that you can do:
+
+* Fork and clone.
+* Create a branch, commit, push and send us a pull request.
+* Check the list of [issues](https://gitlab.com/david-sosa-valdes/craftsman/issues).
+* Send me an email.
 
 ## Codeigniter developers
 
-This is a list of people you need to check on what they are working.
+## Related Projects for CodeIgniter 3.0
 
-[Kenjis](https://github.com/kenjis/)
+* [kenjis/codeigniter-cli](https://github.com/kenjis/codeigniter-cli)
