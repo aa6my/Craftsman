@@ -73,7 +73,7 @@ php bin/craftsman migration:generate create_foo name:varchar description:text am
 
 Any field separated with the ':' symbol then the field type.
 
-The migration will be placed in your application/migrations folder or in any folder you specify instead of the default value, and will contain a number which allows the framework to determine the order of the migrations.
+The migration will be placed in your ```application/migrations``` folder or in any folder you specify instead of the default value, and will contain a number which allows the framework to determine the order of the migrations.
 
 #### Running migrations
 
