@@ -188,7 +188,7 @@ php bin/craftsman migration:refresh
 ## CHANGELOG
 ---
 
-** 1.2.3**
+**1.2.3**
 
 * Update Migration:run commands
 * Now using Third-Party-Modules as HMVC pattern.
