@@ -10,7 +10,7 @@ Craftsman is the name of the command-line interface that you needed in Codeignit
 
 * PHP 5.2.4+
 * CodeIgniter 3.x
-* Codeigniter [HMVC Module](https://bitbucket.org/wiredesignz/codeigniter-modular-extensions-hmvc)
+* Codeigniter [Third-Party-Modules](https://gitlab.com/david-sosa-valdes/third-party-modules)
 
 Note: Codeigniter 2.x is not supported.
 
