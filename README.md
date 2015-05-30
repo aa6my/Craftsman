@@ -210,6 +210,8 @@ php bin/craftsman migration:reset
 php bin/craftsman migration:refresh
 ```
 
+Note: all migration versions of modules are stored separated apart from each other, so you can control the versions of every module and never interfering with each other.
+
 ## CHANGELOG
 ---
 
