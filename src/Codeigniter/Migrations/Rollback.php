@@ -49,8 +49,9 @@ class Rollback extends Command
 
         $arguments = array(
             'command' => 'migration:run',
-            'work'    => 'rollback',
+            'work'    => 'info',
             '-m'      => $input->getOption('module'),
+            '-cr'     => $input->getOption('ci-route')
         );  
 
         $input = new ArrayInput($arguments);

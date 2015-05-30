@@ -48,8 +48,9 @@ class Refresh extends Command
 
         $arguments = array(
             'command' => 'migration:run',
-            'work'    => 'refresh',
+            'work'    => 'info',
             '-m'      => $input->getOption('module'),
+            '-cr'     => $input->getOption('ci-route')
         );  
 
         $input = new ArrayInput($arguments);

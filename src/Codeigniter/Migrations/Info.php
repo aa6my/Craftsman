@@ -26,8 +26,8 @@ class Info extends Command
     protected function configure()
     {
         $this
-            ->setName('migration:reset')
-            ->setDescription('Rollback all migrations and run them all again')
+            ->setName('migration:info')
+            ->setDescription('Display the current migration information of app or hmvc module')
             ->addOption(
                 'module', 
                 'm', 
@@ -51,6 +51,7 @@ class Info extends Command
             'command' => 'migration:run',
             'work'    => 'info',
             '-m'      => $input->getOption('module'),
+            '-cr'     => $input->getOption('ci-route')
         );  
 
         $input = new ArrayInput($arguments);
