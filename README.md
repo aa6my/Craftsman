@@ -58,9 +58,34 @@ php bin/craftsman help migration:run
 
 Migration schemes are simple files that hold the commands to apply and remove changes to your database. It allows you to easily keep track of changes made in your app. They may create/modify tables or fields, etc. But they are not limited to just changing the schema. You could use them to fix bad data in the database or populate new fields.
 
+### Display info
+
+You can display the current migration information with the comand:
+
+```
+php bin/craftsman migration:run info
+```
+
+This is an example output:
+
+```
+Craftsman Migration
+--------------------
+Work: info
++--------------------+------------------------------------------------------+
+| Info               | Value                                                |
++--------------------+------------------------------------------------------+
+| Module             | ci_system                                            |
+| Last File Version  |                                |
+| Current DB Version | 0                                                    |
+| Migrations Path    | /Users/dsv/Sites/codeigniter/application/migrations/ |
+|                    |                                                      |
++--------------------+------------------------------------------------------+
+```
+
 ### Creating migrations
 
-Create a migration with the migration:generate command on the Craftsman CLI:
+Create a migration with the migration:generate command:
 
 ```
 php bin/craftsman migration:generate create_users
