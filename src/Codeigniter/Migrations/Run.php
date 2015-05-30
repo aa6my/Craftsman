@@ -13,6 +13,7 @@ use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Helper\Table;
 
 use Symfony\Component\Process\Process;
 
@@ -63,9 +64,11 @@ class Run extends Command
      * @var array
      */
     private $_commands = array(
-        'module' => '/usr/bin/env php index.php climigration module',
-        'default' => '/usr/bin/env php index.php climigration'
+        'module' => '/usr/bin/env php {ci_instance} climigration module',
+        'default' => '/usr/bin/env php {ci_instance} climigration'
     );
+
+    private $_ci_instance = 'index.php';
 
     /**
      * Current migration version
@@ -101,6 +104,12 @@ class Run extends Command
                 'Set the module name', 
                 FALSE
             )
+            ->addOption(
+               'ci-route',
+               'cr',
+               InputOption::VALUE_OPTIONAL,
+               'If you are using a secure installation of CI, set where can i find the index.php script.'
+            )            
         ;
     }
 
@@ -114,11 +123,14 @@ class Run extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->_work = $input->getArgument('work');
+        $this->_work    = $input->getArgument('work');
         $this->_version = $input->getArgument('version');
-        $this->_module = $input->getOption('module');
+        $this->_module  = $input->getOption('module');
         
-        $output->writeln('<info>Work: '.$this->_work.'</info>');
+        $output->writeln(PHP_EOL."Craftsman Migration");
+        $output->writeln(str_repeat("--", 10));
+
+        $output->writeln('Work: <info>'.$this->_work.'</info>');
         if (! in_array($this->_work, $this->_valid_works)) 
         {
             $output->writeln('<error>The work: '.$this->_work.' is not valid.</error>');
@@ -130,7 +142,6 @@ class Run extends Command
             if ($this->_work == 'version') 
             {
                 $this->_version = abs($this->_version);
-                $output->writeln('<info>Version: '.$this->_version.'</info>');
                 $command = $this->_commands["module"]." {$this->_module} {$this->_work} {$this->_version}";
             } 
             else 
@@ -143,7 +154,7 @@ class Run extends Command
             if ($this->_work == 'version') 
             {
                 $this->_version = abs($this->_version);
-                $output->writeln('<info>Version: '.$this->_version.'</info>');
+                
                 $command = $this->_commands["default"]." {$this->_work} {$this->_version}";
             } 
             else 
@@ -151,24 +162,61 @@ class Run extends Command
                 $command = $this->_commands["default"]." {$this->_work}";
             }
         }
+        $output->writeln('Version: <info>'.$this->_version.'</info>');
+
         $helper = $this->getHelper('question');
         $question = new ConfirmationQuestion('Continue with this action <comment>[yes]</comment>? ', TRUE);     
         if (!$helper->ask($input, $output, $question)) {
             return;
         }
+        if ($input->getOption('ci-route')) 
+        {
+            $this->_ci_instance = $input->getOption('ci-route');    
+        }
+
+        try {
+            if (! file_exists($this->_ci_instance)) 
+            {
+                throw new Exception("Trying to run 'php {$this->_ci_instance}'. CI instance is not declared properly, set with --ci-route.");
+            }
+            else
+            {
+                $command = str_replace('{ci_instance}', $this->_ci_instance, $command);
+            }
+        } catch (Exception $e) {
+            $output->writeln('<error>'.$e->getMessage().'</error>');
+            return;
+        }
         $process = new Process($command);
         $process->run();
-
+        $cli_output = $process->getOutput();
         try {
             // executes after the command finishes
             if (!$process->isSuccessful()) {
                 throw new \RuntimeException($process->getErrorOutput());
             }           
         } catch (\RuntimeException $e) {
-            $output->writeln('<error>'.PHP_EOL.$e->getMessage().'</error>');
+            $output->writeln('<error>'.$e->getMessage().'</error>');
             return;
         }
 
-       $output->writeln('<comment>'.PHP_EOL.$process->getOutput().'</comment>');     
+        if ($this->_work == 'index') 
+        {
+            $table = new Table($output);    
+
+            $output_lines = explode("\n", $cli_output);
+            for ($i=0; $i < count($output_lines); $i++) { 
+                $output_lines[$i] = explode(': ',$output_lines[$i]);
+            }   
+
+            $table
+                ->setHeaders(array('Info','Value'))
+                ->setRows($output_lines);
+            $table->render();                  
+        }      
+        else
+        { 
+            $output->writeln(PHP_EOL.$cli_output); 
+        }    
     }   
 }
