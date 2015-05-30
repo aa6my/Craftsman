@@ -20,7 +20,7 @@ Note: Codeigniter 2.x is not supported.
 ### With composer
 
 ```
-composer require "dsv/craftsman":"^1.2"
+composer require "dsv/craftsman":"^1.3"
 ```
 
 **Note**: Before run the composer install command, add the bin-dir config path inside your composer file:
@@ -187,6 +187,11 @@ php bin/craftsman migration:refresh
 
 ## CHANGELOG
 ---
+
+**1.3.0**
+
+* Now compatible with secured CI installation path (using --ci-route).
+* Improved display migration info.
 
 **1.2.3**
 
