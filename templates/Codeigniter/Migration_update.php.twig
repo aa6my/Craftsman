@@ -15,7 +15,7 @@ class Migration_{{name}} extends CI_Migration {
 
 	public function down() 
 	{
-		$this->db->truncate(ci_{{ table_name|replace({'update_':''}) }});
+		$this->db->truncate('ci_{{ table_name|replace({'update_':''}) }}');
 	}
 
 	private function update_{{table_name}}_table()
