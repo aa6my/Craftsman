@@ -24,14 +24,15 @@ class Migration_{{name}} extends CI_Migration {
 			'id' => array(
 				'type' => 'INT',
 				'null' => FALSE,
-				'auto_increment' => TRUE
+				'auto_increment' => TRUE,
+				'unsigned' => TRUE,
+				'constraint' => 11
 			),{% for field in fields %}{% set command = set_command(field) %}
 
 			'{{command.name}}' => array(
 				'type' => '{{command.type|upper}}',
 				'constraint' => 100,
 				'null' => TRUE,
-				'auto_increment' => FALSE
 			),{% endfor %}
 
 		));

@@ -216,7 +216,9 @@ class Generate extends Command
                 $template_name = 'Migration_create.php.twig'; 
                 $params['fields'] = (array) $input->getArgument('columns');
                 break;
-            
+            case 'update':
+                $template_name = 'Migration_update.php.twig';
+                break;
             default:
                 $template_name = 'Migration_default.php.twig';
                 break;
