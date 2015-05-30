@@ -34,6 +34,12 @@ class Rollback extends Command
                 InputOption::VALUE_REQUIRED, 
                 'Set the module name', 
                 FALSE
+            )
+            ->addOption(
+               'ci-route',
+               'cr',
+               InputOption::VALUE_OPTIONAL,
+               'If you are using a secure installation of CI, set where can i find the index.php script.'
             );
     }
 
