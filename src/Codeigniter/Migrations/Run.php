@@ -162,10 +162,11 @@ class Run extends Command
                 $command = $this->_commands["default"]." {$this->_work}";
             }
         }
-       if ($this->_work == 'version') 
-       {
-         $output->writeln('Version: <info>'.$this->_version.'</info>');
-       }
+        
+        if ($this->_work == 'version') 
+        {
+            $output->writeln('Version: <info>'.$this->_version.'</info>');
+        }
 
         $helper = $this->getHelper('question');
         $question = new ConfirmationQuestion('Continue with this action <comment>[yes]</comment>? ', TRUE);     
@@ -193,6 +194,7 @@ class Run extends Command
         $process = new Process($command);
         $process->run();
         $cli_output = $process->getOutput();
+        
         try {
             // executes after the command finishes
             if (!$process->isSuccessful()) {
