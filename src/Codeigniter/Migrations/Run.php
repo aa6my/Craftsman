@@ -162,7 +162,10 @@ class Run extends Command
                 $command = $this->_commands["default"]." {$this->_work}";
             }
         }
-        $output->writeln('Version: <info>'.$this->_version.'</info>');
+       if ($this->_work == 'version') 
+       {
+         $output->writeln('Version: <info>'.$this->_version.'</info>');
+       }
 
         $helper = $this->getHelper('question');
         $question = new ConfirmationQuestion('Continue with this action <comment>[yes]</comment>? ', TRUE);     

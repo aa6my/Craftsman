@@ -49,7 +49,7 @@ class Reset extends Command
 
         $arguments = array(
             'command' => 'migration:run',
-            'work'    => 'info',
+            'work'    => 'reset',
             '-m'      => $input->getOption('module'),
             '-cr'     => $input->getOption('ci-route')
         );  
