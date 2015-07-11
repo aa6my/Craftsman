@@ -19,7 +19,7 @@ Note: Codeigniter 2.x is not supported.
 ### With composer
 
 ```
-composer require "dsv/craftsman":"^1.3"
+composer require "dsv/craftsman":"^2.0"
 ```
 
 **Note**: Before run the composer install command, add the bin-dir config path inside your composer file:
