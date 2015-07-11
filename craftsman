@@ -1,6 +1,16 @@
 #!/usr/bin/env php
 <?php
 
+/**
+ * CLI Codeigniter Crafstman
+ *
+ * @author     David Sosa Valdes <https://gitlab.com/david-sosa-valdes>
+ * @license    MIT License
+ * @copyright  2015 David Sosa Valdes
+ * @link       https://gitlab.com/david-sosa-valdes/craftsman
+ * @copyright  Copyright (c) 2015, David Sosa Valdes.
+ */
+
 require 'vendor/autoload.php';
 define('ROOTPATH',__DIR__.DIRECTORY_SEPARATOR);
 
@@ -31,7 +41,7 @@ use Codeigniter\Migrations\Refresh as RefreshCommand;
 use Codeigniter\Migrations\Reset as ResetCommand;
 use Codeigniter\Migrations\Info as MigrationInfoCommand;
 
-# Migration Instances
+# Migration Commands
 $migration = array(
 	new GenerateCommand(),
 	new RunCommand($CI->migration),

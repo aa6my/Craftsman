@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 
 /**
- * CodeIgniter Migration (HMVC Mode)
+ * CodeIgniter Migration
  *
  * Run all the posible migration escenarios in a Codeigniter application or HMVC application
  *
@@ -24,7 +24,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage	Libraries
  * @category	Libraries
  * @author		David Sosa Valdes
- * @link		https://gitlab.com/david-sosa-valdes/CI-HMVC-Migrations/
  * @copyright   Copyright (c) 2015, David Sosa Valdes.
  */
 class MY_Migration extends CI_Migration
