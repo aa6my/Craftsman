@@ -1,34 +1,48 @@
 #!/usr/bin/env php
 <?php
-# PRODUCTION
-require __DIR__.'/../../autoload.php';
 
-# DEVELOPMENT
-#require __DIR__.'/vendor/autoload.php';
+require 'vendor/autoload.php';
+define('ROOTPATH',__DIR__.DIRECTORY_SEPARATOR);
 
-define('TEMPLATEPATH', __DIR__.'/templates/Codeigniter'.DIRECTORY_SEPARATOR);
+# Copy the args 
+$args = $_SERVER['argv'];
 
+# Set empty args for the CI routing system
+$_SERVER['argv'] = array();
+
+# CI Migration Class instance
+$CI = require ROOTPATH.'ci_instance.php';
+$CI->load->add_package_path(ROOTPATH.'src/Module');
+$CI->config->load('migration', TRUE, TRUE);
+$params = $CI->config->item('migration');
+$CI->load->library('migration', $params);
+
+# Pass the actual args to Symfony
+$_SERVER['argv'] = $args;
+
+# Symfony Classes
 use Symfony\Component\Console\Application;
 
-use Codeigniter\Migrations\Generate as MigrationsGenerateCommand;
-use Codeigniter\Migrations\Run as MigrationsRunCommand;
-use Codeigniter\Migrations\Rollback as MigrationsRollbackCommand;
-use Codeigniter\Migrations\Refresh as MigrationsRefreshCommand;
-use Codeigniter\Migrations\Reset as MigrationsResetCommand;
+# Craftsman Classes
+use Codeigniter\Migrations\Generate as GenerateCommand;
+use Codeigniter\Migrations\Run as RunCommand;
+use Codeigniter\Migrations\Rollback as RollbackCommand;
+use Codeigniter\Migrations\Refresh as RefreshCommand;
+use Codeigniter\Migrations\Reset as ResetCommand;
 use Codeigniter\Migrations\Info as MigrationInfoCommand;
 
-$commands = array(
-	new MigrationsGenerateCommand(),
-	new MigrationsRunCommand(),
-	new MigrationsRollbackCommand(),
-	new MigrationsResetCommand(),
-	new MigrationsRefreshCommand(),
+# Migration Instances
+$migration = array(
+	new GenerateCommand(),
+	new RunCommand($CI->migration),
+	new RollbackCommand(),
+	new ResetCommand(),
+	new RefreshCommand(),
 	new MigrationInfoCommand()
 );
+$application = new Application('Craftsman','2.0.1');
 
-$application = new Application('Craftsman','1.3.x');
-
-foreach ($commands as $key => $command) {
+foreach ($migration as $key => $command) {
 	$application->add($command);
 }
 $application->run();

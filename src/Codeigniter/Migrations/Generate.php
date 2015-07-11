@@ -237,7 +237,7 @@ class Generate extends Command
     private function _create_script_template($params = array(),$template_name = "")
     {
         Twig_Autoloader::register();
-        $loader = new Twig_Loader_Filesystem(TEMPLATEPATH);
+        $loader = new Twig_Loader_Filesystem(ROOTPATH.'templates/Codeigniter');
         $twig = new Twig_Environment($loader);
         $function = new \Twig_SimpleFunction('set_command', function ($field = "") {
           return array_combine(array('name','type'), explode(':', $field));
