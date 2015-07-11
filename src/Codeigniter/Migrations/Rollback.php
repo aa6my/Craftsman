@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 /**
  * Migration:Refresh Class
  *
- * Calls Migration:run command with a predefined params for rollback the migration scheme.
+ * Calls Migration:run command with a predefined params and rollback the migration scheme.
  *
  * @package     CLI Craftsman
  * @author      David Sosa Valdes
@@ -34,12 +34,6 @@ class Rollback extends Command
                 InputOption::VALUE_REQUIRED, 
                 'Set the module name', 
                 FALSE
-            )
-            ->addOption(
-               'ci-route',
-               'cr',
-               InputOption::VALUE_OPTIONAL,
-               'If you are using a secure installation of CI, set where can i find the index.php script.'
             );
     }
 
@@ -51,7 +45,6 @@ class Rollback extends Command
             'command' => 'migration:run',
             'work'    => 'rollback',
             '-m'      => $input->getOption('module'),
-            '-cr'     => $input->getOption('ci-route')
         );  
 
         $input = new ArrayInput($arguments);

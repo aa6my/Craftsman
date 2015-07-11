@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 /**
  * Migration:Reset Class
  *
- * Calls Migration:run command with a predefined params for reset all the migration schemes.
+ * Calls Migration:run command with a predefined params and reset all the migration schemes.
  *
  * @package     CLI Craftsman
  * @author      David Sosa Valdes
@@ -34,13 +34,7 @@ class Reset extends Command
                 InputOption::VALUE_REQUIRED, 
                 'Set the module name', 
                 FALSE
-            )
-            ->addOption(
-               'ci-route',
-               'cr',
-               InputOption::VALUE_OPTIONAL,
-               'If you are using a secure installation of CI, set where can i find the index.php script.'
-            );            
+            );          
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -51,7 +45,6 @@ class Reset extends Command
             'command' => 'migration:run',
             'work'    => 'reset',
             '-m'      => $input->getOption('module'),
-            '-cr'     => $input->getOption('ci-route')
         );  
 
         $input = new ArrayInput($arguments);

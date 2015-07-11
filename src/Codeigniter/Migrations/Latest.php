@@ -10,31 +10,31 @@ use Symfony\Component\Console\Input\ArrayInput;
 
 
 /**
- * Migration:Info Class
+ * Migration:Latest Class
  *
- * Calls Migration:run info command and display the current migration information
- * of application/hmvc object.
+ * Calls Migration:run command with a predefined params and set the latest migration scheme version.
  *
  * @package     CLI Craftsman
  * @author      David Sosa Valdes
  * @link        https://gitlab.com/david-sosa-valdes/craftsman
  * @copyright   Copyright (c) 2014, David Sosa Valdes.
- * @version     1.2.1
+ * @version     1.0.0
+ *
  */
-class Info extends Command
+class Latest extends Command
 {
     protected function configure()
     {
         $this
-            ->setName('migration:info')
-            ->setDescription('Display the current migration information of app or hmvc module')
+            ->setName('migration:latest')
+            ->setDescription('Run the current last migration version')
             ->addOption(
                 'module', 
                 'm', 
                 InputOption::VALUE_REQUIRED, 
                 'Set the module name', 
                 FALSE
-            );          
+            );      
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -43,7 +43,7 @@ class Info extends Command
 
         $arguments = array(
             'command' => 'migration:run',
-            'work'    => 'info',
+            'work'    => 'latest',
             '-m'      => $input->getOption('module'),
         );  
 

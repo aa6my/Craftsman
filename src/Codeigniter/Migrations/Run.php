@@ -127,7 +127,7 @@ class Run extends Command
         $output->getFormatter()->setStyle('title', $style);
 
         $style = new OutputFormatterStyle('cyan', 'black', array('bold'));
-        $output->getFormatter()->setStyle('fire', $style);        
+        $output->getFormatter()->setStyle('action', $style);        
 
         $this->_work    = strtolower($input->getArgument('work'));
         $this->_version = $input->getArgument('version');
@@ -241,7 +241,7 @@ class Run extends Command
         $table = new Table($output); 
 
         $style = new TableStyle();
-        $style->setCellHeaderFormat('<fire>%s</fire>');
+        $style->setCellHeaderFormat('<action>%s</action>');
 
         $table->setStyle($style);
 
@@ -255,8 +255,8 @@ class Run extends Command
                 new TableSeparator,
                 ['Path', $this->_migration_class->get_module_path()],
                 new TableSeparator,
-                [$work_field, '<fire>'.$work_version.'</fire>'],
-                ['Action', '<fire>'.$current_version.'</fire>'],
+                [$work_field, '<action>'.$work_version.'</action>'],
+                ['Action', '<action>'.$current_version.'</action>'],
             ])
             ->render(); 
         if ($this->_work !== 'info') 
@@ -327,9 +327,12 @@ class Run extends Command
     }  
 
     /**
-     * [_set_migration_status description]
-     * @param integer $db_version      [description]
-     * @param integer $current_version [description]
+     * Set migration status
+     * 
+     * @param integer $db_version      Current DB migration version
+     * @param integer $current_version Current version (depending on which work is being done)
+     *
+     * @return string Migration status (action to take)
      */
     private function _set_migration_status($db_version = 0, $current_version = 0)
     {
