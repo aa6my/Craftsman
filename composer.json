@@ -1,17 +1,21 @@
 {
     "name": "dsv/craftsman",
     "description": "Craftsman is the name of the command-line interface that you needed in Codeigniter. It provides a number of helpful commands for your use while developing your application. It is driven by the powerful Symfony Console component.",
+    "keywords": [
+        "codeigniter",
+        "codeigniter-craftsman",
+        "craftsman",
+        "cli",
+        "cli-codeigniter"
+    ],
+    "homepage": "https://gitlab.com/david-sosa-valdes/craftsman",
     "license": "MIT",
-    "keywords": ["syseidev","codeigniter","codeigniter-craftsman","craftsman","cli-craftsman","cli","cli-codeigniter"],
     "authors": [
         {
             "name": "David Sosa Valdes",
             "email": "david.sosa.valdes@gmail.com"
         }
     ],
-    "support":{
-        "issues": "https://gitlab.com/david-sosa-valdes/craftsman/issues"
-    },
     "require": {
         "php": ">=5.4.0",
         "symfony/console" : "~2.6",
@@ -19,14 +23,20 @@
         "twig/twig" : "~1.0",
         "symfony/process": "2.6.6",
         "dsv/climigration": "^1.1"
-    },    
+    },
     "autoload": {
         "psr-0": { "": "src/" }
+    },
+    "support":{
+        "issues": "https://gitlab.com/david-sosa-valdes/craftsman/issues"
     },
     "bin": ["craftsman"],
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev"
         }
+    },
+    "suggest": {
+        "dsv/ci-twig": "CI-Twig it's an implementation of Twig/Assetic template engine for CodeIgniter 3.0" 
     }
 }
