@@ -39,7 +39,9 @@ use Codeigniter\Migrations\Run as RunCommand;
 use Codeigniter\Migrations\Rollback as RollbackCommand;
 use Codeigniter\Migrations\Refresh as RefreshCommand;
 use Codeigniter\Migrations\Reset as ResetCommand;
-use Codeigniter\Migrations\Info as MigrationInfoCommand;
+use Codeigniter\Migrations\Info as InfoCommand;
+use Codeigniter\Migrations\Version as VersionCommand;
+use Codeigniter\Migrations\Latest as LatestCommand;
 
 # Migration Commands
 $migration = array(
@@ -48,7 +50,9 @@ $migration = array(
 	new RollbackCommand(),
 	new ResetCommand(),
 	new RefreshCommand(),
-	new MigrationInfoCommand()
+	new InfoCommand(),
+	new VersionCommand(),
+	new LatestCommand()
 );
 $application = new Application('Craftsman','2.0.1');
 

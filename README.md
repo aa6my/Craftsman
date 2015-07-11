@@ -10,7 +10,6 @@ Craftsman is the name of the command-line interface that you needed in Codeignit
 
 * PHP 5.2.4+
 * CodeIgniter 3.x
-* Codeigniter [Third-Party-Modules](https://gitlab.com/david-sosa-valdes/third-party-modules)
 
 Note: Codeigniter 2.x is not supported.
 
@@ -57,32 +56,6 @@ php bin/craftsman help migration:run
 ---
 
 Migration schemes are simple files that hold the commands to apply and remove changes to your database. It allows you to easily keep track of changes made in your app. They may create/modify tables or fields, etc. But they are not limited to just changing the schema. You could use them to fix bad data in the database or populate new fields.
-
-### Display info
-
-You can display the current migration information with the comand:
-
-```
-php bin/craftsman migration:run info
-```
-
-This is an example output:
-
-```
-Craftsman Migration
---------------------
-Work: info
-+--------------------+------------------------------------------------------+
-| Info               | Value                                                |
-+--------------------+------------------------------------------------------+
-| Module             | ci_system                                            |
-| Last File Version  |                                |
-| Current DB Version | 0                                                    |
-| Migrations Path    | /Users/dsv/Sites/codeigniter/application/migrations/ |
-|                    |                                                      |
-+--------------------+------------------------------------------------------+
-```
-**Note**: all migration versions of modules are stored apart from each other, so you can control the versions of every module and never interfering with each other.
 
 ### Creating migrations
 
@@ -161,26 +134,55 @@ class Migration_create_users extends CI_Migration {
 /* Location: /application/migrations/001_create_users.php */
 ```
 
-Now it's your turn to give the finishing touches before running this scheme.
+Now it's your turn to give the finishing touches before running this scheme, check the CI's Database Forge documentation:
+
+[http://www.codeigniter.com/user_guide/database/forge.html](http://www.codeigniter.com/user_guide/database/forge.html)
+
+### Display info
+
+You can display the current migration information with the comand:
+
+```
+php bin/craftsman migration:info
+```
+
+This is an example output:
+
+```
+ -- Craftsman Migration -- 
++-------------+-------------------------------------------+
+| Config      | Value                                     |
++-------------+-------------------------------------------+
+| Work        | info                                      |
+| Environment | development                               |
+| Module      | ci_system                                 |
+| DB Version  | 0                                         |
++-------------+-------------------------------------------+
+| Path        | application/migrations/ 				  |
++-------------+-------------------------------------------+
+| Info Mode   | ---                                       |
+| Action      | None                                      |
++-------------+-------------------------------------------+
+```
 
 ### Running migrations
  
 Running Migrations respecting the Codeigniter standards. Here's a list of posible options.
-<!---
-#### Current (Currently not working properly)
 
-Whatever is set for ```$config['migration_version']``` in HMVC ```config/migration.php``` file.
+#### Current
+
+Whatever is set for ```$config['migration_version']``` in ```config/migration.php``` file.
 
 ```
 php bin/craftsman migration:run current
 ```
--->
+
 #### Latest
 
 Migrate to the latest version, the migration class will use the very newest migration found in the filesystem.
 
 ```
-php bin/craftsman migration:run latest
+php bin/craftsman migration:latest
 ```
 
 #### Version
@@ -188,7 +190,7 @@ php bin/craftsman migration:run latest
 Version can be used to roll back changes or step forwards programmatically to specific versions. 
 
 ```
-php bin/craftsman migration:run version 1
+php bin/craftsman migration:version 1
 ```
 
 ### Rolling Back Migrations
@@ -215,6 +217,10 @@ php bin/craftsman migration:refresh
 
 ## CHANGELOG
 ---
+
+**2.0.0**
+
+* New independent arquitecture, fix some bugs, and new interface. 
 
 **1.3.0**
 
