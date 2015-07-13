@@ -1,6 +1,6 @@
 {
     "name": "dsv/craftsman",
-    "description": "Craftsman is the name of the command-line interface that you needed in Codeigniter. It provides a number of helpful commands for your use while developing your application. It is driven by the powerful Symfony Console component.",
+    "description": "Craftsman Codeigniter CLI provides a number of helpful commands for your use while developing your application. It is driven by the powerful Symfony Console component.",
     "keywords": [
         "codeigniter",
         "codeigniter-craftsman",
