@@ -19,9 +19,9 @@
     "require": {
         "php": ">=5.4.0",
         "symfony/console" : "~2.6",
-        "symfony/filesystem" : "2.6.6",
-        "twig/twig" : "~1.0",
-        "symfony/process": "2.6.6"
+        "symfony/filesystem" : "v2.7.3",
+        "symfony/process": "v2.7.3",
+        "twig/twig" : "v1.20.0"
     },
     "autoload": {
         "psr-0": { "": "src/" }
@@ -36,6 +36,6 @@
         }
     },
     "suggest": {
-        "dsv/ci-twig": "CI-Twig it's an implementation of Twig/Assetic template engine for CodeIgniter 3.0" 
+        "dsv/attire": "Attire is an implementation of Twig template engine and Assetic asset management framework for CodeIgniter 3.0."
     }
 }
