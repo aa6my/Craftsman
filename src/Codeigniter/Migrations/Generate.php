@@ -6,6 +6,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
@@ -36,7 +37,7 @@ class Generate extends Command
      * Available migration folder.
      * @var string
      */
-    private $_default_folder = 'migrations';
+    private $_default_folder = 'migration';
 
     /**
      * Default migrations folder path.
@@ -117,30 +118,38 @@ class Generate extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $style = new OutputFormatterStyle('cyan', 'black', array('bold'));
+        $output->getFormatter()->setStyle('title', $style);
+
         $this->_name = $input->getArgument('name');
         $this->_type = $input->getOption('type');
 
         $migration_regex = ($this->_type === 'timestamp')
             ? '/^\d{14}_(\w+)$/'
-            : '/^\d{3}_(\w+)$/';        
+            : '/^\d{3}_(\w+)$/';  
 
-        $comment = 'Installation path (relative) [<comment>'.$this->_path.'</comment>]: ';
+        $output->writeln("<title> -- Craftsman Migration: Generate -- </title>");      
+
+        $comment = 'Installation path [<comment>'.$this->_path.'</comment>]: ';
         
         $helper = $this->getHelper('question');        
         
         $question = new Question($comment, $this->_path);
+        $question->setAutocompleterValues(array(
+          "application/"
+        ));
         $question->setValidator(function($answer){
-            if (basename($answer) !== $this->_default_folder) 
+            if ( strpos(basename($answer), $this->_default_folder) === FALSE) 
             {
                 throw new \RuntimeException('Not a valid migration directory.');
             }
             return $answer;
         });
-        $this->_path = $helper->ask($input, $output, $question);
+        $this->_path = rtrim($helper->ask($input, $output, $question),'/').'/';
 
-        try {
+        try 
+        {
             $filesystem = new Filesystem();
-            
             if (! $filesystem->exists($this->_path)) 
             {
                 throw new Exception("Directory {$this->_path} doesn't exist.");
@@ -171,14 +180,14 @@ class Generate extends Command
                 closedir($handle);
                 ksort($this->_migrations);
             }            
-        } catch (IOExceptionInterface $e) {
+        } 
+        catch (IOExceptionInterface $e) 
+        {
             echo "An error occurred while creating your directory at ".$e->getPath();
             return;
-        }
-                 
+        }         
         if ($this->_type == 'timestamp') 
         {
-            # check default timezone correctly
             date_default_timezone_set('UTC');
             $target_version = date("YmdHis");
         } 
@@ -186,7 +195,6 @@ class Generate extends Command
         {
             $target_version = sprintf('%03d', abs(end($this->_migrations))+1);
         }
-
         $question = new Question('Target Version [<comment>'.$target_version.'</comment>]: ', $target_version);
         $target_version = $helper->ask($input, $output, $question); 
 
@@ -246,6 +254,4 @@ class Generate extends Command
         $template = $twig->loadTemplate($template_name);
         return $template->render($params);
     }
-
-
 }
