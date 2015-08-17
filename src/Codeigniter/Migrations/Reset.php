@@ -27,14 +27,21 @@ class Reset extends Command
     {
         $this
             ->setName('migration:reset')
-            ->setDescription('Rollback all migrations and run them all again')
+            ->setDescription('Rollback all migrations')
             ->addOption(
                 'module', 
                 'm', 
                 InputOption::VALUE_REQUIRED, 
-                'Set the module name', 
+                'Set the HMVC module name', 
                 FALSE
-            );          
+            )
+            ->addOption(
+                'environment',
+                'e',
+                InputOption::VALUE_REQUIRED,
+                'Set the system environment',
+                ENVIRONMENT
+            );                    
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -45,6 +52,7 @@ class Reset extends Command
             'command' => 'migration:run',
             'work'    => 'reset',
             '-m'      => $input->getOption('module'),
+            '-e'      => $input->getOption('environment')
         );  
 
         $input = new ArrayInput($arguments);

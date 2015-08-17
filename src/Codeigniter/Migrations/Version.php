@@ -32,15 +32,22 @@ class Version extends Command
                 'module', 
                 'm', 
                 InputOption::VALUE_REQUIRED, 
-                'Set the module name', 
+                'Set the HMVC module name', 
                 FALSE
             )
             ->addArgument(
                 'version',
                 InputArgument::OPTIONAL,
-                'Set current version',
+                'Set the migration current version',
                 NULL
-            );          
+            )
+            ->addOption(
+                'environment',
+                'e',
+                InputOption::VALUE_REQUIRED,
+                'Set the system environment',
+                ENVIRONMENT
+            );                        
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -52,6 +59,7 @@ class Version extends Command
             'work'    => 'version',
             'version' => $input->getArgument('version'),
             '-m'      => $input->getOption('module'),
+            '-e'      => $input->getOption('environment')
         );  
 
         $input = new ArrayInput($arguments);

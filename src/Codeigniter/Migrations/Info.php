@@ -32,7 +32,7 @@ class Info extends Command
                 'module', 
                 'm', 
                 InputOption::VALUE_REQUIRED, 
-                'Set the module name', 
+                'Set the HMVC module name', 
                 FALSE
             );          
     }

@@ -26,14 +26,21 @@ class Refresh extends Command
     {
         $this
             ->setName('migration:refresh')
-            ->setDescription('Rollback the last migration operation')
+            ->setDescription('Rollback all migrations and run them all again')
             ->addOption(
                 'module', 
                 'm', 
                 InputOption::VALUE_REQUIRED, 
-                'Set the module name', 
+                'Set the HMVC module name', 
                 FALSE
-            );
+            )
+            ->addOption(
+                'environment',
+                'e',
+                InputOption::VALUE_REQUIRED,
+                'Set the system environment',
+                ENVIRONMENT
+            );            
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -44,6 +51,7 @@ class Refresh extends Command
             'command' => 'migration:run',
             'work'    => 'refresh',
             '-m'      => $input->getOption('module'),
+            '-e'      => $input->getOption('environment')
         );  
 
         $input = new ArrayInput($arguments);

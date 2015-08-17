@@ -32,9 +32,16 @@ class Rollback extends Command
                 'module', 
                 'm', 
                 InputOption::VALUE_REQUIRED, 
-                'Set the module name', 
+                'Set the HMVC module name', 
                 FALSE
-            );
+            )
+            ->addOption(
+                'environment',
+                'e',
+                InputOption::VALUE_REQUIRED,
+                'Set the system environment',
+                ENVIRONMENT
+            );              
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -45,6 +52,7 @@ class Rollback extends Command
             'command' => 'migration:run',
             'work'    => 'rollback',
             '-m'      => $input->getOption('module'),
+            '-e'      => $input->getOption('environment')
         );  
 
         $input = new ArrayInput($arguments);
