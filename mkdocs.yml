@@ -1,0 +1,14 @@
+site_name: Craftsman
+site_url: https://gitlab.com/david-sosa-valdes/craftsman
+site_description: Craftsman is a command-line interface that provides a set of commands that will help you when you're developing your application, in addition to make your job easier. It is driven by the powerful Symfony Console component.
+site_author: David Sosa Valdes
+
+pages:
+- ['index.md','Home']
+- ['user-guide/migrations.md','User Guide','Migrations Guide']
+- ['about/release_notes.md','About','Release Notes']
+- ['about/contribute.md','About','Contributing']
+- ['about/licence.md','About','Licence']
+
+theme: readthedocs
+copyright: Copyright &copy; 2015 <a href="https://gitlab.com/david-sosa-valdes">David Sosa Valdes</a>.
