@@ -1,3 +1,7 @@
+<div style="text-align: center">
+	<img src="img/craftsman_logo.png" alt="alt text" width="120px" height="120px">
+</div>
+
 # Craftsman CLI
 
 Craftsman is a command-line interface that provides a set of commands that will help you when you're developing your application, in addition to make your job easier. It is driven by the powerful Symfony Console component.
