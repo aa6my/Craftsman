@@ -14,26 +14,8 @@
 require 'vendor/autoload.php';
 define('ROOTPATH',__DIR__.DIRECTORY_SEPARATOR);
 
-# Copy the args 
-$args = $_SERVER['argv'];
-
-# Set empty args for the CI routing system
-$_SERVER['argv'] = array();
-
-# CI Migration Class instance
-$CI = require ROOTPATH.'ci_instance.php';
-$CI->load->add_package_path(ROOTPATH.'src/Module');
-$CI->config->load('migration', TRUE, TRUE);
-$params = $CI->config->item('migration');
-$CI->load->library('migration', $params);
-
-# Pass the actual args to Symfony
-$_SERVER['argv'] = $args;
-
-# Symfony Classes
 use Symfony\Component\Console\Application;
 
-# Craftsman Classes
 use Codeigniter\Migrations\Generate as GenerateCommand;
 use Codeigniter\Migrations\Run as RunCommand;
 use Codeigniter\Migrations\Rollback as RollbackCommand;
@@ -42,6 +24,21 @@ use Codeigniter\Migrations\Reset as ResetCommand;
 use Codeigniter\Migrations\Info as InfoCommand;
 use Codeigniter\Migrations\Version as VersionCommand;
 use Codeigniter\Migrations\Latest as LatestCommand;
+
+# Copy the CLI args 
+$args = $_SERVER['argv'];
+
+# Set empty args for the CI routing system
+$_SERVER['argv'] = array();
+# Replace CI's Migration Native Library
+$CI = require ROOTPATH.'ci_instance.php';
+$CI->load->add_package_path(ROOTPATH.'src/Extend');
+$CI->config->load('migration', TRUE, TRUE);
+$params = $CI->config->item('migration');
+$CI->load->library('migration', $params);
+
+# Pass the actual args to Symfony
+$_SERVER['argv'] = $args;
 
 # Migration Commands
 $migration = array(

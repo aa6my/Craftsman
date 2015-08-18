@@ -104,12 +104,11 @@ class Run extends Command
                 InputArgument::REQUIRED,
                 'Set the work name'
             )
-            ->addOption(
-                'mversion',
-                'mv',
-                InputOption::VALUE_REQUIRED,
-                'Set the migration current version',
-                0
+            ->addArgument(
+                'version',
+                InputArgument::OPTIONAL,
+                'Set current version',
+                NULL
             )
             ->addOption(
                 'module', 
@@ -181,13 +180,13 @@ class Run extends Command
         {
             $migration_keys = array_keys($this->_ci_migration->find_migrations());
             array_walk($migration_keys, function(&$item, $key){$item = abs($item);});
-            if (count($migration_keys) > 1) 
+            if (count($migration_keys) >= 1) 
             {
                 end($migration_keys);
                 $rollback_version = prev($migration_keys);
                 while ($rollback_version >= $latest_db_version) 
                 {
-                    if ($rollback_version === FALSE || $rollback_version === 1) 
+                    if ((!$rollback_version) || $rollback_version === 1) 
                     {
                         $rollback_version = 0;
                         break;
@@ -286,7 +285,7 @@ class Run extends Command
                 $this->_environment === 'production' 
                 && $latest_db_version > $current_version
             ) {
-                $output->writeln("<error>It's not possible rollback from {$latest_db_version} to {$current_version} in 'PRODUCTION' environment.</error>");
+                $output->writeln("<error>It's not possible rollback from {$latest_db_version} to {$current_version} in 'PRODUCTION' environment, you can change it with '-e' option.</error>");
                 return;
             }              
         }

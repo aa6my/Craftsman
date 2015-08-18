@@ -38,7 +38,7 @@ class Version extends Command
             ->addArgument(
                 'version',
                 InputArgument::OPTIONAL,
-                'Set the migration current version',
+                'Set current version',
                 NULL
             )
             ->addOption(

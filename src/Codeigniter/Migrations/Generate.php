@@ -70,7 +70,7 @@ class Generate extends Command
     private $_type;
 
     /**
-     * [$_migration_regex description]
+     * Codeigniter Migration regex
      * @var array
      */
     private $_migration_regex = array(
@@ -224,8 +224,10 @@ class Generate extends Command
                 $template_name = 'Migration_create.php.twig'; 
                 $params['fields'] = (array) $input->getArgument('columns');
                 break;
-            case 'update':
-                $template_name = 'Migration_update.php.twig';
+            case 'modify':
+                $template_name = 'Migration_modify.php.twig';
+                $params['fields'] = (array) $input->getArgument('columns');
+                empty($params['fields']) && $params['fields'] = array('column_name:column_type');
                 break;
             default:
                 $template_name = 'Migration_default.php.twig';
