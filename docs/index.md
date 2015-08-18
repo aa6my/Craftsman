@@ -17,6 +17,17 @@ Craftsman is a command-line interface that provides a set of commands that will 
 
 ---
 
+## Demo
+
+This is a small demonstration of what it can do. You can install it, generate a migration scheme then update database (2 minutes).
+
+<video width="600" height="385" controls>
+  <source src="../../img/tutorial.webm" type="video/webm">
+Your browser does not support the video tag.
+</video>
+
+---
+
 ## Installation
 
 With composer:
