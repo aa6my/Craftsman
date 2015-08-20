@@ -11,4 +11,4 @@ pages:
 - ['about/licence.md','About','Licence']
 
 theme: readthedocs
-copyright: Copyright &copy; 2015 <a href="https://gitlab.com/david-sosa-valdes">David Sosa Valdes</a>.
+copyright: Copyright &copy; 2015 <a href="https://gitlab.com/david-sosa-valdes">David Sosa Valdes</a>. <br><div>Icons made by <a href="http://twitter.com/iconmonstr" title="iconmonstr">@iconmonstr</a> from <a href="http://iconmonstr.com/" title="iconmonstr">http://iconmonstr.com/</a> /Desaturated from original.</div>
