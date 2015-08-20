@@ -11,7 +11,7 @@ The Craftsman project welcomes, and depends, on contributions from developers an
 * Bug reports and patch reviews
 
 
-###Reporting an Issue?
+## Reporting an Issue?
 
 Please include as much detail as you can. Let us know your platform and Craftsman/CodeIgniter version. If the problem is visual (for example a theme or design issue) please add a screenshot and if you get an error please include the the full error and traceback.
 
@@ -31,6 +31,6 @@ To run the tests, it is recommended that you use Tox. This just needs to be pip 
 It will attempt to run the tests against all of the Python versions we support. So don't be concerned if you are missing some and they fail. The rest will be verified by Travis when you submit a pull request.
 -->
 
-###Submitting Pull Requests
+## Submitting Pull Requests
 
 Once you are happy with your changes or you are ready for some feedback, push it to your fork and send a pull request. For a change to be accepted it will most likely need to have tests and documentation if it is a new feature.
