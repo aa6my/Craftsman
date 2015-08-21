@@ -31,7 +31,7 @@ $args = $_SERVER['argv'];
 # Set empty args for the CI routing system
 $_SERVER['argv'] = array();
 # Replace CI's Migration Native Library
-$CI = require ROOTPATH.'ci_instance.php';
+$CI = require ROOTPATH.'src/CiInstance.php';
 $CI->load->add_package_path(ROOTPATH.'src/Extend');
 $CI->config->load('migration', TRUE, TRUE);
 $params = $CI->config->item('migration');

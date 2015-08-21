@@ -221,16 +221,16 @@ class Generate extends Command
         switch ($migration_type) 
         {
             case 'create':
-                $template_name = 'Migration_create.php.twig'; 
+                $template_name = 'Create.php.twig'; 
                 $params['fields'] = (array) $input->getArgument('columns');
                 break;
             case 'modify':
-                $template_name = 'Migration_modify.php.twig';
+                $template_name = 'Modify.php.twig';
                 $params['fields'] = (array) $input->getArgument('columns');
                 empty($params['fields']) && $params['fields'] = array('column_name:column_type');
                 break;
             default:
-                $template_name = 'Migration_default.php.twig';
+                $template_name = 'Default.php.twig';
                 break;
         }
         $template = $this->_create_script_template($params,$template_name);
@@ -247,7 +247,7 @@ class Generate extends Command
     private function _create_script_template($params = array(),$template_name = "")
     {
         Twig_Autoloader::register();
-        $loader = new Twig_Loader_Filesystem(ROOTPATH.'templates/Codeigniter');
+        $loader = new Twig_Loader_Filesystem(ROOTPATH.'templates/Migrations');
         $twig = new Twig_Environment($loader);
         $function = new \Twig_SimpleFunction('set_command', function ($field = "") {
           return array_combine(array('name','type'), explode(':', $field));
