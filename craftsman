@@ -25,6 +25,8 @@ use Codeigniter\Migrations\Info as InfoCommand;
 use Codeigniter\Migrations\Version as VersionCommand;
 use Codeigniter\Migrations\Latest as LatestCommand;
 
+use Codeigniter\Cerberus\Migration as CerberusMigrationCommand;
+
 # Copy the CLI args 
 $args = $_SERVER['argv'];
 
@@ -40,8 +42,8 @@ $CI->load->library('migration', $params);
 # Pass the actual args to Symfony
 $_SERVER['argv'] = $args;
 
-# Migration Commands
-$migration = array(
+# Commands
+$commands = array(
 	new GenerateCommand(),
 	new RunCommand($CI->migration),
 	new RollbackCommand(),
@@ -49,11 +51,12 @@ $migration = array(
 	new RefreshCommand(),
 	new InfoCommand(),
 	new VersionCommand(),
-	new LatestCommand()
+	new LatestCommand(),
+	new CerberusMigrationCommand()
 );
 $application = new Application('Craftsman','2.0.3');
 
-foreach ($migration as $key => $command) {
+foreach ($commands as $key => $command) {
 	$application->add($command);
 }
 $application->run();
