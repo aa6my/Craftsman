@@ -36,6 +36,12 @@ use Exception;
 class Run extends Command
 {
     /**
+     * [$_migration_path description]
+     * @var null
+     */
+    private $_migration_path = NULL;
+
+    /**
      * Set of all the posible works.
      * @var array
      */
@@ -123,6 +129,13 @@ class Run extends Command
                 InputOption::VALUE_REQUIRED,
                 'Set the system environment',
                 ENVIRONMENT
+            )
+            ->addOption(
+                'path',
+                'p',
+                InputOption::VALUE_REQUIRED,
+                'Set the migration path',
+                FALSE
             );
     }
 
@@ -142,10 +155,11 @@ class Run extends Command
         $style = new OutputFormatterStyle('cyan', 'black', array('bold'));
         $output->getFormatter()->setStyle('action', $style);        
 
-        $this->_work        = strtolower($input->getArgument('work'));
-        $this->_version     = $input->getArgument('version');
-        $this->_module      = $input->getOption('module');
-        $this->_environment = strtolower($input->getOption('environment'));
+        $this->_work           = strtolower($input->getArgument('work'));
+        $this->_version        = $input->getArgument('version');
+        $this->_module         = $input->getOption('module');
+        $this->_environment    = strtolower($input->getOption('environment'));
+        $this->_migration_path = $input->getOption('path');
         
         $helper = $this->getHelper('question');
         
@@ -168,7 +182,15 @@ class Run extends Command
             {
                 $this->_version = abs($this->_version);
             }
-        }       
+        }
+
+        if ($this->_migration_path !== FALSE && $this->_module !== FALSE) 
+        {
+            $this->_ci_migration->set_params([
+                'module_path' => $this->_migration_path,
+                'module_name' => $this->_module
+            ]);
+        }          
 
         $migrations            = $this->_ci_migration->find_migrations();
         $latest_file_version   = abs($this->_ci_migration->get_number(abs(basename(end($migrations)))));
@@ -243,14 +265,7 @@ class Run extends Command
         else
         {
             $current_version = $this->_set_migration_status($latest_db_version, $work_version);
-        }
-
-        if ($this->_module !== FALSE) 
-        {
-            $this->_ci_migration->set_params([
-                'module_name' => $this->_module
-            ]);
-        }        
+        }     
         
         $table = new Table($output); 
 

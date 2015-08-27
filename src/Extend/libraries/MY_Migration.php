@@ -38,7 +38,7 @@ class MY_Migration extends CI_Migration
 	 * [$_module_path description]
 	 * @var [type]
 	 */
-	protected $_module_path = 'modules/<modname>/migrations/';
+	protected $_module_path = NULL;
 
 	/**
 	 * [$_module_name description]
@@ -142,10 +142,14 @@ class MY_Migration extends CI_Migration
 		if ($this->_module_name === 'ci_system') {
 			return;
 		}
-		elseif ($module_path = config_item('modules_path')) 
+		elseif ($this->_module_path !== NULL) 
 		{
-			$this->_migration_path = rtrim($module_path.$this->_module_name,'/').'/migrations/';				
+			$this->_migration_path = rtrim($this->_module_path,'/').'/';
 		}
+		// elseif ($module_path = config_item('modules_path')) 
+		// {
+		// 	$this->_migration_path = rtrim($module_path.$this->_module_name,'/').'/migrations/';				
+		// }
 		return $this;
 	}	
 

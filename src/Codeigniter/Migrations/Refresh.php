@@ -35,12 +35,19 @@ class Refresh extends Command
                 FALSE
             )
             ->addOption(
+                'path',
+                'p',
+                InputOption::VALUE_REQUIRED,
+                'Set the migration path',
+                FALSE
+            )
+            ->addOption(
                 'environment',
                 'e',
                 InputOption::VALUE_REQUIRED,
                 'Set the system environment',
                 ENVIRONMENT
-            );            
+            );                                   
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -51,7 +58,8 @@ class Refresh extends Command
             'command' => 'migration:run',
             'work'    => 'refresh',
             '-m'      => $input->getOption('module'),
-            '-e'      => $input->getOption('environment')
+            '-p'      => $input->getOption('path'),
+            '-e'      => $input->getOption('environment'),            
         );  
 
         $input = new ArrayInput($arguments);

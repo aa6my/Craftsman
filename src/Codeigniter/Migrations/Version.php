@@ -28,13 +28,6 @@ class Version extends Command
         $this
             ->setName('migration:version')
             ->setDescription('Run a migration version')
-            ->addOption(
-                'module', 
-                'm', 
-                InputOption::VALUE_REQUIRED, 
-                'Set the HMVC module name', 
-                FALSE
-            )
             ->addArgument(
                 'version',
                 InputArgument::OPTIONAL,
@@ -42,12 +35,26 @@ class Version extends Command
                 NULL
             )
             ->addOption(
+                'module', 
+                'm', 
+                InputOption::VALUE_REQUIRED, 
+                'Set the HMVC module name', 
+                FALSE
+            )            
+            ->addOption(
+                'path',
+                'p',
+                InputOption::VALUE_REQUIRED,
+                'Set the migration path',
+                FALSE
+            )
+            ->addOption(
                 'environment',
                 'e',
                 InputOption::VALUE_REQUIRED,
                 'Set the system environment',
                 ENVIRONMENT
-            );                        
+            );                                        
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -59,7 +66,8 @@ class Version extends Command
             'work'    => 'version',
             'version' => $input->getArgument('version'),
             '-m'      => $input->getOption('module'),
-            '-e'      => $input->getOption('environment')
+            '-p'      => $input->getOption('path'),
+            '-e'      => $input->getOption('environment'),            
         );  
 
         $input = new ArrayInput($arguments);

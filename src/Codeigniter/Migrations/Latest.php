@@ -34,7 +34,21 @@ class Latest extends Command
                 InputOption::VALUE_REQUIRED, 
                 'Set the module name', 
                 FALSE
-            );      
+            )
+            ->addOption(
+                'path',
+                'p',
+                InputOption::VALUE_REQUIRED,
+                'Set the migration path',
+                FALSE
+            )
+            ->addOption(
+                'environment',
+                'e',
+                InputOption::VALUE_REQUIRED,
+                'Set the system environment',
+                ENVIRONMENT
+            );                           
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -45,6 +59,8 @@ class Latest extends Command
             'command' => 'migration:run',
             'work'    => 'latest',
             '-m'      => $input->getOption('module'),
+            '-p'      => $input->getOption('path'),
+            '-e'      => $input->getOption('environment'),
         );  
 
         $input = new ArrayInput($arguments);

@@ -34,7 +34,14 @@ class Info extends Command
                 InputOption::VALUE_REQUIRED, 
                 'Set the HMVC module name', 
                 FALSE
-            );          
+            )
+            ->addOption(
+                'path',
+                'p',
+                InputOption::VALUE_REQUIRED,
+                'Set the migration path',
+                FALSE
+            );                     
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -45,6 +52,7 @@ class Info extends Command
             'command' => 'migration:run',
             'work'    => 'info',
             '-m'      => $input->getOption('module'),
+            '-p'      => $input->getOption('path'),
         );  
 
         $input = new ArrayInput($arguments);
