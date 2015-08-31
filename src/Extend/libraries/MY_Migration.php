@@ -61,7 +61,6 @@ class MY_Migration extends CI_Migration
 	{
        	parent::__construct($config);
 
-
 		log_message('info', 'HMVC Migrations Module Class init');		
 
 		if (! $this->db->field_exists($this->_module_field, $this->_migration_table))

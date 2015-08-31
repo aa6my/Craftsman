@@ -12,7 +12,9 @@
  */
 
 require 'vendor/autoload.php';
+
 define('ROOTPATH',__DIR__.DIRECTORY_SEPARATOR);
+define('CRAFTSMAN_VERSION', "2.0.3");
 
 use Symfony\Component\Console\Application;
 
@@ -54,8 +56,7 @@ $commands = array(
 	new LatestCommand(),
 	new CerberusMigrationCommand()
 );
-$application = new Application('Craftsman','2.0.3');
-
+$application = new Application('Craftsman', CRAFTSMAN_VERSION);
 foreach ($commands as $key => $command) {
 	$application->add($command);
 }

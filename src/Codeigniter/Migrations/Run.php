@@ -163,7 +163,7 @@ class Run extends Command
         
         $helper = $this->getHelper('question');
         
-        $output->writeln("<title> -- Craftsman Migration -- </title>");
+        $output->writeln("<title> -- Craftsman -- </title>");
 
         if (! in_array($this->_work, $this->_valid_works)) 
         {
