@@ -14,7 +14,7 @@
 require 'vendor/autoload.php';
 
 define('ROOTPATH',__DIR__.DIRECTORY_SEPARATOR);
-define('CRAFTSMAN_VERSION', "2.0.3");
+define('CRAFTSMAN_VERSION', "2.1.2");
 
 use Symfony\Component\Console\Application;
 
