@@ -21,7 +21,7 @@
         "symfony/console" : "~2.6",
         "symfony/filesystem" : "v2.7.3",
         "symfony/process": "v2.7.3",
-        "twig/twig" : "v1.20.0"
+        "twig/twig" : "^1.18"
     },
     "autoload": {
         "psr-0": { "": "src/" }
