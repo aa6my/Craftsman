@@ -11,8 +11,6 @@
  * @copyright  Copyright (c) 2015, David Sosa Valdes.
  */
 
-require 'vendor/autoload.php';
-
 define('ROOTPATH',__DIR__.DIRECTORY_SEPARATOR);
 define('CRAFTSMAN_VERSION', "2.1.2");
 
@@ -29,35 +27,33 @@ use Codeigniter\Migrations\Latest as LatestCommand;
 
 use Codeigniter\Cerberus\Migration as CerberusMigrationCommand;
 
-# Copy the CLI args 
-$args = $_SERVER['argv'];
+$CI = require ROOTPATH.'src/ci_instance.php';
 
-# Set empty args for the CI routing system
-$_SERVER['argv'] = array();
-# Replace CI's Migration Native Library
-$CI = require ROOTPATH.'src/CiInstance.php';
 $CI->load->add_package_path(ROOTPATH.'src/Extend');
 $CI->config->load('migration', TRUE, TRUE);
-$params = $CI->config->item('migration');
-$CI->load->library('migration', $params);
 
-# Pass the actual args to Symfony
-$_SERVER['argv'] = $args;
-
-# Commands
-$commands = array(
-	new GenerateCommand(),
-	new RunCommand($CI->migration),
-	new RollbackCommand(),
-	new ResetCommand(),
-	new RefreshCommand(),
-	new InfoCommand(),
-	new VersionCommand(),
-	new LatestCommand(),
-	new CerberusMigrationCommand()
-);
-$application = new Application('Craftsman', CRAFTSMAN_VERSION);
-foreach ($commands as $key => $command) {
-	$application->add($command);
+if ($params = $CI->config->item('migration')) 
+{
+	$CI->load->library('migration', $params);
+	$commands = array(
+		new GenerateCommand(),
+		new RunCommand($CI->migration),
+		new RollbackCommand(),
+		new ResetCommand(),
+		new RefreshCommand(),
+		new InfoCommand(),
+		new VersionCommand(),
+		new LatestCommand(),
+		new CerberusMigrationCommand()
+	);
+	$application = new Application('Craftsman', CRAFTSMAN_VERSION);
+	foreach ($commands as $key => $command) {
+		$application->add($command);
+	}
+	$application->run();
 }
-$application->run();
+else
+{
+	header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
+	echo "Craftsman migration settings does not appear to set correctly.\n";
+}
