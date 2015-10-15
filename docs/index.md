@@ -19,9 +19,9 @@ Craftsman is a command-line interface that provides a set of commands that will 
 
 ## Demo
 
-This is a small demonstration of what it can do. You can install it, generate a migration scheme then update database (2 minutes).
+You can install Craftsman, generate a migration scheme then update the database with no aditional installations. (3 minutes).
 
-<iframe width="675" height="400" src="https://www.youtube.com/embed/UU_fixg0J4Y" frameborder="0" allowfullscreen></iframe>
+<iframe width="680" height="400" src="https://www.youtube.com/embed/JA51oVUoWRc?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
 
 ---
 
@@ -29,13 +29,13 @@ This is a small demonstration of what it can do. You can install it, generate a 
 
 With composer:
 
-```
-composer require "dsv/craftsman":"^2.0"
+```bash
+composer require dsv/craftsman ^2.0
 ```
 
 **Optional**: Before run the composer install command, add the bin-dir config path inside your composer file:
 
-```
+```json
 "config": {
     "bin-dir": "bin"
 }	
@@ -43,20 +43,18 @@ composer require "dsv/craftsman":"^2.0"
 
 If you specify the bin directory you can run the command like this:
 
-```
+```bash
 php bin/craftsman
 ```
 
 If you don't, this CLI Composer package should be listed as a vendor binary, and it should be runned like:
 
-```
+```bash
 php vendor/bin/craftsman
 ```
 ---
 
 ## How to use it
-
-Listing All Available Commands
 
 To view a list of all available Craftsman commands, you may use the **list** command:
 
@@ -64,7 +62,7 @@ To view a list of all available Craftsman commands, you may use the **list** com
 php craftsman list
 ```
 
-Viewing The Help Screen For A Command
+###Help Screen
 
 Every command includes a **help** screen which displays the command's available arguments and options. To view a help screen from a command, simply add the name of the command with help:
 

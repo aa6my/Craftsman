@@ -12,7 +12,7 @@
  */
 
 define('ROOTPATH',__DIR__.DIRECTORY_SEPARATOR);
-define('CRAFTSMAN_VERSION', "2.1.2");
+define('CRAFTSMAN_VERSION', "3.0.1");
 
 use Symfony\Component\Console\Application;
 

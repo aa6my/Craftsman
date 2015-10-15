@@ -12,9 +12,11 @@ Create a migration with the **migration:generate** command:
 php craftsman migration:generate create_users
 ```
 
-If the migration name is of the form "create_XXX" or "modify_XXX" and is followed by a list of column names and types then a migration containing the appropriate add_column and update_column statements will be created.
+If the migration name is in the form "create_XXX" or "modify_XXX" and is followed by a list of column names and types then a migration containing the appropriate add_column and update_column statements will be created.
 
-```
+###Example
+
+```bash
 php craftsman migration:generate create_users firstname:varchar lastname:varchar email:varchar active:smallint
 ```
 
@@ -77,9 +79,10 @@ class Migration_create_users extends CI_Migration {
 
 /* End of file 001_create_users.php.php */
 /* Location: /application/migrations/001_create_users.php */
+?>
 ```
 
-The migration file will be placed in your **migration** folder or any folder you specify instead of the default path. It will contain a version number as a prefix which allows **Codeigniter** to determine the order of the migrations.
+The migration file will be placed in your **migration** folder or any folder you specify instead of the default path with a version number as a prefix which allows **Codeigniter** to determine the order of the migrations.
 
 Now it's your turn to give the finishing touches before running this scheme. Check the [Database Forge documentation](http://www.codeigniter.com/user_guide/database/forge.html) for more information about **CodeIgniter Migrations**.
 

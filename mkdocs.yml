@@ -5,7 +5,7 @@ site_author: David Sosa Valdes
 
 pages:
 - ['index.md','Home']
-- ['user-guide/migrations.md','User Guide','Migrations Guide']
+- ['user-guide/migrations.md','User Guide','Migrations']
 - ['about/release_notes.md','About','Release Notes']
 - ['about/contribute.md','About','Contributing']
 - ['about/licence.md','About','Licence']
