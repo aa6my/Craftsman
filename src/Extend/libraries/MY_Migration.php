@@ -51,7 +51,7 @@ class MY_Migration extends CI_Migration
 	 * [$_module_field description]
 	 * @var string
 	 */
-	protected $_module_field = "module";
+	protected $_module_field = 'module';
 
 	/**
 	 * [__construct description]
@@ -61,11 +61,10 @@ class MY_Migration extends CI_Migration
 	{
        	parent::__construct($config);
 
-		log_message('info', 'HMVC Migrations Module Class init');		
+		log_message('info', 'HMVC Migrations Module Class init');
 
 		if (! $this->db->field_exists($this->_module_field, $this->_migration_table))
-		{
-			log_message('info', 'HMVC Migrations Create Table');		
+		{		
 			$fields = array(
         		'module' => array(
         			'type' => 'VARCHAR',
@@ -75,10 +74,15 @@ class MY_Migration extends CI_Migration
         		)
 			);
 			$this->dbforge->add_column($this->_migration_table, $fields);
-			$this->db->query("ALTER TABLE {$this->_migration_table} 
-				ADD PRIMARY KEY({$this->_module_field});");
-			$this->db->query("UPDATE {$this->_migration_table} 
-				SET {$this->_module_field} = '{$this->_module_name}' LIMIT 1;");
+			
+			$this->db->query(
+				"ALTER TABLE {$this->_migration_table} "
+				."ADD PRIMARY KEY({$this->_module_field});"
+			);
+			$this->db->query(
+				"UPDATE {$this->_migration_table} "
+				."SET {$this->_module_field} = '{$this->_module_name}' LIMIT 1;"
+			);
 		}
 		$this->_set_migration_path();
 	}
@@ -107,8 +111,8 @@ class MY_Migration extends CI_Migration
 	 */
 	protected function _get_version()
 	{
-		$this->db->select("version,{$this->_module_field}");
-		$this->db->where("{$this->_module_field}", $this->_module_name);
+		$this->db->select("version, {$this->_module_field}");
+		$this->db->where($this->_module_field, $this->_module_name);
 		$row = $this->db->get($this->_migration_table)->row();
 		return (!is_null($row)) ? $row->version : '0';
 	}
@@ -145,10 +149,6 @@ class MY_Migration extends CI_Migration
 		{
 			$this->_migration_path = rtrim($this->_module_path,'/').'/';
 		}
-		// elseif ($module_path = config_item('modules_path')) 
-		// {
-		// 	$this->_migration_path = rtrim($module_path.$this->_module_name,'/').'/migrations/';				
-		// }
 		return $this;
 	}	
 
@@ -182,12 +182,12 @@ class MY_Migration extends CI_Migration
 		if ($this->_check_module_exist()) 
 		{
 			$this->db->where($this->_module_field, $this->_module_name);
-			$this->db->update($this->_migration_table,$data);
+			$this->db->update($this->_migration_table, $data);
 		}
 		else 
 		{
 			$insert_query = $this->db->insert_string($this->_migration_table, $data);
-			$insert_query = str_replace('INSERT INTO','INSERT IGNORE INTO',$insert_query);
+			$insert_query = str_replace('INSERT INTO','INSERT IGNORE INTO', $insert_query);
 			$this->db->query($insert_query);
 		}
 	}	
@@ -198,12 +198,12 @@ class MY_Migration extends CI_Migration
 	 */
 	protected function _check_module_exist()
 	{
+		$this->db->from($this->_migration_table);
 		$this->db->where($this->_module_field, $this->_module_name);
 		$this->db->limit(1);
-		$query = $this->db->get($this->_migration_table);
+		$query = $this->db->get();
 		return $query->num_rows() >= 1;
-	}	
-
+	}
 }
 
 /* End of file MY_Migration.php */
