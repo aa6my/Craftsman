@@ -15,7 +15,7 @@ Craftsman is a command-line interface that provides a set of commands that will 
 
 This is a small demonstration of what it can do, click in the image to see the youtube video (2 minutes). You can install it, generate a migration scheme then update database.
 
-[![Craftsman Demo](http://img.youtube.com/vi/UU_fixg0J4Y/0.jpg)](https://www.youtube.com/edit?video_id=UU_fixg0J4Y)
+[![Craftsman Demo](http://img.youtube.com/vi/JA51oVUoWRc/0.jpg)](https://www.youtube.com/watch?v=JA51oVUoWRc)
 
 ### Requirements 
 
