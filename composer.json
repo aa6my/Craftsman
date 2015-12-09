@@ -8,7 +8,7 @@
         "cli",
         "cli-codeigniter"
     ],
-    "homepage": "https://gitlab.com/david-sosa-valdes/craftsman",
+    "homepage": "https://github.com/davidsosavaldes/Craftsman",
     "license": "MIT",
     "authors": [
         {
@@ -27,12 +27,12 @@
         "psr-0": { "": "src/" }
     },
     "support":{
-        "issues": "https://gitlab.com/david-sosa-valdes/craftsman/issues"
+        "issues": "https://github.com/davidsosavaldes/Craftsman/issues"
     },
     "bin": ["craftsman"],
     "extra": {
         "branch-alias": {
-            "dev-master": "2.1.x-dev"
+            "dev-master": "3.0.x-dev"
         }
     },
     "suggest": {
