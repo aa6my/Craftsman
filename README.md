@@ -1,6 +1,6 @@
 **Documentation for Craftsman is available at [ci-craftsman.readthedocs.org](http://ci-craftsman.readthedocs.org/).**
 
----
+![Logo](https://www.dropbox.com/s/n8xyqlgbv1uw64u/craftsman_logo.png?dl=0)
 
 # Codeigniter Craftsman CLI #
 
