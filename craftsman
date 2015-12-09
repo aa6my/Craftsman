@@ -54,6 +54,5 @@ if ($params = $CI->config->item('migration'))
 }
 else
 {
-	header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
-	echo "Craftsman migration settings does not appear to set correctly.\n";
+	print("Craftsman migration settings does not appear to set correctly.\n");
 }
