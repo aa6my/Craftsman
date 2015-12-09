@@ -1,12 +1,10 @@
 **Documentation for Craftsman is available at [ci-craftsman.readthedocs.org](http://ci-craftsman.readthedocs.org/).**
 
-<p style="text-align:center;">
-  <img src="https://www.dropbox.com/s/n8xyqlgbv1uw64u/craftsman_logo.png?dl=1" width="120">
-</p>
+<img style="float:left;"  src="https://www.dropbox.com/s/n8xyqlgbv1uw64u/craftsman_logo.png?dl=1" width="120">
 
-<h1 style="text-align:center;">Codeigniter Craftsman CLI</h1>
+#Codeigniter Craftsman CLI
 
-<p style="text-align:center;">Advanced Comand-Line interface for Codeigniter 3.0 using <b>Symfony Console component</b>.</p>
+Advanced Comand-Line interface for Codeigniter 3.0 using **Symfony Console component**.
 
 [![Latest Stable Version](https://poser.pugx.org/dsv/craftsman/v/stable)](https://packagist.org/packages/dsv/craftsman) [![Total Downloads](https://poser.pugx.org/dsv/craftsman/downloads)](https://packagist.org/packages/dsv/craftsman) [![Latest Unstable Version](https://poser.pugx.org/dsv/craftsman/v/unstable)](https://packagist.org/packages/dsv/craftsman) [![License](https://poser.pugx.org/dsv/craftsman/license)](https://packagist.org/packages/dsv/craftsman) [![Documentation Status](https://readthedocs.org/projects/ci-craftsman/badge/?version=latest)](https://readthedocs.org/projects/ci-craftsman/?badge=latest)
 
