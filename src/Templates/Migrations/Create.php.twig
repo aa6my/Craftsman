@@ -37,7 +37,7 @@ class Migration_{{name}} extends CI_Migration {
 
 		));
 		$this->dbforge->add_key('id', TRUE);
-		$this->dbforge->create_table('ci_{{ table_name|replace({'create_':''}) }}',TRUE);		
+		$this->dbforge->create_table('ci_{{ table_name|replace({'create_':''}) }}', TRUE);		
 	}
 }
 
