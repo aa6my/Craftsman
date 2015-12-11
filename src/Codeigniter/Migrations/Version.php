@@ -16,9 +16,8 @@ use Symfony\Component\Console\Input\ArrayInput;
  *
  * @package     CLI Craftsman
  * @author      David Sosa Valdes
- * @link        https://gitlab.com/david-sosa-valdes/craftsman
+ * @link        https://github.com/davidsosavaldes/Craftsman
  * @copyright   Copyright (c) 2014, David Sosa Valdes.
- * @version     1.0.0
  *
  */
 class Version extends Command
@@ -27,7 +26,7 @@ class Version extends Command
     {
         $this
             ->setName('migration:version')
-            ->setDescription('Run a migration version')
+            ->setDescription('Run a migration by specified version as argument')
             ->addArgument(
                 'version',
                 InputArgument::OPTIONAL,
@@ -38,15 +37,15 @@ class Version extends Command
                 'module', 
                 'm', 
                 InputOption::VALUE_REQUIRED, 
-                'Set the HMVC module name', 
+                'Set the module name', 
                 FALSE
-            )            
+            )
             ->addOption(
                 'path',
                 'p',
                 InputOption::VALUE_REQUIRED,
                 'Set the migration path',
-                FALSE
+                APPPATH
             )
             ->addOption(
                 'environment',

@@ -15,9 +15,8 @@ use Symfony\Component\Console\Input\ArrayInput;
  *
  * @package     CLI Craftsman
  * @author      David Sosa Valdes
- * @link        https://gitlab.com/david-sosa-valdes/craftsman
+ * @link        https://github.com/davidsosavaldes/Craftsman
  * @copyright   Copyright (c) 2014, David Sosa Valdes.
- * @version     1.2.1
  *
  */
 class Refresh extends Command
@@ -31,7 +30,7 @@ class Refresh extends Command
                 'module', 
                 'm', 
                 InputOption::VALUE_REQUIRED, 
-                'Set the HMVC module name', 
+                'Set the module name', 
                 FALSE
             )
             ->addOption(
@@ -39,7 +38,7 @@ class Refresh extends Command
                 'p',
                 InputOption::VALUE_REQUIRED,
                 'Set the migration path',
-                FALSE
+                APPPATH
             )
             ->addOption(
                 'environment',

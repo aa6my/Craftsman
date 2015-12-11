@@ -16,9 +16,8 @@ use Symfony\Component\Console\Input\ArrayInput;
  *
  * @package     CLI Craftsman
  * @author      David Sosa Valdes
- * @link        https://gitlab.com/david-sosa-valdes/craftsman
+ * @link        https://github.com/davidsosavaldes/Craftsman
  * @copyright   Copyright (c) 2014, David Sosa Valdes.
- * @version     1.0.0
  *
  */
 class Latest extends Command
@@ -27,7 +26,7 @@ class Latest extends Command
     {
         $this
             ->setName('migration:latest')
-            ->setDescription('Run the current last migration version')
+            ->setDescription('Run the latest migration')
             ->addOption(
                 'module', 
                 'm', 
@@ -40,7 +39,7 @@ class Latest extends Command
                 'p',
                 InputOption::VALUE_REQUIRED,
                 'Set the migration path',
-                FALSE
+                APPPATH
             )
             ->addOption(
                 'environment',

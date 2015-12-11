@@ -6,41 +6,31 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Helper\TableStyle;
-
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
-use Exception;
 
 /**
- * Migration:Run Class
+ * Run Command
  *
- * Principal class used as a default command for every other Migration class exept generate. 
+ * This is the main migration command that runs the CodeIgniter migration class.
  *
  * @package     CLI Craftsman
  * @author      David Sosa Valdes
- * @link        https://gitlab.com/david-sosa-valdes/craftsman
- * @copyright   Copyright (c) 2014, David Sosa Valdes.
- * @version     1.2.1
+ * @link        https://github.com/davidsosavaldes/Craftsman
+ * @copyright   Copyright (c) 2015, David Sosa Valdes.
+ * @version     1.3.0
  *
  */
 class Run extends Command
 {
-    /**
-     * [$_migration_path description]
-     * @var null
-     */
-    private $_migration_path = NULL;
-
     /**
      * Set of all the posible works.
      * @var array
@@ -54,40 +44,17 @@ class Run extends Command
         'reset',
         'refresh'
     );
-    
-    /**
-     * Currently selected work.
-     * @var string
-     */
-    private $_work;
 
     /**
-     * Currently selected module (HMVC)
-     * @var string
-     */
-    private $_module;
-
-    /**
-     * Current migration version
-     * @var integer
-     */
-    private $_version = 0;
-
-    /**
-     * [$_ci_migration description]
-     * @var [type]
+     * CodeIgniter migration class.
+     * @var object
      */
     protected $_ci_migration;
 
     /**
-     * [$_environment description]
-     * @var [type]
-     */
-    protected $_environment;
-
-    /**
-     * [__construct description]
-     * @param object $CI_ci_migration [description]
+     * Constructor
+     * 
+     * @param object Craftsman_Migration class
      */
     public function __construct($CI_Migration_Class)
     {
@@ -104,7 +71,7 @@ class Run extends Command
     {
         $this
             ->setName('migration:run')
-            ->setDescription('Migration Run')
+            ->setDescription('Main migration command that runs the CodeIgniter migration class')
             ->addArgument(
                 'work',
                 InputArgument::REQUIRED,
@@ -120,8 +87,15 @@ class Run extends Command
                 'module', 
                 'm', 
                 InputOption::VALUE_REQUIRED, 
-                'Set the HMVC module name', 
+                'Set the module name', 
                 FALSE
+            )
+            ->addOption(
+                'path',
+                'p',
+                InputOption::VALUE_REQUIRED,
+                'Set the migration path',
+                APPPATH
             )
             ->addOption(
                 'environment',
@@ -129,14 +103,7 @@ class Run extends Command
                 InputOption::VALUE_REQUIRED,
                 'Set the system environment',
                 ENVIRONMENT
-            )
-            ->addOption(
-                'path',
-                'p',
-                InputOption::VALUE_REQUIRED,
-                'Set the migration path',
-                FALSE
-            );
+            );            
     }
 
     /**
@@ -149,66 +116,64 @@ class Run extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $style = new OutputFormatterStyle('cyan', 'black', array('bold'));
-        $output->getFormatter()->setStyle('title', $style);
+        $output->getFormatter()->setStyle(
+            'title', 
+            new OutputFormatterStyle('cyan', 'black', array('bold'))
+        );
+        $output->getFormatter()->setStyle(
+            'action', 
+            new OutputFormatterStyle('cyan', 'black', array('bold'))
+        );        
 
-        $style = new OutputFormatterStyle('cyan', 'black', array('bold'));
-        $output->getFormatter()->setStyle('action', $style);        
-
-        $this->_work           = strtolower($input->getArgument('work'));
-        $this->_version        = $input->getArgument('version');
-        $this->_module         = $input->getOption('module');
-        $this->_environment    = strtolower($input->getOption('environment'));
-        $this->_migration_path = $input->getOption('path');
-        
-        $helper = $this->getHelper('question');
+        $work        = strtolower($input->getArgument('work'));
+        $version     = $input->getArgument('version');
+        $module      = strtolower($input->getOption('module'));
+        $environment = strtolower($input->getOption('environment'));
+        $path        = rtrim($input->getOption('path'),'/').'/';
         
         $output->writeln("<title> -- Craftsman -- </title>");
 
-        if (! in_array($this->_work, $this->_valid_works)) 
-        {
-            $output->writeln('<error>The work: '.$this->_work.' is not valid.</error>');
-            return;
-        }
+        $helper = $this->getHelper('question');    
 
-        if ($this->_work == 'version') 
+        if (! in_array($work, $this->_valid_works)) 
         {
-            if ($this->_version == NULL) 
+            throw new \RuntimeException('The work: ['.$work.'] is not valid.');
+        }
+        elseif ($work == 'version') 
+        {
+            if ($version == NULL) 
             {
-                $output->writeln("<error>You're gonna need to specify a version</error>");
-                return;
-            }
-            else
-            {
-                $this->_version = abs($this->_version);
+                throw new \RuntimeException("You're gonna need to specify a version.");
             }
         }
-
-        if ($this->_migration_path !== FALSE && $this->_module !== FALSE) 
-        {
-            $this->_ci_migration->set_params([
-                'module_path' => $this->_migration_path,
-                'module_name' => $this->_module
-            ]);
-        }          
-
-        $migrations            = $this->_ci_migration->find_migrations();
-        $latest_file_version   = abs($this->_ci_migration->get_number(abs(basename(end($migrations)))));
-        $latest_db_version     = abs($this->_ci_migration->get_db_version());
-        $latest_config_version = abs($this->_ci_migration->get_current_config_version());
+        // Set CI Migration params.
+        $this->_ci_migration->set_params([
+            'module_path' => $path,
+            'module_name' => empty($module)? 'ci_system': $module
+        ]);      
+        // Get all available migration files
+        $migrations = $this->_ci_migration->find_migrations();
+        // Set all version status types
+        $latest_file_version   = $this->_ci_migration->get_latest_version($migrations);
+        $latest_db_version     = $this->_ci_migration->get_db_version();
+        $latest_config_version = $this->_ci_migration->get_config_version();
         $rollback_version      = 0;
 
-        if ($this->_work === 'rollback') 
+        if ($work === 'rollback') 
         {
-            $migration_keys = array_keys($this->_ci_migration->find_migrations());
-            array_walk($migration_keys, function(&$item, $key){$item = abs($item);});
+            array_walk($migration_keys = array_keys($migrations), 
+                function(&$item, $key) {
+                    $item = abs($item);
+                }
+            );
+
             if (count($migration_keys) >= 1) 
             {
                 end($migration_keys);
                 $rollback_version = prev($migration_keys);
                 while ($rollback_version >= $latest_db_version) 
                 {
-                    if ((!$rollback_version) || $rollback_version === 1) 
+                    if ((! $rollback_version) || $rollback_version === 1) 
                     {
                         $rollback_version = 0;
                         break;
@@ -223,42 +188,21 @@ class Run extends Command
         }         
 
         $info = array(
-            'info' => array(
-                'Info Mode',
-                '---'
-            ),
-            'current' => array(
-                'Config Version',
-                $latest_config_version
-            ),
-            'latest' => array(
-                'Latest File Version',
-                $latest_file_version
-            ),
-            'version' => array(
-                'File Version',
-                $this->_version
-            ),
-            'reset' => array(
-                'Reset Version',
-                0
-            ),
-            'rollback' => array(
-                'Rollback Version',
-                $rollback_version
-            ),
-            'refresh' => array(
-                'Refresh Version',
-                $latest_file_version
-            )
+            'info'     => array('Info Mode','Viewer'),
+            'current'  => array('Config Version', $latest_config_version),
+            'latest'   => array('Latest File Version', $latest_file_version),
+            'version'  => array('File Version', $version),
+            'reset'    => array('Reset Version', 0),
+            'rollback' => array('Rollback Version', $rollback_version),
+            'refresh'  => array('Refresh Version', $latest_file_version)
         );
-        list($work_field,$work_version) = $info[$this->_work];     
+        list($work_field, $work_version) = $info[$work];     
         
-        if ($this->_work == 'refresh') 
+        if ($work == 'refresh') 
         {
             $current_version = 'Up';
         }
-        elseif ($this->_work == 'info') 
+        elseif ($work == 'info') 
         {
             $current_version = 'None';
         }
@@ -268,17 +212,12 @@ class Run extends Command
         }     
         
         $table = new Table($output); 
-
-        $style = new TableStyle();
-        $style->setCellHeaderFormat('<action>%s</action>');
-
-        $table->setStyle($style);
-
         $table
+            ->setStyle((new TableStyle)->setCellHeaderFormat('<action>%s</action>'))
             ->setHeaders(['Config','Value'])
             ->setRows([
-                ['Work', $this->_work],
-                ['Environment', $this->_environment],
+                ['Work', $work],
+                ['Environment', $environment],
                 ['Module', $this->_ci_migration->get_module_name()],
                 ['DB Version', $latest_db_version],
                 new TableSeparator,
@@ -288,7 +227,8 @@ class Run extends Command
                 ['Action', '<action>'.$current_version.'</action>'],
             ])
             ->render(); 
-        if ($this->_work !== 'info') 
+
+        if ($work !== 'info') 
         {
             $message = 'Continue with this action <comment>[yes]</comment>? ';
             $question = new ConfirmationQuestion($message, TRUE);    
@@ -297,78 +237,73 @@ class Run extends Command
                 return;
             } 
             if (
-                $this->_environment === 'production' 
+                $environment === 'production' 
                 && $latest_db_version > $current_version
             ) {
-                $output->writeln("<error>It's not possible rollback from {$latest_db_version} to {$current_version} in 'PRODUCTION' environment, you can change it with '-e' option.</error>");
-                return;
+                throw new \RuntimeException("It's not possible rollback from {$latest_db_version}"
+                    . " to {$current_version} in a PRODUCTION environment,"
+                    ." you can change it with '-e' argument.");
+                
             }              
         }
-        if (empty($migrations)) 
+        if (empty($migrations) && $work !== 'info') 
         {
-            $output->writeln('<error>No migrations were found</error>');
-            return;
-        }              
-        
-        $response = FALSE;
-        switch ($this->_work) 
+            throw new \RuntimeException("No migrations were found.");
+        }
+        switch ($work) 
         {
             case 'current':
-                $this->_ci_migration->current() && $response = TRUE;
+                $this->_ci_migration->current();
                 break;
             case 'latest':
-                $this->_ci_migration->latest() && $response = TRUE;
+                $this->_ci_migration->latest();
                 break;
             case 'version':
-                $this->_ci_migration->version($this->_version) && $response = TRUE;
+                $this->_ci_migration->version($version);
                 break;
             case 'reset':
-                $this->_ci_migration->version(0) && $response = TRUE;
+                $this->_ci_migration->version(0);
                 break;
             case 'rollback':
                 if ($latest_db_version <= 0) 
                 {
-                    $output->writeln("<error>Not posible to rollback from 0</error>");
-                    return;
+                    throw new \RuntimeException("Not posible to rollback from 0.");
                 }
                 else
                 {
-                    $this->_ci_migration->version($rollback_version) && $response = TRUE;
+                    $this->_ci_migration->version($rollback_version);
                 }
                 break;
             case 'refresh':
                 $this->_ci_migration->version(0);
-                $this->_ci_migration->latest() && $response = TRUE;
+                $this->_ci_migration->latest();
                 break;
         }
-        if ($response !== FALSE || ($latest_db_version == $work_version)) 
+        if ($latest_db_version == $work_version) 
         {
-            if ($this->_work !== 'info') 
+            if ($work !== 'info') 
             {
                 $output->writeln('<info>SUCCESS</info>');
             }
         }
-        else
+        elseif (! empty($this->_ci_migration->error_string())) 
         {
-            $output->writeln('<error>'.$this->_ci_migration->error_string().'</error>');
+            throw new \RuntimeException($this->_ci_migration->error_string());
         }
-        return;
     }  
 
     /**
-     * Set migration status
+     * Set migration status depending on which work is being done.
      * 
      * @param integer $db_version      Current DB migration version
-     * @param integer $current_version Current version (depending on which work is being done)
+     * @param integer $current_version Current version 
      *
-     * @return string Migration status (action to take)
+     * @return string Migration status
      */
     private function _set_migration_status($db_version = 0, $current_version = 0)
     {
-        if ($db_version == $current_version) 
-        {
-            return 'Not change';
-        }
-        return ($current_version > $db_version)? "Up" : "Down";
+        return ($db_version == $current_version)
+            ? 'Not change'
+            : ($current_version > $db_version)? "Up" : "Down";
     }
 }
