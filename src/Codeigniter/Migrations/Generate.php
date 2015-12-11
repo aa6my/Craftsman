@@ -7,18 +7,14 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 use Twig_Autoloader;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
-
-use Exception;
 
 /**
  * Migration:Generate Class
@@ -26,57 +22,19 @@ use Exception;
  *
  * @package     CLI Craftsman
  * @author      David Sosa Valdes
- * @link        https://gitlab.com/david-sosa-valdes/craftsman
- * @copyright   Copyright (c) 2014, David Sosa Valdes.
- * @version     1.2.1
+ * @link        https://github.com/davidsosavaldes/Craftsman
+ * @copyright   Copyright (c) 2015, David Sosa Valdes.
+ * @version     1.3.0
  *
  */
 class Generate extends Command
 {
     /**
-     * Available migration folder.
-     * @var string
-     */
-    private $_default_folder = 'migration';
-
-    /**
      * Default migrations folder path.
      * @var string
      */
-    private $_path = 'application/migrations/';
+    private $_path = APPPATH.'migrations/';
 
-    /**
-     * Set of migrations available inside the Migration Filesystem.
-     * @var array
-     */
-    private $_migrations = array();
-
-    /**
-     * New Migration Filename 
-     * @var string
-     */
-    private $_filename;
-
-    /**
-     * New Migration name (without extension and prefix)
-     * @var string
-     */
-    private $_name;
-
-    /**
-     * Migration Type (numeric,timestamp) 
-     * @var string
-     */
-    private $_type;
-
-    /**
-     * Codeigniter Migration regex
-     * @var array
-     */
-    private $_migration_regex = array(
-        '/^\d{14}_(\w+)$/',
-        '/^\d{3}_(\w+)$/' 
-    );
 
     /**
      * Command configuration method.
@@ -118,142 +76,138 @@ class Generate extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $style = new OutputFormatterStyle('cyan', 'black', array('bold'));
-        $output->getFormatter()->setStyle('title', $style);
+        // Set default timezone if we use a timestamp migration version.
+        date_default_timezone_set('UTC');
 
-        $this->_name = $input->getArgument('name');
-        $this->_type = $input->getOption('type');
+        $output->getFormatter()->setStyle('title', 
+            new OutputFormatterStyle('cyan', 'black', array('bold'))
+        );
 
-        $migration_regex = ($this->_type === 'timestamp')
+        $name = ucfirst($input->getArgument('name'));
+        $type = strtolower($input->getOption('type'));
+
+        $migration_regex = ($type == 'timestamp')
             ? '/^\d{14}_(\w+)$/'
             : '/^\d{3}_(\w+)$/';  
 
         $output->writeln("<title> -- Craftsman Migration: Generate -- </title>");      
 
-        $comment = 'Installation path [<comment>'.$this->_path.'</comment>]: ';
+        // Show the short version path.
+        $comment = 'Installation path [<comment>'
+            .basename(dirname($this->_path)).'/'
+            .basename($this->_path).'/</comment>]: ';
         
         $helper = $this->getHelper('question');        
         
         $question = new Question($comment, $this->_path);
+        // Posible CI migrations paths
         $question->setAutocompleterValues(array(
-          "application/"
+          'application/',
+          'system/',
+          'application/vendor/',
+          'bundles/',
+          'application/migrations/',
         ));
-        $question->setValidator(function($answer){
-            if ( strpos(basename($answer), $this->_default_folder) === FALSE) 
-            {
-                throw new \RuntimeException('Not a valid migration directory.');
-            }
-            return $answer;
-        });
+        
         $this->_path = rtrim($helper->ask($input, $output, $question),'/').'/';
-
+        // Create the migration file based on target version
         try 
         {
             $filesystem = new Filesystem();
-            if (! $filesystem->exists($this->_path)) 
-            {
-                throw new Exception("Directory {$this->_path} doesn't exist.");
-            }
+            // We could try to create a directory for you if doesn't exist.
+            (! $filesystem->exists($this->_path)) &&  $filesystem->mkdir($this->_path);
+            // And now let's figure out the migration target version
             if ($handle = opendir($this->_path)) 
             {      
-                while (false !== ($entry = readdir($handle))) 
+                while (($entry = readdir($handle)) !== FALSE) 
                 {     
-                    if ($entry != "." && $entry != "..") 
+                    if ($entry == "." && $entry == "..") 
                     {      
-                        $file = basename($entry, '.php');   
-                        if (preg_match($migration_regex, $file))
-                        {
-                            $number = sscanf($file, '%[0-9]+', $number)? $number : '0'; 
-                            try {
-                                if (isset($this->_migrations[$number])) 
-                                {
-                                    throw new Exception("Cannot be duplicate migration numbers");
-                                }
-                            } catch (Exception $e) {
-                                $output->writeln("<error>".$e->getMessage()."</error>");
-                                return;
-                            }
-                            $this->_migrations[$number] = $file; 
-                        }
+                        continue;  
                     }
+
+                    if (preg_match($migration_regex, $file = basename($entry, '.php')))
+                    {
+                        $number = sscanf($file, '%[0-9]+', $number)? $number : '0'; 
+                        if (isset($migrations[$number])) 
+                        {
+                            throw new \RuntimeException("Cannot be duplicate migration numbers");
+                        }
+                        $migrations[$number] = $file; 
+                    }                    
                 }       
                 closedir($handle);
-                ksort($this->_migrations);
+                ksort($migrations);
             }            
         } 
         catch (IOExceptionInterface $e) 
         {
             echo "An error occurred while creating your directory at ".$e->getPath();
             return;
-        }         
-        if ($this->_type == 'timestamp') 
-        {
-            date_default_timezone_set('UTC');
-            $target_version = date("YmdHis");
-        } 
-        else 
-        {
-            $target_version = sprintf('%03d', abs(end($this->_migrations))+1);
         }
-        $question = new Question('Target Version [<comment>'.$target_version.'</comment>]: ', $target_version);
+
+        $question = new Question('Target Version [<comment>'.$target_version.'</comment>]: ', ($type == 'timestamp')
+            ? date("YmdHis")
+            : sprintf('%03d', abs(end($migrations)) + 1)
+        );
+
         $target_version = $helper->ask($input, $output, $question); 
+        $filename = $target_version."_".$name.".php";       
 
-        $this->_filename = $target_version."_".$this->_name.".php";       
-
-        $output->writeln("Installation path: <info>{$this->_path}</info>");
-        $output->writeln("Filename: <info>{$this->_filename}</info>");
+        $output->writeln('Installation path: <info>'.$this->_path.'</info>');
+        $output->writeln('Filename: <info>'.$filename.'</info>');
         
         $question = new ConfirmationQuestion('Generate migration file? [<comment>yes</comment>]? ', TRUE);
         if (! $helper->ask($input, $output, $question)) {
             $output->writeln("<info>Aborting...</info>");
             return;
         } 
-        # Set the migration template
+        # Set the migration template arguments
         $params = array(
-            'name'       => $this->_name,
-            'filename'   => $this->_filename,
-            'path'       => DIRECTORY_SEPARATOR.$this->_path.$this->_filename,
-            'table_name' => $this->_name
+            'name'       => $name,
+            'filename'   => $filename,
+            'path'       => $this->_path.$filename,
+            'table_name' => $name,
+            'fields'     => (array) $input->getArgument('columns')
         );
 
-        list($migration_type) = explode('_', $this->_name);
-
-        switch ($migration_type) 
+        switch (list($_type) = explode('_', $name)) 
         {
             case 'create':
                 $template_name = 'Create.php.twig'; 
-                $params['fields'] = (array) $input->getArgument('columns');
                 break;
             case 'modify':
                 $template_name = 'Modify.php.twig';
-                $params['fields'] = (array) $input->getArgument('columns');
                 empty($params['fields']) && $params['fields'] = array('column_name:column_type');
                 break;
             default:
                 $template_name = 'Default.php.twig';
                 break;
         }
-        $template = $this->_create_script_template($params,$template_name);
-        $filesystem->dumpFile($this->_path.$this->_filename, $template); 
+        $filesystem->dumpFile(
+            $this->_path.$filename, 
+            $this->_create_template($params, $template_name)
+        ); 
     }
 
     /**
-     * Create a script template using Twig.
+     * Create a migration template using Twig.
      * 
      * @param  array  $params   Twig template params.
      * @param  string $name     Template filename.
      * @return string           Twig render output.
      */
-    private function _create_script_template($params = array(),$template_name = "")
+    private function _create_template($params = array(),$template_name = "")
     {
         Twig_Autoloader::register();
         $loader = new Twig_Loader_Filesystem(ROOTPATH.'src/Templates/Migrations');
-        $twig = new Twig_Environment($loader);
+        $twig   = new Twig_Environment($loader);
+        
         $function = new \Twig_SimpleFunction('set_command', function ($field = "") {
           return array_combine(array('name','type'), explode(':', $field));
         });
         $twig->addFunction($function);        
-        $template = $twig->loadTemplate($template_name);
-        return $template->render($params);
+
+        return $twig->loadTemplate($template_name)->render($params);
     }
 }
