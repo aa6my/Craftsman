@@ -8,7 +8,7 @@ $application_folder = 'application';
 $view_folder = '';
 
 # Make sure some config variables are set correctly
-$assign_to_config['subclass_prefix'] = 'MY_';
+$assign_to_config['subclass_prefix'] = 'Craftsman_';
 
 if (($_temp = realpath($system_path)) !== FALSE)
 {
