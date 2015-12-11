@@ -4,49 +4,54 @@
 /**
  * CLI Codeigniter Crafstman
  *
- * @author     David Sosa Valdes <https://gitlab.com/david-sosa-valdes>
+ * @author     David Sosa Valdes <https://github.com/davidsosavaldes>
  * @license    MIT License
- * @copyright  2015 David Sosa Valdes
- * @link       https://gitlab.com/david-sosa-valdes/craftsman
+ * @link       https://github.com/davidsosavaldes/Craftsman
  * @copyright  Copyright (c) 2015, David Sosa Valdes.
  */
 
-define('ROOTPATH',__DIR__.DIRECTORY_SEPARATOR);
-define('CRAFTSMAN_VERSION', "3.0.1");
+define('ROOTPATH', __DIR__.DIRECTORY_SEPARATOR);
+
+use Codeigniter\Migrations\Run;
+use Codeigniter\Migrations\Rollback;
+use Codeigniter\Migrations\Refresh;
+use Codeigniter\Migrations\Reset;
+use Codeigniter\Migrations\Info;
+use Codeigniter\Migrations\Version;
+use Codeigniter\Migrations\Latest;
+use Codeigniter\Migrations\Generate;
 
 use Symfony\Component\Console\Application;
 
-use Codeigniter\Migrations\Generate as GenerateCommand;
-use Codeigniter\Migrations\Run as RunCommand;
-use Codeigniter\Migrations\Rollback as RollbackCommand;
-use Codeigniter\Migrations\Refresh as RefreshCommand;
-use Codeigniter\Migrations\Reset as ResetCommand;
-use Codeigniter\Migrations\Info as InfoCommand;
-use Codeigniter\Migrations\Version as VersionCommand;
-use Codeigniter\Migrations\Latest as LatestCommand;
-
-use Codeigniter\Cerberus\Migration as CerberusMigrationCommand;
-
+// Create CodeIgniter instance and add the extended packages.
 $CI = require ROOTPATH.'src/ci_instance.php';
-
 $CI->load->add_package_path(ROOTPATH.'src/Extend');
-$CI->config->load('migration', TRUE, TRUE);
 
+/**
+ * We need to load the special migration settings.
+ * 
+ * Config file path:
+ * 		src/Extend/config/migration.php
+ * 		
+ * @var array
+ */
+$CI->config->load('migration', TRUE, TRUE);
 if ($params = $CI->config->item('migration')) 
 {
 	$CI->load->library('migration', $params);
+
 	$commands = array(
-		new GenerateCommand(),
-		new RunCommand($CI->migration),
-		new RollbackCommand(),
-		new ResetCommand(),
-		new RefreshCommand(),
-		new InfoCommand(),
-		new VersionCommand(),
-		new LatestCommand(),
-		new CerberusMigrationCommand()
+		new Codeigniter\Migrations\Run($CI->migration),
+		new Codeigniter\Migrations\Rollback(),
+		new Codeigniter\Migrations\Refresh(),
+		new Codeigniter\Migrations\Reset(),
+		new Codeigniter\Migrations\Info(),
+		new Codeigniter\Migrations\Version(),
+		new Codeigniter\Migrations\Latest(),
+		new Codeigniter\Migrations\Generate()
 	);
-	$application = new Application('Craftsman', CRAFTSMAN_VERSION);
+	
+	$application = new Application('Craftsman', '3.1.0');
 	foreach ($commands as $key => $command) {
 		$application->add($command);
 	}
@@ -54,5 +59,5 @@ if ($params = $CI->config->item('migration'))
 }
 else
 {
-	print("Craftsman migration settings does not appear to set correctly.\n");
+	throw new \RuntimeException("Craftsman migration settings does not appear to set correctly.");
 }
