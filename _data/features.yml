@@ -1,0 +1,11 @@
+- title: Solid Base
+  icon: clone
+  description: Built with Symfony Console component.
+
+- title: Interactive
+  icon: terminal
+  description: "Every command also includes a help screen which describes available options."
+
+- title: Modular migrations
+  icon: database
+  description: "Manage your database scheme's evolution through independent versions."

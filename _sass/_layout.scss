@@ -1,0 +1,63 @@
+body {
+/*  min-height: 2000px;*/
+  padding-top: 50px;
+}
+
+.description .jumbotron {
+    text-align: center;
+  
+} 
+
+.container .jumbotron, .container-fluid .jumbotron {
+	border-radius: 0;
+}
+
+a.btn#install-latest {
+	border-color: white;
+}
+
+.features .features-title {
+	margin-bottom: 50px;
+	text-align: center;
+}
+
+.motto {
+    padding: 20px;
+}
+
+.motto h4 {
+	font-weight: 200;
+	font-size: 21px;
+    padding: 0 15% 0 15%;
+}
+
+.contribute {
+    margin-top: 25px;
+}
+
+.contribute .well {
+	min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border:none;
+    border-radius: 0px;
+    box-shadow: none;
+}
+
+footer {
+    text-align: center;
+    padding: 50px;
+}
+
+.navbar-default .navbar-toggle {
+    border-color: transparent;
+}
+
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+    background-color: $brand-primary;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: white;
+}

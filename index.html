@@ -1,0 +1,94 @@
+---
+layout: default
+---
+<section class="description">
+  <div class="row">
+    <div class="jumbotron">
+      <h2>{{site.title}}</h2>
+      <p>{{site.description}}</p>
+      {% if site.data.install.latest %}
+        <p><a class="btn btn-primary btn-lg" href="{{ site.data.install.latest | prepend: site.baseurl }}"  id="install-latest" role="button">Install Latest Build</a></p>
+      {% endif %}
+      <p class="muted" style="font-size:14px;">
+        Currently v{{site.data.project.version}}
+      </p>
+    </div>
+  </div>
+</section>
+{% if site.data.project.motto %}
+  <section class="motto">
+    <div class="text-center">
+      <h4>{{ site.data.project.motto }}</h4>
+    </div>
+  </section>
+  <hr>
+{% endif %}
+{% if site.data.features %}
+  <section class="features">
+    <div class="features-title">
+      <h4>Features</h4>
+      <p>Built on top of great technology.</p>
+    </div>
+    {% assign features_length = site.data.features | size %}
+    {% assign col_size = 12 | divided_by: features_length - 1| round %}
+    <div class="row text-center">
+      {% for feature in site.data.features %}
+        <div class="col-sm-{{ col_size }}">
+          <i class="fa fa-{{ feature.icon }} fa-3x fa-fw"></i>
+          <h4>{{ feature.title }}</h4>
+          <p>{{ feature.description }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}
+<hr>
+{% if site.data.project.demo %}
+  <section class="demo" style="padding:25px;">
+    <div class="text-center">
+      <h4>Demo.</h4>
+      <p>{{ site.data.project.demo.description }}</p>
+    </div>
+    <div class="row">
+      <div class="col-sm-8 col-sm-offset-2">
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe src="{{ site.data.project.demo.url }}" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+  <hr>
+{% endif %}
+<section class="examples" style="padding:50px;">
+  <div class="text-center">
+    <h4>Commands</h4>
+    <p>There are several commands which you will use to interact with your application:</p>
+  </div>
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+      <div class="list-group">
+        <a href="{{ '/docs#migrations' | prepend: site.baseurl }}" class="list-group-item">
+          <h4 class="list-group-item-heading">Migration</h4>
+          <p class="list-group-item-text">Creating new migrations based on the changes you have made to your models, also applying migrations, as well as unapplying and listing their status.</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="contribute">
+  <div class="row well text-center" style="padding:50px;">
+    <h4>Contribute</h4>
+    <p>It would be appreciate if developers join the project, check how you can help.</p>
+    <div class="row" style="margin-top:40px;">
+      <div class="col-sm-3 col-sm-offset-3">
+        <a target="_blank" href="{{ site.data.project.issues | append: '/new' }}" class="btn btn-default btn-block btn-lg">Open an issue</a>
+      </div>
+      <div class="col-sm-3 hide">
+        <button type="button" class="btn btn-default btn-block btn-lg">Shout a tweet</button>
+      </div>
+      <div class="col-sm-3">
+        <a href="{{ '/pulls' | prepend: site.baseurl | prepend: site.url }}" class="btn btn-default btn-block btn-lg">Create a pull request</a>
+      </div>
+    </div>
+  </div>
+</section>
