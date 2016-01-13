@@ -21,6 +21,8 @@ use Codeigniter\Migrations\Version;
 use Codeigniter\Migrations\Latest;
 use Codeigniter\Migrations\Generate;
 
+use Codeigniter\Scaffold\Generate as ScaffoldGenerator;
+
 use Symfony\Component\Console\Application;
 
 // Create CodeIgniter instance and add the extended packages.
@@ -48,7 +50,8 @@ if ($params = $CI->config->item('migration'))
 		new Codeigniter\Migrations\Info(),
 		new Codeigniter\Migrations\Version(),
 		new Codeigniter\Migrations\Latest(),
-		new Codeigniter\Migrations\Generate()
+		new Codeigniter\Migrations\Generate(),
+		new ScaffoldGenerator(),
 	);
 	
 	$application = new Application('Craftsman', '3.1.0');
