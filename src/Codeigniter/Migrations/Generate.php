@@ -20,7 +20,7 @@ use Twig_Environment;
  * Migration:Generate Class
  *
  *
- * @package     CLI Craftsman
+ * @package     Craftsman
  * @author      David Sosa Valdes
  * @link        https://github.com/davidsosavaldes/Craftsman
  * @copyright   Copyright (c) 2015, David Sosa Valdes.

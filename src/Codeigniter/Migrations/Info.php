@@ -15,7 +15,7 @@ use Symfony\Component\Console\Input\ArrayInput;
  * Calls Migration:run info command and display the current migration information
  * of application/hmvc object.
  *
- * @package     CLI Craftsman
+ * @package     Craftsman
  * @author      David Sosa Valdes
  * @link        https://github.com/davidsosavaldes/Craftsman
  * @copyright   Copyright (c) 2014, David Sosa Valdes.

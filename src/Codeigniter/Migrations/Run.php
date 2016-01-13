@@ -22,7 +22,7 @@ use Symfony\Component\Process\ProcessBuilder;
  *
  * This is the main migration command that runs the CodeIgniter migration class.
  *
- * @package     CLI Craftsman
+ * @package     Craftsman
  * @author      David Sosa Valdes
  * @link        https://github.com/davidsosavaldes/Craftsman
  * @copyright   Copyright (c) 2015, David Sosa Valdes.
