@@ -199,9 +199,9 @@ class Generate extends Command
         Twig_Autoloader::register();
 
         $loader = new Twig_Loader_Filesystem(array(
-            ROOTPATH.'src/Templates/Controllers',
-            ROOTPATH.'src/Templates/Models',
-            ROOTPATH.'src/Templates/Views'
+            CRAFTSMANPATH.'src/Templates/Controllers',
+            CRAFTSMANPATH.'src/Templates/Models',
+            CRAFTSMANPATH.'src/Templates/Views'
         ));
         $twig = new Twig_Environment($loader);
 

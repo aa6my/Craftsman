@@ -200,7 +200,7 @@ class Generate extends Command
     private function _create_template($params = array(),$template_name = "")
     {
         Twig_Autoloader::register();
-        $loader = new Twig_Loader_Filesystem(ROOTPATH.'src/Templates/Migrations');
+        $loader = new Twig_Loader_Filesystem(CRAFTSMANPATH.'src/Templates/Migrations');
         $twig   = new Twig_Environment($loader);
         
         $function = new \Twig_SimpleFunction('set_command', function ($field = "") {

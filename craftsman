@@ -10,7 +10,10 @@
  * @copyright  Copyright (c) 2015, David Sosa Valdes.
  */
 
-define('ROOTPATH', __DIR__.DIRECTORY_SEPARATOR);
+// Set to run indefinitely if needed
+set_time_limit(0);
+// Define global variables
+define('CRAFTSMANPATH', __DIR__.DIRECTORY_SEPARATOR);
 
 use Codeigniter\Migrations\Run;
 use Codeigniter\Migrations\Rollback;
@@ -19,25 +22,23 @@ use Codeigniter\Migrations\Reset;
 use Codeigniter\Migrations\Info;
 use Codeigniter\Migrations\Version;
 use Codeigniter\Migrations\Latest;
-use Codeigniter\Migrations\Generate;
-
-use Codeigniter\Scaffold\Generate as ScaffoldGenerator;
+use Craftsman\Commands\Generators\Controller;
+use Craftsman\Commands\Generators\Model;
 
 use Symfony\Component\Console\Application;
 
 // Create CodeIgniter instance and add the extended packages.
-$CI = require ROOTPATH.'src/ci_instance.php';
-$CI->load->add_package_path(ROOTPATH.'src/Extend');
+$CI = require CRAFTSMANPATH.'src/ci_instance.php';
+$CI->load->add_package_path(CRAFTSMANPATH.'src/Extend');
 
 /**
  * We need to load the special migration settings.
  * 
- * Config file path:
- * 		src/Extend/config/migration.php
- * 		
- * @var array
+ * Config file: 
+ * 	src/Extend/config/migration.php
  */
 $CI->config->load('migration', TRUE, TRUE);
+
 if ($params = $CI->config->item('migration')) 
 {
 	$CI->load->library('migration', $params);
@@ -51,10 +52,11 @@ if ($params = $CI->config->item('migration'))
 		new Codeigniter\Migrations\Version(),
 		new Codeigniter\Migrations\Latest(),
 		new Codeigniter\Migrations\Generate(),
-		new ScaffoldGenerator(),
+		new Craftsman\Commands\Generators\Controller(),
+		new Craftsman\Commands\Generators\Model()
 	);
 	
-	$application = new Application('Craftsman', '3.1.0');
+	$application = new Application('Craftsman', '3.2.1');
 	foreach ($commands as $key => $command) {
 		$application->add($command);
 	}

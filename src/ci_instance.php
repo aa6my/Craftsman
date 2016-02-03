@@ -56,7 +56,6 @@ define('VIEWPATH', APPPATH.'views'.DIRECTORY_SEPARATOR);
 #########################################################################
 
 require_once(BASEPATH.'core/Common.php');
-require_once(ROOTPATH.'src/Extend/core/security.php');
 
 get_config(array('subclass_prefix' => $assign_to_config['subclass_prefix']));
 
@@ -75,7 +74,7 @@ else
 
 $CFG  =& load_class('Config', 'core');
 
-require_once(ROOTPATH.'src/Extend/core/charset.php');
+require_once(CRAFTSMANPATH.'src/Extend/core/charset.php');
 require_once(BASEPATH.'core/compat/standard.php');
 
 $UNI  =& load_class('Utf8', 'core');
