@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Migration_{{name}} extends CI_Migration {
-
+class Migration_{{NAME}} extends CI_Migration 
+{
 	public function __construct()
 	{
 		$this->load->dbforge();
@@ -10,7 +10,7 @@ class Migration_{{name}} extends CI_Migration {
 
 	public function up() 
 	{
-		$this->{{table_name}}_table();
+		$this->{{TABLE_NAME}}_table();
 	}
 
 	public function down() 
@@ -18,15 +18,15 @@ class Migration_{{name}} extends CI_Migration {
 		/**
 		 * Uncomment bellow if you need to destroy the columns you modify.
 		 */
-{% for field in fields %}{% set command = set_command(field) %}
-		#$this->dbforge->drop_column('ci_{{ table_name|replace({'modify_':''}) }}', '{{command.name}}');
+{% for field in FIELDS %}{% set command = set_command(field) %}
+		#$this->dbforge->drop_column('ci_{{ TABLE_NAME|replace({'modify_':''}) }}', '{{command.name}}');
 {% endfor %}
 	}
 
-	private function {{table_name}}_table()
+	private function {{TABLE_NAME}}_table()
 	{
 		$fields = array(
-{% for field in fields %}{% set command = set_command(field) %}
+{% for field in FIELDS %}{% set command = set_command(field) %}
 
 			'<column_old_name>' => array(
 				'name' => '{{command.name}}',
@@ -35,7 +35,7 @@ class Migration_{{name}} extends CI_Migration {
 
 		);		
 
-		$this->dbforge->modify_column('ci_{{ table_name|replace({'modify_':''}) }}', $fields); 
+		$this->dbforge->modify_column('ci_{{ TABLE_NAME|replace({'modify_':''}) }}', $fields); 
 	}	
 }
 

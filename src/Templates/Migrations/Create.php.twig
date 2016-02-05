@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Migration_{{name}} extends CI_Migration {
+class Migration_{{NAME}} extends CI_Migration {
 
 	public function __construct()
 	{
@@ -10,15 +10,15 @@ class Migration_{{name}} extends CI_Migration {
 
 	public function up() 
 	{
-		$this->{{table_name}}_table();
+		$this->{{TABLE_NAME}}_table();
 	}
 
 	public function down() 
 	{
-		$this->dbforge->drop_table('ci_{{ table_name|replace({'create_':''}) }}');
+		$this->dbforge->drop_table('ci_{{TABLE_NAME|replace({'create_':''})}}');
 	}
 
-	private function {{table_name}}_table()
+	private function {{TABLE_NAME}}_table()
 	{
 		$this->dbforge->add_field(array(
 			'id' => array(
@@ -27,7 +27,7 @@ class Migration_{{name}} extends CI_Migration {
 				'auto_increment' => TRUE,
 				'unsigned' => TRUE,
 				'constraint' => 11
-			),{% for field in fields %}{% set command = set_command(field) %}
+			),{% for field in FIELDS %}{% set command = set_command(field) %}
 
 			'{{command.name}}' => array(
 				'type' => '{{command.type|upper}}',
@@ -37,9 +37,9 @@ class Migration_{{name}} extends CI_Migration {
 
 		));
 		$this->dbforge->add_key('id', TRUE);
-		$this->dbforge->create_table('ci_{{ table_name|replace({'create_':''}) }}', TRUE);		
+		$this->dbforge->create_table('ci_{{ TABLE_NAME|replace({'create_':''}) }}', TRUE);		
 	}
 }
 
-/* End of file {{filename}}.php */
-/* Location: {{path}} */
+/* End of file {{FILENAME}}.php */
+/* Location: {{PATH}} */

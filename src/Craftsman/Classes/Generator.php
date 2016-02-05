@@ -2,12 +2,13 @@
 namespace Craftsman\Classes;
 
 use Craftsman\Commands\Base as Command;
-use Craftsman\Interfaces\Generator as GeneratorInterface;
+
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Filesystem\Filesystem;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
+use Twig_SimpleFunction;
 
 /**
  * Base Generator Class
@@ -15,10 +16,10 @@ use Twig_Environment;
  * @package     Craftsman
  * @author      David Sosa Valdes
  * @link        https://github.com/davidsosavaldes/Craftsman
- * @copyright   Copyright (c) 2015, David Sosa Valdes.
+ * @copyright   Copyright (c) 2016, David Sosa Valdes.
  * @version     1.0.0
  */
-class Generator extends Command implements GeneratorInterface
+class Generator extends Command
 {
 	/**
 	 * Symfony Filesystem instance
@@ -29,9 +30,9 @@ class Generator extends Command implements GeneratorInterface
     /**
      * Class constructor
      */
-    public function __construct($name = NULL)
+    public function __construct()
     {
-    	parent::__construct($name);
+    	parent::__construct();
     	$this->_filesystem = new Filesystem();   	
     }
 
@@ -65,7 +66,13 @@ class Generator extends Command implements GeneratorInterface
                 NULL,
                 InputOption::VALUE_NONE,
                 'If set, the task will force the generation process'
-            );
+            )
+            ->addOption(
+                'timestamp',
+                NULL,
+                InputOption::VALUE_NONE,
+                'If set, the migration will run with timestamp mode active'
+            );            
     }
 
     /**
@@ -78,26 +85,20 @@ class Generator extends Command implements GeneratorInterface
      * @return bool              Returns true if the file has been created
      */
     protected function make($filenames, $paths, array $options = array(), $template = 'Base.php.twig')
-    {
-        if (is_array($paths)) 
-        {
-            array_walk($paths, function(&$path){
-                $path = CRAFTSMANPATH.$path;
-            });
-        }
-        else
-        {
-            $paths = CRAFTSMANPATH.$paths;
-        }
-    
+    {    
         $loader = new Twig_Loader_Filesystem($paths);
-        $twig = new Twig_Environment($loader);         
+        $twig = new Twig_Environment($loader); 
+
+        $function = new Twig_SimpleFunction('set_command', function ($field = "") {
+          return array_combine(array('name','type'), explode(':', $field));
+        });
+        $twig->addFunction($function);                 
     
         foreach ((array) $filenames as $filename) 
         { 
             if (! $this->getOption('force') && $this->_filesystem->exists($filename)) 
             {
-                throw new \RuntimeException("Cannot duplicate [{$filename}]");
+                throw new \RuntimeException("Cannot duplicate [{$filename}].");
             }   
 
             foreach ($this->getArgument('options') as $option) 
@@ -113,9 +114,4 @@ class Generator extends Command implements GeneratorInterface
         }
         return TRUE;
     }
-
-    /**
-     * Start method prototype
-     */
-    public function start(){return FALSE;}
 }

@@ -3,8 +3,17 @@
 namespace Craftsman\Commands\Generators;
 
 use Craftsman\Classes\Generator;
+use Craftsman\Interfaces\Generator as GeneratorInterface;
 
-class Model extends Generator
+/**
+ * Generator - Model Command
+ *
+ * @package     Craftsman
+ * @author      David Sosa Valdes
+ * @link        https://github.com/davidsosavaldes/Craftsman
+ * @copyright   Copyright (c) 2016, David Sosa Valdes.
+ */
+class Model extends Generator implements GeneratorInterface
 {
 	protected $name        = 'generator:model';
 	protected $description = 'Generate a Model';
@@ -17,8 +26,11 @@ class Model extends Generator
 		// We could try to create a directory if doesn't exist.
 		(! $this->_filesystem->exists($basepath)) && $this->_filesystem->mkdir($basepath);
 
+		$this->text('Controller path: <comment>'.$basepath.'</comment>');
+		$this->text('Filename: <comment>'.$filename.'_model.php</comment>');			
+
         // Confirm the action
-	    if($this->confirm('Do you want me to create a '.$filename.'Model?', TRUE))
+	    if($this->confirm('Do you want to create a '.$filename.' Model?', TRUE))
 	    {
 	    	$test_file = $basepath.$filename.'_model.php';
 	    	$options = array(
@@ -27,7 +39,7 @@ class Model extends Generator
 	    		'FILENAME'   => basename($test_file),
 	    		'PATH'       => $test_file	    		
 	    	);
-	    	if ($this->make($test_file, 'src/Templates/Models', $options)) 
+	    	if ($this->make($test_file, CRAFTSMANPATH.'src/Templates/Models', $options)) 
 	    	{
 	    		$this->success('Model created successfully!');
 	    	}

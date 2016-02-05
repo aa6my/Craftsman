@@ -1,68 +1,50 @@
 #!/usr/bin/env php
 <?php
 
+use Craftsman\Commands\Generators\Controller;
+use Craftsman\Commands\Generators\Model;
+use Craftsman\Commands\Generators\Migration;
+use Craftsman\Commands\Migrations\Info;
+use Craftsman\Commands\Migrations\Version;
+use Craftsman\Commands\Migrations\Latest;
+use Craftsman\Commands\Migrations\Rollback;
+use Craftsman\Commands\Migrations\Reset;
+use Craftsman\Commands\Migrations\Refresh;
+
+use Symfony\Component\Console\Application;
+
 /**
  * CLI Codeigniter Crafstman
  *
  * @author     David Sosa Valdes <https://github.com/davidsosavaldes>
  * @license    MIT License
  * @link       https://github.com/davidsosavaldes/Craftsman
- * @copyright  Copyright (c) 2015, David Sosa Valdes.
+ * @copyright  Copyright (c) 2016, David Sosa Valdes.
  */
 
 // Set to run indefinitely if needed
 set_time_limit(0);
-// Define global variables
+
 define('CRAFTSMANPATH', __DIR__.DIRECTORY_SEPARATOR);
 
-use Codeigniter\Migrations\Run;
-use Codeigniter\Migrations\Rollback;
-use Codeigniter\Migrations\Refresh;
-use Codeigniter\Migrations\Reset;
-use Codeigniter\Migrations\Info;
-use Codeigniter\Migrations\Version;
-use Codeigniter\Migrations\Latest;
-use Craftsman\Commands\Generators\Controller;
-use Craftsman\Commands\Generators\Model;
-
-use Symfony\Component\Console\Application;
-
-// Create CodeIgniter instance and add the extended packages.
+// Create a Codeigniter instance and add the extended packages.
 $CI = require CRAFTSMANPATH.'src/ci_instance.php';
 $CI->load->add_package_path(CRAFTSMANPATH.'src/Extend');
 
-/**
- * We need to load the special migration settings.
- * 
- * Config file: 
- * 	src/Extend/config/migration.php
- */
-$CI->config->load('migration', TRUE, TRUE);
+$commands = array(
+	new Migration(),
+	new Controller(),
+	new Model(),
+	new Info($CI),
+	new Version($CI),
+	new Latest($CI),
+	new Rollback($CI),
+	new Reset($CI),
+	new Refresh($CI)
+);
 
-if ($params = $CI->config->item('migration')) 
-{
-	$CI->load->library('migration', $params);
-
-	$commands = array(
-		new Codeigniter\Migrations\Run($CI->migration),
-		new Codeigniter\Migrations\Rollback(),
-		new Codeigniter\Migrations\Refresh(),
-		new Codeigniter\Migrations\Reset(),
-		new Codeigniter\Migrations\Info(),
-		new Codeigniter\Migrations\Version(),
-		new Codeigniter\Migrations\Latest(),
-		new Codeigniter\Migrations\Generate(),
-		new Craftsman\Commands\Generators\Controller(),
-		new Craftsman\Commands\Generators\Model()
-	);
-	
-	$application = new Application('Craftsman', '3.2.1');
-	foreach ($commands as $key => $command) {
-		$application->add($command);
-	}
-	$application->run();
+$application = new Application('Craftsman', '3.3.0');
+foreach ($commands as $key => $command) {
+	$application->add($command);
 }
-else
-{
-	throw new \RuntimeException("Craftsman migration settings does not appear to set correctly.");
-}
+$application->run();

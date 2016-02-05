@@ -36,6 +36,6 @@
         }
     },
     "suggest": {
-        "dsv/attire": "Attire is an implementation of Twig template engine and Assetic asset management framework for CodeIgniter 3.0."
+        "dsv/attire": "Attire is an implementation of Twig template engine and Sprockets-PHP asset management framework for CodeIgniter 3.0."
     }
 }

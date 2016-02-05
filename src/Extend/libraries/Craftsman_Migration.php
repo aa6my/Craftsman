@@ -2,34 +2,33 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * CodeIgniter Migration
+ * Craftsman Migration
  *
  * Run all the posible migration escenarios in a Codeigniter or HMVC application.
  *
  * @package		CodeIgniter
  * @category	Libraries
  * @author		David Sosa Valdes
- * @copyright   Copyright (c) 2015, David Sosa Valdes.
+ * @copyright   Copyright (c) 2016, David Sosa Valdes.
  */
 class Craftsman_Migration extends CI_Migration
 {
 	/**
 	 * Module path where migrations are stored.
-	 * @var [type]
+	 * @var string
 	 */
 	protected $_module_path;
 
 	/**
-	 * Module name stored in DB.
-	 * @var null
+	 * Module name stored in Database.
+	 * @var string
 	 */
-	
 	protected $_module_name = 'ci_system';
 
 	/**
 	 * Constructor
 	 * 
-	 * @param array $config [description]
+	 * @param array $config Migration library config arguments.
 	 */
 	public function __construct($config = array())
 	{
@@ -57,6 +56,7 @@ class Craftsman_Migration extends CI_Migration
 
 	/**
 	 * Set alll params you want.
+	 * 
 	 * @param array $config
 	 */
 	public function set_params($config = array())
@@ -71,6 +71,7 @@ class Craftsman_Migration extends CI_Migration
 
 	/**
 	 * Get module name
+	 * 
 	 * @return string
 	 */
 	public function get_module_name()
@@ -80,6 +81,7 @@ class Craftsman_Migration extends CI_Migration
 
 	/**
 	 * Get module path
+	 * 
 	 * @return string
 	 */
 	public function get_module_path()
@@ -89,7 +91,8 @@ class Craftsman_Migration extends CI_Migration
 
 	/**
 	 * Get the actual db migration version
-	 * @return mix [the migration number version]
+	 * 
+	 * @return mix the migration number version
 	 */
 	protected function _get_version()
 	{
@@ -100,7 +103,8 @@ class Craftsman_Migration extends CI_Migration
 
 	/**
 	 * Get the actual db migration version
-	 * @return mix [the migration number version]
+	 * 
+	 * @return mix the migration number version
 	 */
 	public function get_db_version()
 	{
@@ -109,7 +113,8 @@ class Craftsman_Migration extends CI_Migration
 
 	/**
 	 * Get the migration number on config file.
-	 * @return mix [the migration number version]
+	 * 
+	 * @return mix the migration number version
 	 */
 	public function get_config_version()
 	{
@@ -117,9 +122,10 @@ class Craftsman_Migration extends CI_Migration
 	}
 
 	/**
-	 * Get migration number based on ----
+	 * Get migration number based on a set of migrations
+	 * 
 	 * @param  mix $number 
-	 * @return mix [the migration number version]
+	 * @return mix the migration number version
 	 */
 	public function get_latest_version(array $migrations)
 	{
@@ -145,8 +151,7 @@ class Craftsman_Migration extends CI_Migration
 	/**
 	 * Store the current schema version or ignore it without changes.
 	 *
-	 * @param	string	$migration	Migration reached
-	 * @return	self
+	 * @param string $migration	Migration reached
 	 */
 	protected function _update_version($migration)
 	{
@@ -181,6 +186,16 @@ class Craftsman_Migration extends CI_Migration
 		$this->db->limit(1);
 		$query = $this->db->get();
 		return $query->num_rows() >= 1;
+	}
+
+	/**
+	 * Get current migration table used in Database.
+	 * 
+	 * @return string migration table name
+	 */
+	public function getTable()
+	{
+		return $this->_migration_table;
 	}
 }
 
