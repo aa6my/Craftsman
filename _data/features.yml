@@ -1,6 +1,6 @@
 - title: Solid Base
   icon: clone
-  description: Built with Symfony Console component.
+  description: "Built with <a href='https://github.com/symfony/console' target='_blank'>Symfony Console component</a>"
 
 - title: Interactive
   icon: terminal

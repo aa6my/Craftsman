@@ -69,7 +69,11 @@ layout: default
       <div class="list-group">
         <a href="{{ '/docs#migrations' | prepend: site.baseurl }}" class="list-group-item">
           <h4 class="list-group-item-heading">Migration</h4>
-          <p class="list-group-item-text">Creating new migrations based on the changes you have made to your models, also applying migrations, as well as unapplying and listing their status.</p>
+          <p class="list-group-item-text">Easily modify and share the application's database schema.</p>
+        </a>
+        <a href="{{ '/docs#generators' | prepend: site.baseurl }}" class="list-group-item">
+          <h4 class="list-group-item-heading">Generators</h4>
+          <p class="list-group-item-text">Rapidly speed up your Codeigniter workflow.</p>
         </a>
       </div>
     </div>
@@ -80,15 +84,18 @@ layout: default
     <h4>Contribute</h4>
     <p>It would be appreciate if developers join the project, check how you can help.</p>
     <div class="row" style="margin-top:40px;">
-      <div class="col-sm-3 col-sm-offset-3">
+      <div class="col-sm-4">
         <a target="_blank" href="{{ site.data.project.issues | append: '/new' }}" class="btn btn-default btn-block btn-lg">Open an issue</a>
       </div>
       <div class="col-sm-3 hide">
         <button type="button" class="btn btn-default btn-block btn-lg">Shout a tweet</button>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <a href="{{ '/pulls' | prepend: site.baseurl | prepend: site.url }}" class="btn btn-default btn-block btn-lg">Create a pull request</a>
       </div>
+      <div class="col-sm-4">
+        <a href="{{ '/docs#create-command' | prepend: site.baseurl }}" class="btn btn-default btn-block btn-lg">Create a command</a>
+      </div>      
     </div>
   </div>
 </section>
