@@ -5,16 +5,16 @@ fulltitle: Documentation
 permalink: /docs/
 description: ""
 menu:
-  - setup: 
-      Installation       : "#installation"
-      Getting Started    : "#getting-started"
+  - setup:
+        Installation            : "#installation"
+        Getting Started         : "#getting-started"
   - commands:
-      Migrations  	 	 : "#migrations"
-      Generators         : "#generators"
+        Migrations              : "#migrations"
+        Generators              : "#generators"
   - extra:
-      CI Environment     : "#ci-environment"
+        Codeigniter Environment : "#codeigniter-environment"
   - get involved:
-      Contributions    	 : "#contributions"
+        Contributions           : "#contributions"
 ---
 
 Installation
@@ -374,14 +374,14 @@ Now it's your turn to give the finishing touches before running this scheme. Che
 
 ----
 
-CI Environment
---------------
+Codeigniter Environment
+-----------------------
 
 Fix the paths in `path/to/vendor/dsv/craftsman/ci_instance.php` if you need.
 
-$system_path        = 'system';
-$application_folder = 'application';
-$view_folder        = ''; // if there's another than the default
+    $system_path        = 'system';
+    $application_folder = 'application';
+    $view_folder        = ''; // if there's another path than the default
 
 ----
 

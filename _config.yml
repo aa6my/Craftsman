@@ -9,7 +9,7 @@
 title: Craftsman
 email: david.sosa.valdes@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  Advanced CLI for Codeigniter using the Symfony Console component.
+  Advanced CLI for Codeigniter 3.0
 baseurl: "/Craftsman" # the subpath of your site, e.g. /blog
 url: "https://github.com/davidsosavaldes" # the base hostname & protocol for your site
 github_username: davidsosavaldes
