@@ -1,7 +1,0 @@
-issues: https://github.com/davidsosavaldes/Craftsman/issues
-releases: https://github.com/davidsosavaldes/Craftsman/wiki/Release-Notes
-motto: "Provides a number of helpful commands for your use while developing your application."
-version: 3.3.0
-demo:
-  url: "https://www.youtube-nocookie.com/embed/JA51oVUoWRc?rel=0&amp;showinfo=0&amp;hd=1"
-  description: "Install Craftsman, generate a migration scheme then update the database under 3 minutes."

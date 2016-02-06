@@ -14,6 +14,14 @@ baseurl: "/Craftsman" # the subpath of your site, e.g. /blog
 url: "https://github.com/davidsosavaldes" # the base hostname & protocol for your site
 github_username: davidsosavaldes
 
+# Theme settings
+issues: "/issues"
+releases: "/wiki/Release-Notes"
+motto: "Provides a number of helpful commands for your use while developing your application."
+version: 3.3.0
+demo: "https://www.youtube-nocookie.com/embed/JA51oVUoWRc?rel=0&amp;showinfo=0&amp;hd=1"
+license: 'MIT'
+
 # Build settings
 markdown: kramdown
 

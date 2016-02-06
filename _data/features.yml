@@ -1,11 +1,14 @@
 - title: Solid Base
   icon: clone
   description: "Built with <a href='https://github.com/symfony/console' target='_blank'>Symfony Console component</a>"
+  col_size: 4
 
 - title: Interactive
   icon: terminal
   description: "Every command also includes a help screen which describes available options."
+  col_size: 4
 
 - title: Modular migrations
   icon: database
   description: "Manage your database scheme's evolution through independent versions."
+  col_size: 4
