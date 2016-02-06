@@ -3,6 +3,10 @@
 error_reporting(-1);
 ini_set('display_errors', 1);
 
+#########################################################################
+# CodeIgniter Attributes
+#########################################################################
+
 $system_path = 'system';
 $application_folder = 'application';
 $view_folder = '';
@@ -78,9 +82,9 @@ require_once(CRAFTSMANPATH.'src/Extend/core/charset.php');
 require_once(BASEPATH.'core/compat/standard.php');
 
 $UNI  =& load_class('Utf8', 'core');
-#$RTR  =& load_class('Router', 'core', NULL);
+#$RTR =& load_class('Router', 'core', NULL);
 $SEC  =& load_class('Security', 'core');
-#$IN	  =& load_class('Input', 'core');
+#$IN  =& load_class('Input', 'core');
 $LANG =& load_class('Lang', 'core');
 
 require_once BASEPATH.'core/Controller.php';
