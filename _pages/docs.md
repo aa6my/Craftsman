@@ -8,10 +8,11 @@ menu:
   - setup: 
       Installation       : "#installation"
       Getting Started    : "#getting-started"
-      Commands 			 : "#commands"
   - commands:
       Migrations  	 	 : "#migrations"
       Generators         : "#generators"
+  - extra:
+      CI Environment     : "#ci-environment"
   - get involved:
       Contributions    	 : "#contributions"
 ---
@@ -57,6 +58,7 @@ To view a list of all available Craftsman commands, you may use the list command
 Every command includes a help screen which displays the command's available arguments and options. To view a help screen from a command, simply add the name of the command with help:
 
 	php path/to/craftsman help migration:latest
+
 
 ---
 
@@ -271,14 +273,11 @@ Output:
 
 class Foo_model extends CI_Model 
 {
-
     public function __construct()
     {
         parent::__construct();
         $this->load->database();    
     }
-
-
 }
 
 /* End of file Foo_model.php */
@@ -372,6 +371,19 @@ class Migration_create_users extends CI_Migration {
 The migration file will be placed in your migration folder or any folder you specify with the `--path` argument instead of the default Codeigniter migration path with a version number as a prefix.
 
 Now it's your turn to give the finishing touches before running this scheme. Check the [Database Forge documentation](https://codeigniter.com/user_guide/database/forge.html) for more information about CodeIgniter Migrations.
+
+----
+
+CI Environment
+--------------
+
+Fix the paths in `path/to/vendor/dsv/craftsman/ci_instance.php` if you need.
+
+$system_path        = 'system';
+$application_folder = 'application';
+$view_folder        = ''; // if there's another than the default
+
+----
 
 
 Contributions
