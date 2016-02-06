@@ -65,7 +65,7 @@ Migrations
 
 Migration schemes are simple files that hold the commands to apply and remove changes to your database. It allows you to easily keep track of changes made in your app. They may create/modify tables or fields, etc. But they are not limited to just changing the schema. You could use them to fix bad data in the database or populate new fields.
 
-###Migration file names
+##Migration file names
 
 Each Migration is run in numeric order forward or backwards depending on the method taken. Two numbering styles are available:
 
@@ -74,7 +74,7 @@ Each Migration is run in numeric order forward or backwards depending on the met
 
 By default Craftsman uses the sequential style but it can be forced to change with the `--timestamp` argument used with every migration command listed bellow.
 
-###Displaying info
+##Displaying info
 
 You can display the current migration information with the comand:
 
@@ -122,7 +122,7 @@ Below the information table there is a legend witch indicates the action to take
 
 Each migration command shows relevant information to perform some action and it asks a Yes/No question to the user before perform some action.
 
-###Running migrations
+##Running migrations
 
 Migrations are designed to be mostly automatic, but you’ll need to know when to make migrations, when to run them, and the common problems you might run into. Here's a list of possible options.
 
@@ -138,7 +138,7 @@ Version can be used to roll back changes or step forwards programmatically to sp
 
 	php path/to/craftsman migration:version <number>
 
-###Rolling-back migrations
+##Rolling-back migrations
 
 Allows you to quickly roll back and forth through the history of the migration schema, so as to work with desired version. Here's a list of possible options.
 
@@ -163,7 +163,7 @@ Generators
 
 Craftsman provides a variety of generators to speed up your development process.
 
-###Controller
+##Controller
 
 Generate a controller with:
 
@@ -258,7 +258,7 @@ You can put the controller inside a different directory with the `--path` argume
 
     php path/to/craftsman generator:controller foo --path='new/path/admin'
 
-###Model
+##Model
 
 Generate a model with:
 
@@ -290,7 +290,7 @@ Same as the [Controller Generator](#controller), you can put the model inside a 
 
     php path/to/craftsman generator:controller foo --path='new/path/admin'
 
-###Migration
+##Migration
 
 Generate a migration with:
 
