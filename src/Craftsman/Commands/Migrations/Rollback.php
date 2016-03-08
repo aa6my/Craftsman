@@ -1,5 +1,4 @@
 <?php
-
 namespace Craftsman\Commands\Migrations;
 
 use Craftsman\Classes\Migration;
@@ -20,11 +19,18 @@ class Rollback extends Migration
 	protected function start()
 	{
 		$migrations = $this->_model->find_migrations();
+		$versions   = array_map('intval', array_keys($migrations));
+
 		$db_version = intval($this->_model->get_db_version());
 
-		$versions = array_keys($migrations); 
 		end($versions);
-		$version = prev($versions);
+		while ($version = prev($versions)) 
+		{
+			if ($version == ($db_version - 1)) 
+			{
+				break;
+			}
+		}
 
 		if($version < 0)
 		{
@@ -40,7 +46,7 @@ class Rollback extends Migration
 				'</comment> from <comment>'.$db_version.'</comment>');
 			$case = 'reverting';
 			$signal = '--';
-		}	
+		}
 
 		$this->newLine();
 		$this->text('<info>'.$signal.'</info> '.$case);		

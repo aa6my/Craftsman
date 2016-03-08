@@ -1,7 +1,9 @@
 <?php
 namespace Craftsman\Commands\Generators;
+
 use Craftsman\Classes\Generator;
 use Craftsman\Interfaces\Generator as GeneratorInterface;
+
 /**
 * Generator - Controller Command
 *
@@ -25,10 +27,14 @@ class Migration extends Generator implements GeneratorInterface
 			: '/^\d{3}_(\w+)$/';
 		
 		$filename = $this->getArgument('filename');
-		$basepath = rtrim($this->getOption('path'),'/').'/migrations/';
+		$basepath = $this->getOption('path');
+
+		$basepath = rtrim(preg_replace(['/migrations/','/migration/'], ['',''], $basepath),'/');
+		$basepath.='/migrations/';
 		
 		// We could try to create a directory if doesn't exist.
 		(! $this->_filesystem->exists($basepath)) && $this->_filesystem->mkdir($basepath);
+		
 		$migrations = array();
 		// And now let's figure out the migration target version
 		if ($handle = opendir($basepath))
@@ -77,33 +83,34 @@ class Migration extends Generator implements GeneratorInterface
 		if($this->confirm('Do you want to create a '.$filename.' Migration?', TRUE))
 		{
 			$test_file = $basepath.$target_file;
-	        # Set the migration template arguments
-	        $options = array(
-	            'NAME'       => ucfirst($this->getArgument('filename')),
-	            'FILENAME'   => $target_file,
-	            'PATH'       => $test_file,
-	            'TABLE_NAME' => $this->getArgument('filename'),
-	            'FIELDS'     => (array) $this->getArgument('options')
-	        );
+	        	# Set the migration template arguments
+	        	$options = array(
+	            		'NAME'       => ucfirst($this->getArgument('filename')),
+	            		'FILENAME'   => $target_file,
+	            		'PATH'       => $test_file,
+	            		'TABLE_NAME' => $this->getArgument('filename'),
+	            		'FIELDS'     => (array) $this->getArgument('options')
+	        	);
 
-	        list($_type) = explode('_', $this->getArgument('filename'));
+		        list($_type) = explode('_', $this->getArgument('filename'));
 
-	        switch ($_type) 
-	        {
-	        	case 'add':
-	            case 'create':
-	            case 'new':
-	                $template_name = 'Create.php.twig'; 
-	                break;
-	            case 'update':
-	            case 'modify':
-	                $template_name = 'Modify.php.twig';
-	                empty($options['FIELDS']) && $options['FIELDS'] = array('column_name:column_type');
-	                break;
-	            default:
-	                $template_name = 'Default.php.twig';
-	                break;
-	        }
+	        	switch ($_type) 
+	        	{
+	            		case 'add':
+	            		case 'create':
+	            		case 'new':
+	                		$template_name = 'Create.php.twig'; 
+	                		break;
+	           
+	            		case 'update':
+	            		case 'modify':
+	                		$template_name = 'Modify.php.twig';
+	                		empty($options['FIELDS']) && $options['FIELDS'] = array('column_name:column_type');
+	                		break;
+	            		default:
+	                		$template_name = 'Default.php.twig';
+	                		break;
+	        	}
 
 			if ($this->make($test_file, CRAFTSMANPATH.'src/Templates/Migrations/', $options, $template_name))
 			{
