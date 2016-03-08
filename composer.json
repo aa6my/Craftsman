@@ -21,7 +21,8 @@
         "symfony/console": "^3.0",
         "symfony/filesystem": "^3.0",
         "symfony/process": "^3.0",
-        "twig/twig" : "^1.18"
+        "twig/twig" : "^1.18",
+        "codeigniter/framework": "^3.0"
     },
     "autoload": {
         "psr-0": { "": "src/" }

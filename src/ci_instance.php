@@ -1,15 +1,23 @@
 <?php 
+/**
+ * Part of Attire Library
+ *
+ * @author     David Sosa Valdes <https://github.com/davidsosavaldes>
+ * @license    MIT License
+ * @copyright  2016 David Sosa Valdes
+ * @link       https://github.com/davidsosavaldes/Attire
+ *
+ * Based on https://raw.githubusercontent.com/kenjis/codeigniter-ss-twig/master/ci_instance.php
+ * Thanks Kenji!
+ */
 
 error_reporting(-1);
 ini_set('display_errors', 1);
 
-#########################################################################
-# CodeIgniter Attributes
-#########################################################################
+define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
 
-$system_path = 'system';
-$application_folder = 'application';
-$view_folder = '';
+$system_path = 'vendor/codeigniter/framework/system';
+$application_folder = 'vendor/codeigniter/framework/application';
 
 # Make sure some config variables are set correctly
 $assign_to_config['subclass_prefix'] = 'Craftsman_';
@@ -25,12 +33,10 @@ else
 
 if (! is_dir($system_path))
 {
-	header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
-	echo "Your system folder path does not appear to be set correctly.\n";
+	print("Your system folder path does not appear to be set correctly.\n");
 	exit(3);
 }
 
-define('ENVIRONMENT', 'development');
 define('BASEPATH', str_replace('\\', '/', $system_path));
 
 if (is_dir($application_folder))
@@ -45,9 +51,8 @@ else
 {
 	if ( ! is_dir(BASEPATH.$application_folder.DIRECTORY_SEPARATOR))
 	{
-		header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
-		echo 'Your application folder path does not appear to be set correctly.' 
-		.' Please open the following file and correct this: '.SELF;
+		print('Your application folder path does not appear to be set correctly.' 
+		.' Please open the following file and correct this: '.SELF);
 		exit(3);
 	}
 	define('APPPATH', BASEPATH.$application_folder.DIRECTORY_SEPARATOR);
@@ -61,14 +66,19 @@ define('VIEWPATH', APPPATH.'views'.DIRECTORY_SEPARATOR);
 
 require_once(BASEPATH.'core/Common.php');
 
+if (file_exists(APPPATH . 'config/' . ENVIRONMENT . '/constants.php')) {
+    require(APPPATH . 'config/' . ENVIRONMENT . '/constants.php');
+} else {
+    require(APPPATH . 'config/constants.php');
+}
+
 get_config(array('subclass_prefix' => $assign_to_config['subclass_prefix']));
 
 $composer_autoload = 'vendor/autoload.php';
 
 if (! file_exists($composer_autoload)) 
 {
-	header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
-	echo 'Your composer autoload file path does not appear to be set correctly.';
+	print('Your composer autoload file path does not appear to be set correctly.');
 	exit(3);
 }
 else
@@ -76,23 +86,44 @@ else
 	require_once($composer_autoload);
 }
 
+$charset = strtoupper(config_item('charset'));
+ini_set('default_charset', $charset);
+
+if (extension_loaded('mbstring')) {
+    define('MB_ENABLED', TRUE);
+    // mbstring.internal_encoding is deprecated starting with PHP 5.6
+    // and it's usage triggers E_DEPRECATED messages.
+    @ini_set('mbstring.internal_encoding', $charset);
+    // This is required for mb_convert_encoding() to strip invalid characters.
+    // That's utilized by CI_Utf8, but it's also done for consistency with iconv.
+    mb_substitute_character('none');
+} else {
+    define('MB_ENABLED', FALSE);
+}
+
+// There's an ICONV_IMPL constant, but the PHP manual says that using
+// iconv's predefined constants is "strongly discouraged".
+if (extension_loaded('iconv')) {
+    define('ICONV_ENABLED', TRUE);
+    // iconv.internal_encoding is deprecated starting with PHP 5.6
+    // and it's usage triggers E_DEPRECATED messages.
+    @ini_set('iconv.internal_encoding', $charset);
+} else {
+    define('ICONV_ENABLED', FALSE);
+}
+
 $CFG  =& load_class('Config', 'core');
-
-require_once(CRAFTSMANPATH.'src/Extend/core/charset.php');
-require_once(BASEPATH.'core/compat/standard.php');
-
 $UNI  =& load_class('Utf8', 'core');
-#$RTR =& load_class('Router', 'core', NULL);
 $SEC  =& load_class('Security', 'core');
-#$IN  =& load_class('Input', 'core');
+$RTR  =& load_class('Router', 'core');
+$IN   =& load_class('Input', 'core');
 $LANG =& load_class('Lang', 'core');
 
 require_once BASEPATH.'core/Controller.php';
 
-function &get_instance() {
+function &get_instance() 
+{
     return CI_Controller::get_instance();
 }
 
-$instance = new CI_Controller();
-
-return $instance;
+return new CI_Controller();
