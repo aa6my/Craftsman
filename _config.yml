@@ -18,7 +18,7 @@ github_username: davidsosavaldes
 issues: "/issues"
 releases: "/wiki/Release-Notes"
 motto: "Provides a number of helpful commands for your use while developing your application."
-version: 3.3.0
+version: 3.4.0
 demo: "https://www.youtube-nocookie.com/embed/JA51oVUoWRc?rel=0&amp;showinfo=0&amp;hd=1"
 license: 'MIT'
 
