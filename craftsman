@@ -1,15 +1,16 @@
 #!/usr/bin/env php
 <?php
 
-use Craftsman\Commands\Generators\Controller;
-use Craftsman\Commands\Generators\Model;
-use Craftsman\Commands\Generators\Migration;
-use Craftsman\Commands\Migrations\Info;
-use Craftsman\Commands\Migrations\Version;
-use Craftsman\Commands\Migrations\Latest;
-use Craftsman\Commands\Migrations\Rollback;
-use Craftsman\Commands\Migrations\Reset;
-use Craftsman\Commands\Migrations\Refresh;
+use Craftsman\Commands\Generators\Controller as Generator_Controller;
+use Craftsman\Commands\Generators\Model      as Generator_Model;
+use Craftsman\Commands\Generators\Migration  as Generator_Migration;
+
+use Craftsman\Commands\Migrations\Info       as Migration_Info;
+use Craftsman\Commands\Migrations\Version    as Migration_Version;
+use Craftsman\Commands\Migrations\Latest     as Migration_Latest;
+use Craftsman\Commands\Migrations\Rollback   as Migration_Rollback;
+use Craftsman\Commands\Migrations\Reset      as Migration_Reset;
+use Craftsman\Commands\Migrations\Refresh    as Migration_Refresh;
 
 use Symfony\Component\Console\Application;
 
@@ -33,18 +34,18 @@ $CI = require CRAFTSMANPATH.'src/ci_instance.php';
 $CI->load->add_package_path(CRAFTSMANPATH.'src/Extend');
 // Set the commands
 $commands = array(
-	new Migration(),
-	new Controller(),
-	new Model(),
-	new Info($CI),
-	new Version($CI),
-	new Latest($CI),
-	new Rollback($CI),
-	new Reset($CI),
-	new Refresh($CI)
+	new Generator_Migration(),
+	new Generator_Controller(),
+	new Generator_Model(),
+	new Migration_Info($CI),
+	new Migration_Version($CI),
+	new Migration_Latest($CI),
+	new Migration_Rollback($CI),
+	new Migration_Reset($CI),
+	new Migration_Refresh($CI)
 );
 
-$application = new Application('Craftsman', '3.3.0');
+$application = new Application('Craftsman', '3.4.0');
 // Add the default commands
 foreach ($commands as $key => $command) {
 	$application->add($command);
