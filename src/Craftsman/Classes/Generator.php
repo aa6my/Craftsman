@@ -59,7 +59,7 @@ class Generator extends Command
                 'p', 
                 InputOption::VALUE_REQUIRED, 
                 'Set the generator base path', 
-                APPPATH
+                'application/'
             )
             ->addOption(
                 'force',

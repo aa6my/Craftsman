@@ -70,7 +70,7 @@ class Migration extends Command
                 NULL,
                 InputOption::VALUE_REQUIRED,
                 'Set the migration path',
-                APPPATH.'migrations/'
+                'application/migrations/'
             )
             ->addOption(
                 'timestamp',
@@ -91,10 +91,14 @@ class Migration extends Command
     {
         if (! $this->harmless) 
         {
-            $this->confirm(
-                'WARNING! You are about to execute a database migration that could '
-                .'result in schema changes and data lost. Do you wish to continue?'
-            );            
+            $message = 'WARNING! You are about to execute a database migration that could '
+                .'result in schema changes and data lost. Do you wish to continue?';
+            
+            if (! $this->confirm($message)) 
+            {
+                $this->error('Process aborted!');
+                exit(3);
+            }           
         }
         if ($params = $this->CI->config->item('migration')) 
         {
