@@ -19,9 +19,6 @@ define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'developm
 $system_path = 'vendor/codeigniter/framework/system';
 $application_folder = 'vendor/codeigniter/framework/application';
 
-# Make sure some config variables are set correctly
-$assign_to_config['subclass_prefix'] = 'Craftsman_';
-
 if (($_temp = realpath($system_path)) !== FALSE)
 {
 	$system_path = $_temp.'/';
@@ -72,7 +69,11 @@ if (file_exists(APPPATH . 'config/' . ENVIRONMENT . '/constants.php')) {
     require(APPPATH . 'config/constants.php');
 }
 
-get_config(array('subclass_prefix' => $assign_to_config['subclass_prefix']));
+# Make sure some config variables are set correctly
+get_config(array(
+	'subclass_prefix' => 'Craftsman_',
+	#'permitted_uri_chars' => '(\"[^\"]+\"|[^\\s\"]+)'
+));
 
 $composer_autoload = 'vendor/autoload.php';
 
@@ -115,7 +116,7 @@ if (extension_loaded('iconv')) {
 $CFG  =& load_class('Config', 'core');
 $UNI  =& load_class('Utf8', 'core');
 $SEC  =& load_class('Security', 'core');
-$RTR  =& load_class('Router', 'core');
+#$RTR  =& load_class('Router', 'core');
 $IN   =& load_class('Input', 'core');
 $LANG =& load_class('Lang', 'core');
 
