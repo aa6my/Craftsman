@@ -30,10 +30,10 @@ define('CRAFTSMANPATH', __DIR__.DIRECTORY_SEPARATOR);
 
 // Create a Codeigniter instance
 $CI = require CRAFTSMANPATH.'src/ci_instance.php';
-// Add the Craftsman extended packages
-$CI->load->add_package_path(CRAFTSMANPATH.'src/Extend');
 // Add the user database configuration according to main application directory.
 $CI->load->add_package_path('application/');
+// Add the Craftsman extended packages
+$CI->load->add_package_path(CRAFTSMANPATH.'src/Extend');
 // Set the commands
 $commands = array(
 	new Generator_Migration(),
