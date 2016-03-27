@@ -7,5 +7,5 @@ interface Generator
 }
 
 
-/* End of file GeneratorInterface.php */
+/* End of file Generator.php */
 /* Location: ./src/Codeigniter/Interfaces/Generator.php */
