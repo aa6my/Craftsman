@@ -22,7 +22,7 @@ class Migration extends Command
      * Codeigniter migration class.
      * @var object
      */
-    protected $_model;
+    protected $migration;
 
     /**
      * Harmless mode - without confirm the action.
@@ -104,7 +104,7 @@ class Migration extends Command
         {
             ($this->getOption('timestamp') !== FALSE) && $params['migration_type'] = 'timestamp';
             $this->CI->load->library('migration', $params);
-            $this->_model = $this->CI->migration;
+            $this->migration = $this->CI->migration;
         }
         else
         {
@@ -119,7 +119,7 @@ class Migration extends Command
      */
     protected function setModelArguments()
     {
-        return $this->_model->set_params(array(
+        return $this->migration->set_params(array(
             'module_path' => rtrim($this->getOption('path'),'/').'/',
             'module_name' => strtolower($this->getOption('name'))
         ));
@@ -135,7 +135,7 @@ class Migration extends Command
      */
     protected function measureQueries(array $queries, $show_in_console = TRUE)
     {
-        $migration_table = $this->_model->getTable();
+        $migration_table = $this->migration->getTable();
         $query_exec_time = 0;
         $exec_queries    = 0;
 
@@ -144,7 +144,7 @@ class Migration extends Command
             if (! strpos($queries[$i], $migration_table)) 
             {
                 ($show_in_console !== FALSE) && $this->text('<comment>-></comment> '.$queries[$i]);
-                $query_exec_time += $this->_model->db->query_times[$i]; 
+                $query_exec_time += $this->migration->db->query_times[$i]; 
                 $exec_queries += 1;     
             }
         }
