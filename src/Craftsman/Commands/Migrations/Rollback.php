@@ -18,12 +18,13 @@ class Rollback extends Migration
 
 	protected function start()
 	{
-		$migrations = $this->_model->find_migrations();
+		$migrations = $this->migration->find_migrations();
 		$versions   = array_map('intval', array_keys($migrations));
 
-		$db_version = intval($this->_model->get_db_version());
+		$db_version = intval($this->migration->get_db_version());
 
 		end($versions);
+		
 		while ($version = prev($versions)) 
 		{
 			if ($version == ($db_version - 1)) 
@@ -53,12 +54,12 @@ class Rollback extends Migration
 
 		$time_start = microtime(true);
 
-		$this->_model->version($version);
+		$this->migration->version($version);
 
 		$time_end = microtime(true);
 
 		$this->newLine();
-		list($query_exec_time, $exec_queries) = $this->measureQueries($this->_model->db->queries);
+		list($query_exec_time, $exec_queries) = $this->measureQueries($this->migration->db->queries);
 	
 		$this->summary($signal, $time_start, $time_end, $query_exec_time, $exec_queries);
 	}

@@ -82,10 +82,14 @@ class Base extends Command
     {
         try 
         {
-            if (! is_null($this->start())) 
+            if (method_exists($this, 'start')) 
             {
-                $this->error('Command is not executed correctly!');
-            }   
+                $this->start(); 
+            }
+            else
+            {
+                throw new \RuntimeException("Command is not set correctly.");
+            }
         } 
         catch (\Exception $e)
         {

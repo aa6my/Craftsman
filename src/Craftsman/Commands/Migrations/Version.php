@@ -31,8 +31,8 @@ class Version extends Migration
 
 	protected function start()
 	{
-		$version = abs($this->getArgument('version'));
-		$db_version = intval($this->_model->get_db_version());				 
+		$version    = abs($this->getArgument('version'));
+		$db_version = intval($this->migration->get_db_version());				
 
 		if($version == $db_version)
 		{
@@ -58,12 +58,12 @@ class Version extends Migration
 
 		$time_start = microtime(true);
 
-		$this->_model->version($version);
+		$this->migration->version($version);
 
 		$time_end = microtime(true);
 
 		$this->newLine();
-		list($query_exec_time, $exec_queries) = $this->measureQueries($this->_model->db->queries);
+		list($query_exec_time, $exec_queries) = $this->measureQueries($this->migration->db->queries);
 
 		$this->summary($signal, $time_start, $time_end, $query_exec_time, $exec_queries);
 	}

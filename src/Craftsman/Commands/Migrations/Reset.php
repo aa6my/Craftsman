@@ -19,9 +19,9 @@ class Reset extends Migration
 
 	protected function start()
 	{
-		$migrations = $this->_model->find_migrations();
-		$db_version = intval($this->_model->get_db_version());
-		$version = 0;
+		$migrations = $this->migration->find_migrations();
+		$db_version = intval($this->migration->get_db_version());
+		$version    = 0;
 
 		$this->text('Migrating database <info>DOWN</info> to version <comment>'.$version.
 			'</comment> from <comment>'.$db_version.'</comment>');
@@ -33,12 +33,12 @@ class Reset extends Migration
 
 		$time_start = microtime(true);
 
-		$this->_model->version($version);
+		$this->migration->version($version);
 
 		$time_end = microtime(true);
 
 		$this->newLine();
-		list($query_exec_time, $exec_queries) = $this->measureQueries($this->_model->db->queries);
+		list($query_exec_time, $exec_queries) = $this->measureQueries($this->migration->db->queries);
 		
 		$this->summary($signal, $time_start, $time_end, $query_exec_time, $exec_queries);
 	}

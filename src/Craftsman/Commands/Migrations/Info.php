@@ -18,27 +18,19 @@ class Info extends Migration
 	protected $description = 'Display the current migration scheme status';
 	protected $harmless    = TRUE;
 
-	protected function configure()
-	{
-		parent::configure();
-		$this->setAliases(array(
-			'migration:status'
-		));
-	}
-
 	protected function start()
 	{
-		$migrations     = $this->_model->find_migrations();
-		$db_version     = $this->_model->get_db_version();
-		$latest_version = $this->_model->get_latest_version($migrations);
+		$migrations     = $this->migration->find_migrations();
+		$db_version     = $this->migration->get_db_version();
+		$latest_version = $this->migration->get_latest_version($migrations);
 
 		$this->table(
 			array('Migration','Value'),
 			array(
-				array('Name', $this->_model->get_module_name()),
+				array('Name', $this->migration->get_module_name()),
 				array('Actual version', $db_version),
 				array('File version', $latest_version),
-				array('Path',$this->_model->get_module_path()),
+				array('Path',$this->migration->get_module_path()),
 			)
 		);
 
