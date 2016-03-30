@@ -27,9 +27,8 @@ class Migration extends Generator implements GeneratorInterface
 			: '/^\d{3}_(\w+)$/';
 		
 		$filename = $this->getArgument('filename');
-		$basepath = $this->getOption('path');
-
-		$basepath = rtrim(preg_replace(['/migrations/','/migration/'], ['',''], $basepath),'/');
+		$basepath = rtrim(preg_replace(['/migrations/','/migration/'], ['',''], $this->getOption('path')),'/');
+		
 		$basepath.='/migrations/';
 		
 		// We could try to create a directory if doesn't exist.
@@ -93,6 +92,7 @@ class Migration extends Generator implements GeneratorInterface
 	        	);
 
 		        list($_type) = explode('_', $this->getArgument('filename'));
+		        $options['REPLACE_TAG'] = $_type.'_';
 
 	        	switch ($_type) 
 	        	{

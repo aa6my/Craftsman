@@ -18,24 +18,22 @@ class Migration_{{NAME}} extends CI_Migration
 		/**
 		 * Uncomment bellow if you need to destroy the columns you modify.
 		 */
-{% for field in FIELDS %}{% set command = set_command(field) %}
-		#$this->dbforge->drop_column('ci_{{ TABLE_NAME|replace({'modify_':''}) }}', '{{command.name}}');
+{% for field in FIELDS %}{% set command = argument(field) %}
+		#$this->dbforge->drop_column('ci_{{ TABLE_NAME|replace({REPLACE_TAG : ''}) }}', '{{command.name}}');
 {% endfor %}
 	}
 
 	private function {{TABLE_NAME}}_table()
 	{
-		$fields = array(
-{% for field in FIELDS %}{% set command = set_command(field) %}
-
-			'<column_old_name>' => array(
+		$fields = array({% for field in FIELDS %}
+			{% set command = argument(field) %}'<column_old_name>' => array(
 				'name' => '{{command.name}}',
 				'type' => '{{command.type|upper}}',
-			),{% endfor %}	
-
+			),
+			{% endfor %}
 		);		
 
-		$this->dbforge->modify_column('ci_{{ TABLE_NAME|replace({'modify_':''}) }}', $fields); 
+		$this->dbforge->modify_column('ci_{{ TABLE_NAME|replace({REPLACE_TAG : ''}) }}', $fields); 
 	}	
 }
 

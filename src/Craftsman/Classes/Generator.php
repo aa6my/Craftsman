@@ -89,7 +89,7 @@ class Generator extends Command
         $loader = new Twig_Loader_Filesystem($paths);
         $twig = new Twig_Environment($loader); 
 
-        $function = new Twig_SimpleFunction('set_command', function ($field = "") {
+        $function = new Twig_SimpleFunction('argument', function ($field = "") {
           return array_combine(array('name','type'), explode(':', $field));
         });
         $twig->addFunction($function);                 
