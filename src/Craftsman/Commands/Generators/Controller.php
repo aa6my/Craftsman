@@ -35,7 +35,7 @@ class Controller extends Generator implements GeneratorInterface
 	    	$test_file = $basepath.$filename.'.php';
 	    	$options = array(
 	    		'NAME'       => $filename,
-	    		'COLLECTION' => $filename,
+	    		'COLLECTION' => strtolower($filename),
 	    		'FILENAME'   => basename($test_file),
 	    		'PATH'       => $test_file
 	    	);
