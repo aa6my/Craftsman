@@ -77,7 +77,13 @@ class Migration extends Command
                 NULL,
                 InputOption::VALUE_NONE,
                 'If set, the migration will run with timestamp mode active'
-            );    
+            )
+            ->addOption(
+                'debug',
+                NULL,
+                InputOption::VALUE_NONE,
+                'If set, the debug mode will show the mysql queries executed'
+            );   
     }
 
     /**
@@ -133,17 +139,19 @@ class Migration extends Command
      * @return array                    Array of total exec time and the
      *                                  amount of queries.
      */
-    protected function measureQueries(array $queries, $show_in_console = TRUE)
+    protected function measureQueries(array $queries)
     {
         $migration_table = $this->migration->getTable();
         $query_exec_time = 0;
         $exec_queries    = 0;
 
+        ($this->getOption('debug') !== FALSE) && $this->newLine();
+
         for ($i = 2; $i < count($queries); $i++) 
         {
             if (! strpos($queries[$i], $migration_table)) 
             {
-                ($show_in_console !== FALSE) && $this->text('<comment>-></comment> '.$queries[$i]);
+                ($this->getOption('debug') !== FALSE) && $this->text('<comment>-></comment> '.$queries[$i]);
                 $query_exec_time += $this->migration->db->query_times[$i]; 
                 $exec_queries += 1;     
             }

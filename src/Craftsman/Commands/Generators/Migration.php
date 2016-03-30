@@ -83,16 +83,15 @@ class Migration extends Generator implements GeneratorInterface
 		{
 			$test_file = $basepath.$target_file;
 	        	# Set the migration template arguments
-	        	$options = array(
-	            		'NAME'       => ucfirst($this->getArgument('filename')),
-	            		'FILENAME'   => $target_file,
-	            		'PATH'       => $test_file,
-	            		'TABLE_NAME' => $this->getArgument('filename'),
-	            		'FIELDS'     => (array) $this->getArgument('options')
-	        	);
+	        	list($_type) = explode('_', $this->getArgument('filename'));
 
-		        list($_type) = explode('_', $this->getArgument('filename'));
-		        $options['REPLACE_TAG'] = $_type.'_';
+	        	$options = array(
+	            	'NAME'       => ucfirst($this->getArgument('filename')),
+	            	'FILENAME'   => $target_file,
+	           		'PATH'       => $test_file,
+	           		'TABLE_NAME' => str_replace($_type.'_', '', $this->getArgument('filename')),
+	           		'FIELDS'     => (array) $this->getArgument('options')
+	        	);
 
 	        	switch ($_type) 
 	        	{

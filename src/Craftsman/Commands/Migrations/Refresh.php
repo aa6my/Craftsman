@@ -45,8 +45,8 @@ class Refresh extends Migration
 
 		$time_end = microtime(true);
 
-		$this->newLine();
 		list($query_exec_time, $exec_queries) = $this->measureQueries($this->migration->db->queries);
+		
 		$this->summary($signal, $time_start, $time_end, $query_exec_time, $exec_queries);
 	}
 }

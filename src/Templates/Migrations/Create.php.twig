@@ -10,15 +10,15 @@ class Migration_{{NAME}} extends CI_Migration {
 
 	public function up() 
 	{
-		$this->{{TABLE_NAME}}_table();
+		$this->create_{{TABLE_NAME}}_table();
 	}
 
 	public function down() 
 	{
-		$this->dbforge->drop_table('ci_{{TABLE_NAME|replace({REPLACE_TAG : ''})}}');
+		$this->dbforge->drop_table('ci_{{TABLE_NAME}}');
 	}
 
-	private function {{TABLE_NAME}}_table()
+	private function create_{{TABLE_NAME}}_table()
 	{
 		$this->dbforge->add_field(array(
 			'id' => array(
@@ -37,7 +37,7 @@ class Migration_{{NAME}} extends CI_Migration {
 
 		));
 		$this->dbforge->add_key('id', TRUE);
-		$this->dbforge->create_table('ci_{{ TABLE_NAME|replace({REPLACE_TAG : ''}) }}', TRUE);		
+		$this->dbforge->create_table('ci_{{TABLE_NAME}}', TRUE);		
 	}
 }
 
