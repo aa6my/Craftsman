@@ -23,15 +23,15 @@ class Controller extends Generator implements GeneratorInterface
         $filename = ucfirst($this->getArgument('filename'));
         $basepath = rtrim($this->getOption('path'),'/').'/controllers/';
 
-		// We could try to create a directory if doesn't exist.
-		(! $this->_filesystem->exists($basepath)) && $this->_filesystem->mkdir($basepath);
-
 		$this->text('Controller path: <comment>'.$basepath.'</comment>');
 		$this->text('Filename: <comment>'.$filename.'.php</comment>');		
 
         // Confirm the action
 	    if($this->confirm('Do you want to create a '.$filename.' Controller?', TRUE))
 	    {
+			// We could try to create a directory if doesn't exist.
+			(! $this->_filesystem->exists($basepath)) && $this->_filesystem->mkdir($basepath);	    	
+	    	
 	    	$test_file = $basepath.$filename.'.php';
 	    	$options = array(
 	    		'NAME'       => $filename,

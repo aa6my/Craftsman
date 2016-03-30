@@ -23,15 +23,15 @@ class Model extends Generator implements GeneratorInterface
         $filename = ucfirst($this->getArgument('filename'));
         $basepath = rtrim($this->getOption('path'),'/').'/models/';
 
-		// We could try to create a directory if doesn't exist.
-		(! $this->_filesystem->exists($basepath)) && $this->_filesystem->mkdir($basepath);
-
 		$this->text('Controller path: <comment>'.$basepath.'</comment>');
 		$this->text('Filename: <comment>'.$filename.'_model.php</comment>');			
 
         // Confirm the action
 	    if($this->confirm('Do you want to create a '.$filename.' Model?', TRUE))
 	    {
+			// We could try to create a directory if doesn't exist.
+			(! $this->_filesystem->exists($basepath)) && $this->_filesystem->mkdir($basepath);	    	
+	    
 	    	$test_file = $basepath.$filename.'_model.php';
 	    	$options = array(
 	    		'NAME' => $filename.'_model',

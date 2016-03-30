@@ -26,36 +26,36 @@ class Migration extends Generator implements GeneratorInterface
 			? '/^\d{14}_(\w+)$/'
 			: '/^\d{3}_(\w+)$/';
 		
-		$filename = $this->getArgument('filename');
-		$basepath = rtrim(preg_replace(['/migrations/','/migration/'], ['',''], $this->getOption('path')),'/');
-		
-		$basepath.='/migrations/';
-		
-		// We could try to create a directory if doesn't exist.
-		(! $this->_filesystem->exists($basepath)) && $this->_filesystem->mkdir($basepath);
-		
+		$filename   = $this->getArgument('filename');
+		$basepath   = rtrim(preg_replace(['/migrations/','/migration/'], ['',''], $this->getOption('path')),'/');
 		$migrations = array();
-		// And now let's figure out the migration target version
-		if ($handle = opendir($basepath))
+
+		$basepath.='/migrations/';
+
+		if ($this->_filesystem->exists($basepath)) 
 		{
-			while (($entry = readdir($handle)) !== FALSE)
+			// And now let's figure out the migration target version
+			if ($handle = opendir($basepath))
 			{
-				if ($entry == "." && $entry == "..")
+				while (($entry = readdir($handle)) !== FALSE)
 				{
-					continue;
-				}
-				if (preg_match($migration_regex, $file = basename($entry, '.php')))
-				{
-					$number = sscanf($file, '%[0-9]+', $number)? $number : '0';
-					if (isset($migrations[$number]))
+					if ($entry == "." && $entry == "..")
 					{
-						throw new \RuntimeException("Cannot be duplicate migration numbers");
+						continue;
 					}
-					$migrations[$number] = $file;
+					if (preg_match($migration_regex, $file = basename($entry, '.php')))
+					{
+						$number = sscanf($file, '%[0-9]+', $number)? $number : '0';
+						if (isset($migrations[$number]))
+						{
+							throw new \RuntimeException("Cannot be duplicate migration numbers");
+						}
+						$migrations[$number] = $file;
+					}
 				}
-			}
-			closedir($handle);
-			ksort($migrations);
+				closedir($handle);
+				ksort($migrations);
+			}		
 		}
 			
 		$versions = array_keys($migrations);
@@ -68,8 +68,7 @@ class Migration extends Generator implements GeneratorInterface
 		// Maybe something wrong with timestamp?
 		if ($target_version <= current($versions))
 		{
-			$this->note("There's something wrong with the target version,"
-				." so we need to replace it with a new one.");
+			$this->note("There's something wrong with the target version, we need to replace it with a new one.");
 			$target_version = abs(current($versions)) + 1;
 		}
 		
@@ -81,35 +80,38 @@ class Migration extends Generator implements GeneratorInterface
 		// Confirm the action
 		if($this->confirm('Do you want to create a '.$filename.' Migration?', TRUE))
 		{
+			// We could try to create a directory if doesn't exist.
+			(! $this->_filesystem->exists($basepath)) && $this->_filesystem->mkdir($basepath);	
+			
 			$test_file = $basepath.$target_file;
-	        	# Set the migration template arguments
-	        	list($_type) = explode('_', $this->getArgument('filename'));
+	       	# Set the migration template arguments
+	       	list($_type) = explode('_', $this->getArgument('filename'));
 
-	        	$options = array(
-	            	'NAME'       => ucfirst($this->getArgument('filename')),
-	            	'FILENAME'   => $target_file,
-	           		'PATH'       => $test_file,
-	           		'TABLE_NAME' => str_replace($_type.'_', '', $this->getArgument('filename')),
-	           		'FIELDS'     => (array) $this->getArgument('options')
-	        	);
+	      	$options = array(
+	           	'NAME'     => ucfirst($this->getArgument('filename')),
+	           	'FILENAME' => $target_file,
+	          		'PATH'       => $test_file,
+	          		'TABLE_NAME' => str_replace($_type.'_', '', $this->getArgument('filename')),
+	          		'FIELDS'     => (array) $this->getArgument('options')
+	       	);
 
-	        	switch ($_type) 
-	        	{
-	            		case 'add':
-	            		case 'create':
-	            		case 'new':
-	                		$template_name = 'Create.php.twig'; 
-	                		break;
-	           
-	            		case 'update':
-	            		case 'modify':
-	                		$template_name = 'Modify.php.twig';
-	                		empty($options['FIELDS']) && $options['FIELDS'] = array('column_name:column_type');
-	                		break;
-	            		default:
-	                		$template_name = 'Default.php.twig';
-	                		break;
-	        	}
+	      	switch ($_type) 
+	       	{
+	           		case 'add':
+	           		case 'create':
+	           		case 'new':
+	               		$template_name = 'Create.php.twig'; 
+	               		break;
+	          
+	           		case 'update':
+	           		case 'modify':
+	               		$template_name = 'Modify.php.twig';
+	               		empty($options['FIELDS']) && $options['FIELDS'] = array('column_name:column_type');
+	               		break;
+	           		default:
+	               		$template_name = 'Default.php.twig';
+	               		break;
+	       	}
 
 			if ($this->make($test_file, CRAFTSMANPATH.'src/Templates/Migrations/', $options, $template_name))
 			{
