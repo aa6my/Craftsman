@@ -125,6 +125,7 @@ class Base extends Command
             case 'success':
             case 'warning':
             case 'error':
+            case 'comment':
                 return call_user_func_array(array($this->_style, $name), $arguments);
 
             case 'getArgument':
