@@ -88,24 +88,31 @@ class Generator extends Command
     {    
         $loader = new Twig_Loader_Filesystem($paths);
         $twig = new Twig_Environment($loader); 
-
-        $function = new Twig_SimpleFunction('argument', function ($field = "") {
-          return array_combine(array('name','type'), explode(':', $field));
-        });
-        $twig->addFunction($function);                 
+              
     
         foreach ((array) $filenames as $filename) 
         { 
             if (! $this->getOption('force') && $this->_filesystem->exists($filename)) 
             {
                 throw new \RuntimeException("Cannot duplicate [{$filename}].");
-            }   
+            }
 
-            foreach ($this->getArgument('options') as $option) 
+            $reflection = new \ReflectionClass(get_class($this));
+
+            if ($reflection->getShortName() === 'Migration') 
             {
-                list($key, $value) = explode(':', $option);
-                $options[$key] = $value;
-            }   
+                $function = new Twig_SimpleFunction('argument', function ($field = "") {
+                    return array_combine(array('name','type'), explode(':', $field));
+                });
+        
+                $twig->addFunction($function);                   
+                
+                foreach ($this->getArgument('options') as $option) 
+                {
+                    list($key, $value) = explode(':', $option);
+                    $options[$key] = $value;
+                }   
+            }
 
             $this->_filesystem->dumpFile(
                 $filename, 
