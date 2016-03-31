@@ -33,15 +33,44 @@ class Controller extends Generator implements GeneratorInterface
 			(! $this->_filesystem->exists($basepath)) && $this->_filesystem->mkdir($basepath);	    	
 	    	
 	    	$test_file = $basepath.$filename.'.php';
+	    	
 	    	$options = array(
 	    		'NAME'       => $filename,
 	    		'COLLECTION' => strtolower($filename),
 	    		'FILENAME'   => basename($test_file),
-	    		'PATH'       => $test_file
+	    		'PATH'       => $test_file,
+	    		'ACTIONS'    => $this->getArgument('options')
 	    	);
+	    	$this->comment('Controller');
+
 	    	if ($this->make($test_file, CRAFTSMANPATH.'src/Templates/Controllers', $options)) 
 	    	{
-	    		$this->success('Controller created successfully!');
+	    		$this->text('<info>create</> '.$test_file);
+	    	}	    	
+
+	    	$views = empty($options['ACTIONS'])
+	    		? array('index','get','create','edit')
+	    		: $options['ACTIONS'];
+
+	    	$viewpath = rtrim($this->getOption('path'),'/').'/views/'.strtolower($filename).'/';
+
+	   		// We could try to create a directory if doesn't exist.
+			(! $this->_filesystem->exists($viewpath)) && $this->_filesystem->mkdir($viewpath);	 
+
+	    	$options['EXT']      = '.php';
+	    	$options['CLASS']    = $filename;
+	    	$options['VIEWPATH'] = $viewpath;	
+
+	    	$this->comment('Views');
+
+	    	foreach ($views as $view) 
+	    	{
+	    		$viewfile = $viewpath.$view.'.php';
+
+	    		$options['METHOD'] = $view;
+
+	    		$this->make($viewfile, CRAFTSMANPATH.'src/Templates/Views',$options);
+	    		$this->text('<info>create</info> '.$viewfile);
 	    	}
 	    }
 	    else

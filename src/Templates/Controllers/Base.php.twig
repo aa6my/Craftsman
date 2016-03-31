@@ -5,7 +5,8 @@
  */
 class {{ NAME }} extends CI_Controller 
 {
-	/**
+	{% if ACTIONS is empty %}
+/**
 	 * Display a listing of the resource.
 	 * GET /{{ COLLECTION }}
 	 */
@@ -75,6 +76,20 @@ class {{ NAME }} extends CI_Controller
 	{
 		
 	}
+	{% else %}
+
+	{% for action in ACTIONS %}
+/**
+	 * {{action|upper}}|DESCRIPTION|
+	 * @param [type] $[name] [<description>]
+	 * @return [type] [<description>]
+	 */
+	public function {{action}}()
+	{
+
+	}
+{% endfor %}
+{% endif %}
 }
 
 /* End of file {{ FILENAME  }} */
