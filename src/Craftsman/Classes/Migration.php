@@ -63,7 +63,7 @@ class Migration extends Command
                 NULL, 
                 InputOption::VALUE_REQUIRED, 
                 'Set the migration version name', 
-                'ci_system'
+                FALSE
             )
             ->addOption(
                 'path',
@@ -125,10 +125,26 @@ class Migration extends Command
      */
     protected function setModelArguments()
     {
-        return $this->migration->set_params(array(
-            'module_path' => rtrim($this->getOption('path'),'/').'/',
-            'module_name' => strtolower($this->getOption('name'))
-        ));
+        $params = array('module_path' => rtrim($this->getOption('path'),'/').'/');
+
+        if ($this->getOption('name') !== FALSE) 
+        {
+            $params['module_name'] = $this->getOption('name');
+        }
+        else
+        {
+            $_path = preg_replace(
+                array('/migrations/','/migration/'), 
+                array('',''), 
+                $this->getOption('path')
+            );
+
+            $params['module_name'] = basename(rtrim($_path, '/'));
+        }
+
+        $params['module_name'] = strtolower($params['module_name']);
+
+        return $this->migration->set_params($params);
     }
 
     /**

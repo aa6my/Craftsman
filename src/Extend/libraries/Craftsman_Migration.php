@@ -34,8 +34,6 @@ class Craftsman_Migration extends CI_Migration
 	{
        	parent::__construct($config);
 
-		log_message('info', 'Craftsman Migration Class Init');
-
 		if (! $this->db->field_exists('module', $this->_migration_table))
 		{		
 			$fields = array(
@@ -52,6 +50,8 @@ class Craftsman_Migration extends CI_Migration
 			$this->db->query("UPDATE {$this->_migration_table} SET module = '{$this->_module_name}' LIMIT 1;");
 		}
 		$this->_set_migration_path();
+		
+		log_message('info', 'Craftsman Migration Class Init');
 	}
 
 	/**
