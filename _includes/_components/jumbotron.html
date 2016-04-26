@@ -1,0 +1,10 @@
+<div class="jumbotron">
+	<div class="container text-center">
+		<h2 class="animated zoomInUp">{{ site.github.project_title }}</h2>
+		<div class="animated zoomIn">
+			<p>{% if site.description %}{{ site.description }}{% else %}{{ site.github.project_tagline }}{% endif %}</p>
+			<p class="hero-blocks"><a class="btn btn-hero btn-lg" onclick="goToInstall()" role="button">Install Latest Build</a></p>
+			<p><small class="hero-version">Currently {{ site.github.releases[0].tag_name }}</small></p>
+		</div>
+	</div>
+</div>

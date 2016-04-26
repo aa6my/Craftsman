@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	{% include head.html %}
+	<body>
+		{% include header.html %}
+		{% include _components/jumbotron.html %}
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-9 main__article">
+					{{ content }}
+				</div>
+				<div class="col-sm-3 sidebar-menu"></div>
+			</div>
+		</div>
+		{% include footer.html %}
+		<script type="text/javascript" src="{{ "/assets/javascripts/jquery.scrollNav.min.js" | prepend: site.baseurl }}"></script>
+		<script type="text/javascript">
+			$('.main__article').scrollNav({
+			    insertTarget: '.sidebar-menu',
+			    insertLocation: 'prependTo',
+			    headlineText: '',
+			    showTopLink: false,
+			    arrowKeys: true,
+			    sections: 'h2',
+			    subSections: 'h3'
+			});
+			$('nav.scroll-nav')
+			    .addClass('affix hidden-xs hidden-sm')
+			    .affix({
+			        offset: {
+			            top: $('.jumbotron').height() + 50
+			        }
+			    });			
+
+			function goToInstall() {
+			    $(".scroll-nav__link:contains(Installation)").first().click();
+			}
+		</script>
+	</body>
+</html>

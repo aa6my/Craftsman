@@ -1,30 +1,23 @@
 <header>
-  <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="{{ site.baseurl }}/">{{ site.title }}</a>
-      </div>
-      <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
-        <ul class="nav navbar-nav navbar-right">
-          {% for my_page in site.pages %}
-            {% if my_page.title %}
-              <li><a href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.title }}</a></li>
-            {% endif %}
-          {% endfor %}
-          {% for menu in site.data.menu %}
-            {% if menu.title %}
-              <li><a href="{{ menu.url | prepend: site.baseurl | prepend: site.url }}">{{ menu.title }}</a></li>
-            {% endif %}
-          {% endfor %}
-          <li><a href="{{ site.url }}{{ site.baseurl }}">Github</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+	<nav class="navbar navbar-doc">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<i class="fa fa-bars" aria-hidden="true"></i>
+				</button>
+				<a class="navbar-brand" href="{{ site.baseurl }}/">{{ site.github.project_title }}</a>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-navbar-collapse">
+				<ul class="nav navbar-nav hide">
+					<li><a href="#">Link</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="{{ site.github.repository_url }}">Github</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 </header>

@@ -1,63 +1,172 @@
-body {
-/*  min-height: 2000px;*/
-  padding-top: 50px;
+// (Your custom CSS Here)
+
+h1 {
+	margin-bottom: 0px;
 }
 
-.description .jumbotron {
-    text-align: center;
-  
-} 
-
-.container .jumbotron, .container-fluid .jumbotron {
-	border-radius: 0;
+hr {
+	margin-top: 10px;
 }
 
-a.btn#install-latest {
-	border-color: white;
+a {
+    color: $theme-color;
 }
 
-.features .features-title {
-	margin-bottom: 50px;
-	text-align: center;
+.navbar-header>button.navbar-toggle {
+    color: $theme-color;
 }
 
-.motto {
-    padding: 20px;
+nav.navbar {
+	margin-bottom: 0px;
 }
 
-.motto h4 {
-	font-weight: 200;
-	font-size: 21px;
-    padding: 0 15% 0 15%;
+nav.navbar-doc {
+	background-color: transparent;
+	border-color: transparent;
 }
 
-.contribute {
-    margin-top: 25px;
+.navbar-brand {
+	font-weight: 500;
 }
 
-.contribute .well {
-	min-height: 20px;
-    padding: 19px;
-    margin-bottom: 20px;
-    background-color: #f5f5f5;
-    border:none;
-    border-radius: 0px;
-    box-shadow: none;
+.jumbotron {
+	background-color: $theme-color;
+	color: white;
+    padding-top: 80px;
+    padding-bottom: 0px;
+    min-height: 350px;
 }
 
-footer {
-    text-align: center;
-    padding: 50px;
+.jumbotron p {
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: 200;
+    line-height: 1.1;	
 }
 
-.navbar-default .navbar-toggle {
-    border-color: transparent;
+.jumbotron p.hero-blocks {
+	padding-top: 35px;
 }
 
-.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-    background-color: $brand-primary;
+.btn-hero {
+	color: #fff;
+    background-color: $theme-color;
+    border-color: #fff;
+    font-weight: 200;
+    font-size: 20px;    
 }
 
-.navbar-default .navbar-toggle .icon-bar {
-    background-color: white;
+a.btn-hero:hover,
+a.btn-hero:focus {
+	color: $theme-color;
+	background-color: #fff;
+    text-decoration: none;
+}
+
+a.btn-hero:active {
+	outline: none;
+}
+
+small.hero-version {
+	font-size: 70%;
+}
+
+.affix {
+    position: fixed !important;
+    top: 80px;  
+}
+
+.sidebar-menu {
+    padding-top: 30px;
+}
+
+ol.scroll-nav__list {
+	list-style-type: none !important;	
+}
+
+ol.scroll-nav__sub-list {
+	list-style-type: none !important;
+	padding-left: 0px !important;
+}
+
+/* all links */
+ol.scroll-nav__list>li>a {
+    color: #999;
+    border-left: 2px solid transparent;
+    padding: 4px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    display: block;
+}
+
+/* nested links */
+ol.scroll-nav__sub-list>li>a {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 30px;
+    font-size: 14px;
+    color: #999;
+}
+
+/* active & hover links */
+ol.scroll-nav__list>.active>a, 
+ol.scroll-nav__list>li>a:hover, 
+ol.scroll-nav__list>li>a:focus {
+    color: $theme-color;                 
+    text-decoration: none;          
+    background-color: transparent;  
+    border-left-color: $theme-color; 
+}
+/* all active links */
+ol.scroll-nav__list>.active>a, 
+ol.scroll-nav__list>.active:hover>a,
+ol.scroll-nav__list>.active:focus>a {
+    font-weight: 700;
+}
+/* nested active links */
+ol.scroll-nav__sub-list>.active>a, 
+ol.scroll-nav__sub-list>.active:hover>a,
+ol.scroll-nav__sub-list>.active:focus>a {
+    font-weight: 500;
+    border-left: 2px solid $theme-color;
+    padding-left: 28px;
+}
+
+/* hide inactive nested list */
+ol.scroll-nav__list ol.scroll-nav__sub-list {
+    display: none;           
+}
+/* show active nested list */
+ol.scroll-nav__list>.active>ol.scroll-nav__sub-list {
+    display: block;           
+}
+
+.bs-callout-warning {
+    border-left-color: #aa6708 !important;
+}
+
+.bs-callout {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+
+.bs-example {
+    padding-bottom: 0px;
+    padding-top: 10px;
+}
+
+.bs-example:before {
+    position: static;
+    top: 15px;
+    left: 15px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #959595;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    content: "Example";
+    padding-bottom: 10px;
 }

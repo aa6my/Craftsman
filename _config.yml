@@ -7,25 +7,25 @@
 
 # Site settings
 title: Craftsman
-email: david.sosa.valdes@gmail.com
-description: > # this means to ignore newlines until "baseurl:"
-  Advanced CLI for Codeigniter 3.0
-baseurl: "/Craftsman" # the subpath of your site, e.g. /blog
-url: "https://github.com/davidsosavaldes" # the base hostname & protocol for your site
-github_username: davidsosavaldes
+description: 'Advanced CLI for Codeigniter 3.0'
+baseurl: '/Craftsman'
+repository: davidsosavaldes/Craftsman # <username>/<repository>
 
-# Theme settings
-issues: "/issues"
-releases: "/wiki/Release-Notes"
-motto: "Provides a number of helpful commands for your use while developing your application."
-version: 3.4.0
-demo: "https://www.youtube-nocookie.com/embed/JA51oVUoWRc?rel=0&amp;showinfo=0&amp;hd=1"
-license: 'MIT'
+# User settings
+github:
+  user_fullname: 'David Sosa Valdes'
+  licence: MIT # repository licence name
+twitter:
+  username: itsdsv
+  hashtags: 'CLI, Codeigniter, Symfony Console Component' # without symbols
 
 # Build settings
 markdown: kramdown
-
-sass:
-    style: :compressed
-
 include: ['_pages']
+gems: 
+  - jekyll-github-metadata
+  - jekyll-seo-tag
+  - jekyll-mentions
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-gist

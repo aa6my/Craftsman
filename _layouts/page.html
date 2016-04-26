@@ -1,36 +1,14 @@
 ---
 layout: default
 ---
-<article class="page">
-	{% if page.menu %}
-		<div class="affix-top hidden-xs col-sm-3" data-spy="affix">
-			<div class="list-group" style="margin-top:40px;">
-				{% for header in page.menu %}
-					{% for menu in header %}
-						<p style="margin-bottom:5px; margin-top:10px;"><b style="color:#666;">{{ menu[0] | upcase }}</b></p>
-						{% for submenu in menu[1] %}
-							<a style="border:none;" class="list-group-item" href="{{ submenu[1] }}"><span class="list-group-item-text">{{ submenu[0] }}</span></a>
-						{% endfor %}
-					{% endfor %}
-				{% endfor %}
-			</div>
-		</div>
-	{% endif %}
-	<section class="page-content">
-		<div class="row">
-			<div class="{% if page.menu %}col-sm-offset-3 col-sm-9{% else %}col-sm-12{% endif %}">
-			<header class="page-header">
-				<h1 class="page-title">
-					{% if page.fulltitle %}
-						{{ page.fulltitle }}
-					{% else %}
-						{{ page.title }}
-					{% endif %}
-				</h1>
-				<p class="lead">{{ page.description }}</p>
-			</header>
-			{{ content }}
-		</div>
-	</div>
-</section>
+<article class="post">
+
+  <header>
+    <h1>{{ page.title }}</h1>
+  </header>
+
+  <div>
+    {{ content }}
+  </div>
+
 </article>

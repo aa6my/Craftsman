@@ -1,24 +1,45 @@
 ---
-layout: page
+layout: main
 title: Docs
-fulltitle: Documentation
-permalink: /docs/
-description: ""
-menu:
-  - setup:
-        Installation            : "#installation"
-        Getting Started         : "#getting-started"
-  - commands:
-        Migrations              : "#migrations"
-        Generators              : "#generators"
-  - get involved:
-        Contributions           : "#contributions"
 ---
 
-Installation
-------------
+# Overview
 
-**Optional**
+---
+
+Provides a number of helpful commands for your use while developing your application.
+
+## Features
+
+Built on top of great technology.
+
+<div class="row text-center" style="padding-top:20px;">
+    <div class="col-sm-4">
+      <i class="fa fa-clone fa-3x fa-fw"></i>
+      <h4>Solid Base</h4>
+      <p>Built with <a href="https://github.com/symfony/console" target="_blank">Symfony Console component</a></p>
+    </div>
+    <div class="col-sm-4">
+      <i class="fa fa-terminal fa-3x fa-fw"></i>
+      <h4>Interactive</h4>
+      <p>Every command also includes a help screen which describes available options.</p>
+    </div>
+    <div class="col-sm-4">
+      <i class="fa fa-database fa-3x fa-fw"></i>
+      <h4>Modular migrations</h4>
+      <p>Manage your database scheme's evolution through independent versions.</p>
+    </div>
+</div>
+
+## Demo
+
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube-nocookie.com/embed/JA51oVUoWRc?rel=0&amp;showinfo=0&amp;hd=1" allowfullscreen></iframe>
+</div>
+
+---
+
+## Installation
 
 Before run the composer install command, add the bin-dir config path inside your ```composer.json``` file:
 
@@ -30,7 +51,7 @@ Before run the composer install command, add the bin-dir config path inside your
 
 Also if you're going to use the [Migration Commands](#migrations) you should configure your `application/config/database.php` settings needed to access to your database.
 
-**With Composer:**
+#### Composer
 
 	composer require dsv/craftsman
 
@@ -44,8 +65,7 @@ If you don't, this package should be listed as a vendor binary, and it should be
 
 ---
 
-Getting started
----------------
+## Usage
 
 To view a list of all available Craftsman commands, you may use the list command:
 
@@ -57,15 +77,15 @@ Every command includes a help screen which displays the command's available argu
 
 	php path/to/craftsman help migration:latest
 
-
 ---
 
-Migrations
-----------
+## Commands
+
+### Migrations
 
 Migration schemes are simple files that hold the commands to apply and remove changes to your database. It allows you to easily keep track of changes made in your app. They may create/modify tables or fields, etc. But they are not limited to just changing the schema. You could use them to fix bad data in the database or populate new fields.
 
-## Migration file names
+#### File names
 
 Each Migration is run in numeric order forward or backwards depending on the method taken. Two numbering styles are available:
 
@@ -74,7 +94,7 @@ Each Migration is run in numeric order forward or backwards depending on the met
 
 By default Craftsman uses the sequential style but it can be forced to change with the `--timestamp` argument used with every migration command listed bellow.
 
-## Displaying info
+#### Displaying info
 
 You can display the current migration information with the comand:
 
@@ -122,7 +142,7 @@ Below the information table there is a legend witch indicates the action to take
 
 Each migration command shows relevant information to perform some action and it asks a Yes/No question to the user before perform some action.
 
-## Running migrations
+#### Running migrations
 
 Migrations are designed to be mostly automatic, but you’ll need to know when to make migrations, when to run them, and the common problems you might run into. Here's a list of possible options.
 
@@ -138,7 +158,7 @@ Version can be used to roll back changes or step forwards programmatically to sp
 
 	php path/to/craftsman migration:version <number>
 
-## Rolling-back migrations
+#### Rolling-back migrations
 
 Allows you to quickly roll back and forth through the history of the migration schema, so as to work with desired version. Here's a list of possible options.
 
@@ -158,12 +178,11 @@ All migration versions of modules are stored apart from each other, so you can c
 
 ---
 
-Generators
-----------
+### Generators
 
 Craftsman provides a variety of generators to speed up your development process.
 
-## Controller
+#### Controller
 
 Generate a controller with:
 
@@ -258,7 +277,7 @@ You can put the controller inside a different directory with the `--path` argume
 
     php path/to/craftsman generator:controller foo --path='new/path/admin'
 
-## Model
+#### Model
 
 Generate a model with:
 
@@ -287,7 +306,7 @@ Same as the [Controller Generator](#controller), you can put the model inside a 
 
     php path/to/craftsman generator:controller foo --path='new/path/admin'
 
-## Migration
+#### Migration
 
 Generate a migration with:
 
@@ -372,8 +391,7 @@ Now it's your turn to give the finishing touches before running this scheme. Che
 
 ----
 
-Contributions
--------------
+## Contributions
 
 The Craftsman project welcomes, and depends, on contributions from developers and users in the CodeIgniter open source community. Contributions can be made in a number of ways, a few examples are:
 
@@ -383,7 +401,7 @@ The Craftsman project welcomes, and depends, on contributions from developers an
 
 **Reporting an Issue?**
 
-Please include as much detail as you can. Let us know your platform and Craftsman/CodeIgniter version. If the problem is visual (for example a theme or design issue) please add a screenshot and if you get an error please include the the full error and traceback.
+Please include as much detail as you can. Let us know your platform and `Craftsman/CodeIgniter` version. If the problem is visual (for example a theme or design issue) please add a screenshot and if you get an error please include the the full error and traceback.
 
 **Submitting Pull Requests**
 

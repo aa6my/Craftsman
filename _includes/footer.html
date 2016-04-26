@@ -1,5 +1,19 @@
-<footer>
-	<!-- aqui deben de ir los reconocimientos de twig y de attire -->
-	<p><a href="{{ site.url }}{{ site.baseurl }}">{{site.title}} v{{ site.version }}</a> — Created by <a href="{{ site.data.contributors[0].url }}">{{ site.data.contributors[0].name }}</a> — Code licensed under {{site.license}} License</p>
-	<p><a href="{{ site.url }}{{ site.baseurl }}">Github</a>— <a href="#">Examples</a>— <a href="{{ site.issues | prepend: site.baseurl | prepend: site.url }}">Issues</a>— <a href="{{ site.releases | prepend: site.baseurl | prepend: site.url }}">Releases</a></p>
-</footer>
+<script type="text/javascript" src="{{ "/assets/javascripts/jquery.min.js" | prepend: site.baseurl }}"></script>
+<script type="text/javascript" src="{{ "/assets/javascripts/bootstrap.min.js" | prepend: site.baseurl }}"></script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<hr>
+<div class="container" style="padding-bottom:25px;padding-top:25px;">
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<p>
+				<iframe src="https://ghbtns.com/github-btn.html?user={{site.github.owner_name}}&repo={{site.github.project_title}}&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+				<iframe src="https://ghbtns.com/github-btn.html?user={{site.github.owner_name}}&repo={{site.github.project_title}}&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+				<a href="https://twitter.com/share" class="twitter-share-button" data-text="{{ site.github.project_title }}" data-via="{{ site.twitter.username }}" data-hashtags="{{ site.twitter.hashtags }}" data-dnt="true">Tweet</a>
+				<a href="https://twitter.com/{{site.twitter.username}}" class="twitter-follow-button" data-show-count="false" data-dnt="true">Follow @{{site.twitter.username}}</a>
+			</p>
+			<p>Documentation template by <a href="http://getbootstrap.com/">Bootstrap team</a>, generated with <a href="https://github.com/davidsosavaldes/jekyll-project-doc-theme">Jekyll Project Doc</a></p>
+			<p>Created by <a href="{{ site.github.owner_url }}">{{ site.github.user_fullname }}</a>, code licensed under <a href="{{ "/blob/master/LICENSE" | prepend: site.github.repository_url }}">{{ site.github.licence | upcase }} License</a>, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0.</a></p>
+			<p>{{ site.github.project_title }} {{ site.github.releases[0].tag_name }}— <a href="{{ site.github.url }}">GitHub</a>— <a href="{{ site.github.issues_url }}">Issues</a></p>
+		</div>
+	</div>
+</div>
