@@ -11,6 +11,8 @@ Provides a number of helpful commands for your use while developing your applica
 
 ## Features
 
+---
+
 Built on top of great technology.
 
 <div class="row text-center" style="padding-top:20px;">
@@ -33,13 +35,15 @@ Built on top of great technology.
 
 ## Demo
 
+---
+
 <div class="embed-responsive embed-responsive-16by9">
   <iframe class="embed-responsive-item" src="https://www.youtube-nocookie.com/embed/JA51oVUoWRc?rel=0&amp;showinfo=0&amp;hd=1" allowfullscreen></iframe>
 </div>
 
----
-
 ## Installation
+
+---
 
 Before run the composer install command, add the bin-dir config path inside your ```composer.json``` file:
 
@@ -63,9 +67,9 @@ If you don't, this package should be listed as a vendor binary, and it should be
 
 	php path/to/vendor/bin/craftsman
 
----
-
 ## Usage
+
+---
 
 To view a list of all available Craftsman commands, you may use the list command:
 
@@ -77,9 +81,9 @@ Every command includes a help screen which displays the command's available argu
 
 	php path/to/craftsman help migration:latest
 
----
-
 ## Commands
+
+---
 
 ### Migrations
 
@@ -176,11 +180,57 @@ Allows you to quickly roll back and forth through the history of the migration s
 
 All migration versions of modules are stored apart from each other, so you can control the versions of every module and never interfering with each other.
 
----
+#### Modular Migrations
+
+If you're familiar with the [Codeigniter Migration Class](https://codeigniter.com/user_guide/libraries/migration.html), it is imposible to maintain separated migration version files in your application, you need to merge these files in one directory and fix the `migration file name`.
+
+With Craftsman You can manage your database scheme's evolution through independent versions of your components.
+
+We will assume the following directory stucture:
+
+    +- APPPATH/
+    | +- migrations/
+    | | +- 001_add_blog.php
+    | | +- 002_add_posts.php
+
+And an application library uses a database scheme (like Ion Auth, Community Auth, etc). This migrations reside in:
+
+    +- APPPATH
+    | +- libraries/
+    | | +- fooLib/
+    | | | +- migrations
+    | | | | +- 001_add_session.php
+    | | | | +- 002_add_other_stuff.php
+
+Run the Migration command with the `--path` option:
+
+    php vendor/bin/craftsman migration:latest --path="application/libraries/fooLib"
+
+And that's all, your migrations are now independent. 
+
+In your database you can see that every component have a version assigned:
+
+    mysql> SELECT * FROM ci_migrations; 
+
+    +---------------+---------+
+    | module        | version |
+    +---------------+---------+
+    | ci_system     |       2 |
+    | foolib        |       2 |
+    +---------------+---------+
+
+Also you can change the component name stored in the database with the `--name` option:
+
+    php vendor/bin/craftsman migration:latest --name="foo" --path="application/libraries/fooLib"
 
 ### Generators
 
 Craftsman provides a variety of generators to speed up your development process.
+
+Every Generator Command comes with a `--path` option to control where the generated file will be placed overwriting the default path.
+
+    php path/to/craftsman generator:<command> <name> --path="path/to/new"
+
 
 #### Controller
 
@@ -270,12 +320,7 @@ class Foo extends CI_Controller
 
 /* End of file Foo.php */
 /* Location: /path/to/codeigniter/application/controllers/Foo.php */  
-?> 
-{% endhighlight %} 
-
-You can put the controller inside a different directory with the `--path` argument. So, if you want to create the controller inside `new/path/admin`, you can do:
-
-    php path/to/craftsman generator:controller foo --path='new/path/admin'
+?>{% endhighlight %} 
 
 #### Model
 
@@ -301,10 +346,6 @@ class Foo_model extends CI_Model
 /* Location: /path/to/codeigniter/application/models/Foo_model.php */
 ?>
 {% endhighlight %}
-
-Same as the [Controller Generator](#controller), you can put the model inside a different directory with the `--path` argument. So, if you want to create the model inside `new/path/admin`, you can do:
-
-    php path/to/craftsman generator:controller foo --path='new/path/admin'
 
 #### Migration
 
@@ -382,16 +423,13 @@ class Migration_create_users extends CI_Migration {
 
 /* End of file 001_create_users.php.php */
 /* Location: path/to/codeigniter/application/migrations/001_create_users.php */
-?>
-{% endhighlight %}
-
-The migration file will be placed in your migration folder or any folder you specify with the `--path` argument instead of the default Codeigniter migration path with a version number as a prefix.
+?>{% endhighlight %}
 
 Now it's your turn to give the finishing touches before running this scheme. Check the [Database Forge documentation](https://codeigniter.com/user_guide/database/forge.html) for more information about CodeIgniter Migrations.
 
-----
-
 ## Contributions
+
+---
 
 The Craftsman project welcomes, and depends, on contributions from developers and users in the CodeIgniter open source community. Contributions can be made in a number of ways, a few examples are:
 
@@ -406,5 +444,3 @@ Please include as much detail as you can. Let us know your platform and `Craftsm
 **Submitting Pull Requests**
 
 Once you are happy with your changes or you are ready for some feedback, push it to your fork and send a pull request. For a change to be accepted it will most likely need to have tests and documentation if it is a new feature.
-
----
