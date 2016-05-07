@@ -88,29 +88,27 @@ class Seeder extends Command
 
             $obj = new $name();
 
-            if (property_exists($obj, 'run')) 
-            {
-                $this->text('Seeding database...');
-                $case = 'seeding';
-                $signal = '++'; 
-
-                $this->newLine();
-                $this->text('<info>'.$signal.'</info> '.$case);             
-
-                $time_start = microtime(true);              
-
-                $obj->run();    
-
-                $time_end = microtime(true);        
-
-                list($query_exec_time, $exec_queries) = $this->measureQueries($obj->db->queries, $obj->db->query_times);
-                
-                $this->summary($signal, $time_start, $time_end, $query_exec_time, $exec_queries);     
-            }
-            else
+            if (! method_exists($obj, 'run')) 
             {
                 throw new \RuntimeException("{$name} Seeder class does not contain a Seeder::run method");
             }
+            
+            $this->text('Execute queries...');
+            $case = 'seeding';
+            $signal = '++'; 
+
+            $this->newLine();
+            $this->text('<info>'.$signal.'</info> '.$case);             
+
+            $time_start = microtime(true);              
+
+            $obj->run();    
+
+            $time_end = microtime(true);        
+
+            list($query_exec_time, $exec_queries) = $this->measureQueries($obj->db->queries, $obj->db->query_times);
+            
+            $this->summary($signal, $time_start, $time_end, $query_exec_time, $exec_queries);
            
         } 
         catch (\Exception $e)
