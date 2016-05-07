@@ -2,7 +2,6 @@
 namespace Craftsman\Classes;
 
 use Craftsman\Commands\Base as Command;
-
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Filesystem\Filesystem;
@@ -19,7 +18,7 @@ use Twig_SimpleFunction;
  * @copyright   Copyright (c) 2016, David Sosa Valdes.
  * @version     1.0.0
  */
-class Generator extends Command
+abstract class Generator extends Command
 {
 	/**
 	 * Symfony Filesystem instance

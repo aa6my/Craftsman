@@ -2,7 +2,6 @@
 namespace Craftsman\Classes;
 
 use Craftsman\Commands\Base as Command;
-
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -16,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @copyright   Copyright (c) 2016, David Sosa Valdes.
  * @version     1.0.0
  */
-class Migration extends Command
+abstract class Migration extends Command
 {
     /**
      * Codeigniter migration class.

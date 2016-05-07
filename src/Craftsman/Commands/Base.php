@@ -17,7 +17,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  * @copyright   Copyright (c) 2016, David Sosa Valdes.
  * @version     1.0.0
  */
-class Base extends Command
+abstract class Base extends Command
 {   
     /**
      * Console command name
