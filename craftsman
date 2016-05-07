@@ -4,14 +4,13 @@
 use Craftsman\Commands\Generators\Controller as Generator_Controller;
 use Craftsman\Commands\Generators\Model      as Generator_Model;
 use Craftsman\Commands\Generators\Migration  as Generator_Migration;
-
 use Craftsman\Commands\Migrations\Info       as Migration_Info;
 use Craftsman\Commands\Migrations\Version    as Migration_Version;
 use Craftsman\Commands\Migrations\Latest     as Migration_Latest;
 use Craftsman\Commands\Migrations\Rollback   as Migration_Rollback;
 use Craftsman\Commands\Migrations\Reset      as Migration_Reset;
 use Craftsman\Commands\Migrations\Refresh    as Migration_Refresh;
-
+use Craftsman\Commands\Seeder;
 use Symfony\Component\Console\Application;
 
 /**
@@ -29,7 +28,7 @@ set_time_limit(0);
 define('CRAFTSMANPATH', __DIR__.DIRECTORY_SEPARATOR);
 
 // Create a Codeigniter instance
-$CI = require CRAFTSMANPATH.'src/ci_instance.php';
+$CI = require CRAFTSMANPATH.'src/_ci_instance.php';
 // Add the user database configuration according to main application directory.
 $CI->load->add_package_path('application/');
 // Add the Craftsman extended packages
@@ -44,10 +43,11 @@ $commands = array(
 	new Migration_Latest($CI),
 	new Migration_Rollback($CI),
 	new Migration_Reset($CI),
-	new Migration_Refresh($CI)
+	new Migration_Refresh($CI),
+	new Seeder()
 );
 
-$application = new Application('Craftsman', '3.4.0');
+$application = new Application('Craftsman', '3.5.3');
 // Add the default commands
 foreach ($commands as $key => $command) {
 	$application->add($command);

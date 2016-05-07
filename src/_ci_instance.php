@@ -1,23 +1,25 @@
 <?php 
 /**
- * Part of Attire Library
+ * Part of Craftsman Library
  *
  * @author     David Sosa Valdes <https://github.com/davidsosavaldes>
  * @license    MIT License
  * @copyright  2016 David Sosa Valdes
- * @link       https://github.com/davidsosavaldes/Attire
+ * @link       https://github.com/davidsosavaldes/Craftsman
  *
  * Based on https://raw.githubusercontent.com/kenjis/codeigniter-ss-twig/master/ci_instance.php
+ * 
  * Thanks Kenji!
  */
+
+define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
 
 error_reporting(-1);
 ini_set('display_errors', 1);
 
-define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
-
-$system_path = 'vendor/codeigniter/framework/system';
+$system_path        = 'vendor/codeigniter/framework/system';
 $application_folder = 'vendor/codeigniter/framework/application';
+$composer_autoload  = 'vendor/autoload.php';
 
 if (($_temp = realpath($system_path)) !== FALSE)
 {
@@ -72,10 +74,7 @@ if (file_exists(APPPATH . 'config/' . ENVIRONMENT . '/constants.php')) {
 # Make sure some config variables are set correctly
 get_config(array(
 	'subclass_prefix' => 'Craftsman_',
-	#'permitted_uri_chars' => '(\"[^\"]+\"|[^\\s\"]+)'
 ));
-
-$composer_autoload = 'vendor/autoload.php';
 
 if (! file_exists($composer_autoload)) 
 {
