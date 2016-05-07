@@ -1,24 +1,23 @@
 <?php
-
 namespace Craftsman\Commands\Migrations;
 
 use Craftsman\Classes\Migration;
 
 /**
- * Migration - Info Command
+ * Migration\Info Command
  *
  * @package     Craftsman
  * @author      David Sosa Valdes
  * @link        https://github.com/davidsosavaldes/Craftsman
  * @copyright   Copyright (c) 2016, David Sosa Valdes.
  */
-class Info extends Migration
+class Info extends Migration implements \Craftsman\Interfaces\Command
 {
 	protected $name        = 'migration:info';
 	protected $description = 'Display the current migration scheme status';
 	protected $harmless    = TRUE;
 
-	protected function start()
+	public function start()
 	{
 		$migrations     = $this->migration->find_migrations();
 		$db_version     = $this->migration->get_db_version();

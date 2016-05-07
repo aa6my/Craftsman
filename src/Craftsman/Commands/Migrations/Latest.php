@@ -1,23 +1,22 @@
 <?php
-
 namespace Craftsman\Commands\Migrations;
 
 use Craftsman\Classes\Migration;
 
 /**
- * Migration - Latest Command
+ * Migration\Latest Command
  *
  * @package     Craftsman
  * @author      David Sosa Valdes
  * @link        https://github.com/davidsosavaldes/Craftsman
  * @copyright   Copyright (c) 2016, David Sosa Valdes.
  */
-class Latest extends Migration
+class Latest extends Migration implements \Craftsman\Interfaces\Command
 {
 	protected $name        = 'migration:latest';
 	protected $description = 'Run the latest migration';
 
-	protected function start()
+	public function start()
 	{
 		$migrations = $this->migration->find_migrations();
 		$version    = $this->migration->get_latest_version($migrations);

@@ -1,23 +1,22 @@
 <?php
-
 namespace Craftsman\Commands\Migrations;
 
 use Craftsman\Classes\Migration;
 
 /**
- * Migration - Refresh Command
+ * Migration\Refresh Command
  *
  * @package     Craftsman
  * @author      David Sosa Valdes
  * @link        https://github.com/davidsosavaldes/Craftsman
  * @copyright   Copyright (c) 2016, David Sosa Valdes.
  */
-class Refresh extends Migration
+class Refresh extends Migration implements \Craftsman\Interfaces\Command
 {
 	protected $name        = 'migration:refresh';
 	protected $description = 'Rollback all migrations and run them all again';
 
-	protected function start()
+	public function start()
 	{
 		$migrations = $this->migration->find_migrations();
 		$db_version = intval($this->migration->get_db_version());

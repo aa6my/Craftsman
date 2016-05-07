@@ -4,19 +4,19 @@ namespace Craftsman\Commands\Migrations;
 use Craftsman\Classes\Migration;
 
 /**
- * Migration - Rollback Command
+ * Migration\Rollback Command
  *
  * @package     Craftsman
  * @author      David Sosa Valdes
  * @link        https://github.com/davidsosavaldes/Craftsman
  * @copyright   Copyright (c) 2016, David Sosa Valdes.
  */
-class Rollback extends Migration
+class Rollback extends Migration implements \Craftsman\Interfaces\Command
 {
 	protected $name        = 'migration:rollback';
 	protected $description = 'Rollback from the last migration';
 
-	protected function start()
+	public function start()
 	{
 		$migrations = $this->migration->find_migrations();
 		$versions   = array_map('intval', array_keys($migrations));

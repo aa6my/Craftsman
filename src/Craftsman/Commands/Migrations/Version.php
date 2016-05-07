@@ -1,19 +1,18 @@
 <?php
-
 namespace Craftsman\Commands\Migrations;
 
 use Craftsman\Classes\Migration;
 use Symfony\Component\Console\Input\InputArgument;
 
 /**
- * Migration - Version Command
+ * Migration\Version Command
  *
  * @package     Craftsman
  * @author      David Sosa Valdes
  * @link        https://github.com/davidsosavaldes/Craftsman
  * @copyright   Copyright (c) 2016, David Sosa Valdes.
  */
-class Version extends Migration
+class Version extends Migration implements \Craftsman\Interfaces\Command
 {
 	protected $name        = 'migration:version';
 	protected $description = 'Run a migration by version as argument';
@@ -29,7 +28,7 @@ class Version extends Migration
 			);
 	}
 
-	protected function start()
+	public function start()
 	{
 		$version    = abs($this->getArgument('version'));
 		$db_version = intval($this->migration->get_db_version());				

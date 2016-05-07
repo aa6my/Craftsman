@@ -2,17 +2,16 @@
 namespace Craftsman\Commands\Generators;
 
 use Craftsman\Classes\Generator;
-use Craftsman\Interfaces\Generator as GeneratorInterface;
 
 /**
-* Generator - Controller Command
+* Generator\Migration Command
 *
 * @package     Craftsman
 * @author      David Sosa Valdes
 * @link        https://github.com/davidsosavaldes/Craftsman
 * @copyright   Copyright (c) 2016, David Sosa Valdes.
 */
-class Migration extends Generator implements GeneratorInterface
+class Migration extends Generator implements \Craftsman\Interfaces\Command
 {
 	protected $name        = 'generator:migration';
 	protected $description = 'Generate a Migration';

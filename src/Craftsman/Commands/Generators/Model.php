@@ -1,19 +1,17 @@
 <?php
-
 namespace Craftsman\Commands\Generators;
 
 use Craftsman\Classes\Generator;
-use Craftsman\Interfaces\Generator as GeneratorInterface;
 
 /**
- * Generator - Model Command
+ * Generator\Model Command
  *
  * @package     Craftsman
  * @author      David Sosa Valdes
  * @link        https://github.com/davidsosavaldes/Craftsman
  * @copyright   Copyright (c) 2016, David Sosa Valdes.
  */
-class Model extends Generator implements GeneratorInterface
+class Model extends Generator implements \Craftsman\Interfaces\Command
 {
 	protected $name        = 'generator:model';
 	protected $description = 'Generate a Model';
