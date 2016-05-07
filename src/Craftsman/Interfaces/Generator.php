@@ -1,10 +1,7 @@
 <?php
 namespace Craftsman\Interfaces;
 
-interface Generator
-{
-	public function start();	
-}
+interface Generator{}
 
 
 /* End of file Generator.php */

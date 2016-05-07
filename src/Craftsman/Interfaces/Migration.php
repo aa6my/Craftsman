@@ -1,10 +1,7 @@
 <?php
 namespace Craftsman\Interfaces;
 
-interface Migration
-{
-	public function start();	
-}
+interface Migration{}
 
 
 /* End of file Migration.php */
