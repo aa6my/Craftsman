@@ -3,10 +3,9 @@
     "description": "Craftsman Codeigniter CLI provides a number of helpful commands for your use while developing your application. It is driven by the powerful Symfony Console component.",
     "keywords": [
         "codeigniter",
-        "codeigniter-cli",
         "cli",
-        "codeigniter-craftsman",
-        "craftsman"
+        "craftsman",
+        "console"
     ],
     "homepage": "https://github.com/davidsosavaldes/Craftsman",
     "license": "MIT",
