@@ -162,9 +162,10 @@ abstract class Migration extends Command
 
         ($this->getOption('debug') !== FALSE) && $this->newLine();
 
-        for ($i = 2; $i < count($queries); $i++) 
+        for ($i = 0; $i < count($queries); $i++) 
         {
-            if (! strpos($queries[$i], $migration_table)) 
+            if ((! strpos($queries[$i], $migration_table)) 
+                && (! strpos($queries[$i], $this->migration->db->database))) 
             {
                 ($this->getOption('debug') !== FALSE) && $this->text('<comment>-></comment> '.$queries[$i]);
                 $query_exec_time += $this->migration->db->query_times[$i]; 
