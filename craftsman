@@ -4,6 +4,7 @@
 use Craftsman\Commands\Generators\Controller as Generator_Controller;
 use Craftsman\Commands\Generators\Model      as Generator_Model;
 use Craftsman\Commands\Generators\Migration  as Generator_Migration;
+use Craftsman\Commands\Generators\Seeder     as Generator_Seeder;
 use Craftsman\Commands\Migrations\Info       as Migration_Info;
 use Craftsman\Commands\Migrations\Version    as Migration_Version;
 use Craftsman\Commands\Migrations\Latest     as Migration_Latest;
@@ -38,6 +39,7 @@ $commands = array(
 	new Generator_Migration(),
 	new Generator_Controller(),
 	new Generator_Model(),
+	new Generator_Seeder(),
 	new Migration_Info($CI),
 	new Migration_Version($CI),
 	new Migration_Latest($CI),
