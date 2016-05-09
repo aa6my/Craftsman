@@ -35,12 +35,14 @@ class Info extends Migration implements \Craftsman\Interfaces\Command
 
 		if ($latest_version < $db_version) 
 		{
-			$this->caution("Could not find any migrations, check the migrations path.");
+			$this->caution('Could not find any migrations, check the migration path.');
 		}
 		elseif ($latest_version > $db_version) 
 		{
-			$this->note("The Database is not up-to-date with the latest changes, run:".
-				"'migration:latest' to update them.");
+			$this->note(
+				'The Database is not up-to-date with the latest changes,'
+				.'run <info>migration:latest</info> to update them.'
+			);
 		}
 		else
 		{

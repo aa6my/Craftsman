@@ -28,15 +28,21 @@ class Latest extends Migration implements \Craftsman\Interfaces\Command
 		}
 		elseif ($version > $db_version) 
 		{
-			$this->text('Migrating database <info>UP</info> to version <comment>'.$version.
-				'</comment> from <comment>'.$db_version.'</comment>');
+			$this->text(
+				'Migrating database <info>UP</info> to version' 
+				.'<comment>'.$version.'</comment> from '
+				.'<comment>'.$db_version.'</comment>'
+			);
 			$case = 'migrating';
 			$signal = '++';
 		}
 		else
 		{
-			$this->text('Migrating database <info>DOWN</info> to version <comment>'.$version.
-				'</comment> from <comment>'.$db_version.'</comment>');
+			$this->text(
+				'Migrating database <info>DOWN</info> to version'
+				.'<comment>'.$version.'</comment> from '
+				.'<comment>'.$db_version.'</comment>'
+			);
 			$case = 'reverting';
 			$signal = '--';
 		}	
