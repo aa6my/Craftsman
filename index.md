@@ -38,7 +38,7 @@ Built on top of great technology.
 ---
 
 <div class="embed-responsive embed-responsive-16by9">
-  <iframe class="embed-responsive-item" src="https://www.youtube-nocookie.com/embed/JA51oVUoWRc?rel=0&amp;showinfo=0&amp;hd=1" allowfullscreen></iframe>
+<div class="embed-responsive-item"><script type="text/javascript" src="https://asciinema.org/a/45166.js" id="asciicast-45166" async></script></div>
 </div>
 
 ## Installation
